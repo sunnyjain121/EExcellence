@@ -1,6 +1,4 @@
-package com.finalaya.common;
-
-
+package FunctionLibraries;
 
 import java.util.List;
 
@@ -8,6 +6,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import static org.junit.Assert.assertEquals;
+
+import Logger.LoggerInstance;
 
 
 public class CommonUtility {
@@ -79,6 +80,8 @@ public class CommonUtility {
 		    }   	
 	    	
 	 }	//End of Function
+	  
+	  
 }
 
 

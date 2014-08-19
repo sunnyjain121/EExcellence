@@ -1,4 +1,4 @@
-package com.finalaya.common;
+package Logger;
 
 import java.io.File;
 import java.io.IOException;
