@@ -27,32 +27,44 @@ public class FinalayaTest {
 		
 		
 	}// End public void setUp()
+//	@Test(alwaysRun=true)
+//	public void testMarketTab1(){
+//		
+//		obj_marketPage.clickOnMarketTab();
+//		LoggerInstance.logger.info("Verify user is navigated to Market page.");
+//		obj_marketPage.verifyMarketPageIsDisplayed();
+//		obj_marketPage.clickOnBSETab();
+//		LoggerInstance.logger.info("verify current value of sensex is displayed.");
+//		obj_marketPage.verifyCurrentValueOfSensexIsDisplayed();
+//		LoggerInstance.logger.info("verify value change of sensex is displayed.");
+//		obj_marketPage.verifyValueChangeOfSensexIsDisplayed();
+//		LoggerInstance.logger.info("verify Percentage change of sensex is displayed.");
+//		obj_marketPage.verifyPercentageChangeOfSensexIsDisplayed();
+//		LoggerInstance.logger.info("verify Open, Low, High and Pre Close of Sensex is displayed.");
+//		obj_marketPage.verifyOpenLowHighPreCloseIsDisplayed();
+//		obj_marketPage.clickOnNSETab();
+//		LoggerInstance.logger.info("verify current value of Nifty is displayed.");
+//		obj_marketPage.verifyCurrentValueOfNiftyIsDisplayed();
+//		LoggerInstance.logger.info("verify Percentage change of Nifty is displayed.");
+//		obj_marketPage.verifyPercentageChangeOfNiftyIsDisplayed();
+//		LoggerInstance.logger.info("verify value change of Nifty is displayed.");
+//		obj_marketPage.verifyValueChangeOfNiftyIsDisplayed();
+//		LoggerInstance.logger.info("verify Open, Low, High and Pre Close of Nifty is displayed.");
+//		obj_marketPage.verifyOpenLowHighPreCloseIsDisplayed();
+//			
+//	}
 	@Test(alwaysRun=true)
-	public void test(){
+	public void testMarketTab2() throws InterruptedException{
 		
-		obj_marketPage.clickOnMarketTab();
-		LoggerInstance.logger.info("Verify user is navigated to Market page.");
-		obj_marketPage.verifyMarketPageIsDisplayed();
-		obj_marketPage.clickOnBSETab();
-		LoggerInstance.logger.info("verify current value of sensex is displayed.");
-		obj_marketPage.verifyCurrentValueOfSensexIsDisplayed();
-		LoggerInstance.logger.info("verify value change of sensex is displayed.");
-		obj_marketPage.verifyValueChangeOfSensexIsDisplayed();
-		LoggerInstance.logger.info("verify Percentage change of sensex is displayed.");
-		obj_marketPage.verifyPercentageChangeOfSensexIsDisplayed();
-		LoggerInstance.logger.info("verify Open, Low, High and Pre Close of Sensex is displayed.");
-		obj_marketPage.verifyOpenLowHighPreCloseIsDisplayed();
-		obj_marketPage.clickOnNSETab();
-		LoggerInstance.logger.info("verify current value of Nifty is displayed.");
-		obj_marketPage.verifyCurrentValueOfNiftyIsDisplayed();
-		LoggerInstance.logger.info("verify Percentage change of Nifty is displayed.");
-		obj_marketPage.verifyPercentageChangeOfNiftyIsDisplayed();
-		LoggerInstance.logger.info("verify value change of Nifty is displayed.");
-		obj_marketPage.verifyValueChangeOfNiftyIsDisplayed();
-		LoggerInstance.logger.info("verify Open, Low, High and Pre Close of Nifty is displayed.");
-		obj_marketPage.verifyOpenLowHighPreCloseIsDisplayed();
-			
+		obj_marketPage.clickOnETFZoneTab();
+		obj_marketPage.verifyETFZonePageIsDisplayed();
+		obj_marketPage.verifyGoldETFTableIsDisplayed();
+		obj_marketPage.verifyNonGoldETFTableIsDisplayed();
+		obj_marketPage.selectValueFromUnderlying("Non Gold");
+		obj_marketPage.verifyNonGoldETFTableIsDisplayed();
+		obj_marketPage.selectValueFromUnderlying("Gold");
+		obj_marketPage.verifyNonGoldETFTableIsDisplayed();
+		obj_marketPage.verifyNegativeValueColor();
 	}
-	
 	
 }

@@ -4,28 +4,46 @@ package PageObjects;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.testng.Assert;
 
-import FunctionLibraries.CommonUtility;
 import FunctionLibraries.FunctionLibrary;
 import Logger.LoggerInstance;
 
 public class MarketPage {
 	
-	private final String csspath_MarketTab = "html.js.flexbox.canvas.canvastext.webgl.no-touch.geolocation.postmessage.no-websqldatabase.indexeddb.hashchange.history.draganddrop.websockets.rgba.hsla.multiplebgs.backgroundsize.borderimage.borderradius.boxshadow.textshadow.opacity.cssanimations.csscolumns.cssgradients.no-cssreflections.csstransforms.no-csstransforms3d.csstransitions.fontface.video.audio.localstorage.sessionstorage.webworkers.applicationcache.svg.inlinesvg.smil.svgclippaths body form#form1 div.topContainerHome div.fltLft100 div div#ucHeader_divHeader div#ucHeader_divMenu.fltLft100 div#menu-wrapper.menu-wrapper ul.nav li a";
+	private final String csspath_MarketTab = "#menu-wrapper > ul > li:nth-child(1) > a";//"html.js.flexbox.canvas.canvastext.webgl.no-touch.geolocation.postmessage.no-websqldatabase.indexeddb.hashchange.history.draganddrop.websockets.rgba.hsla.multiplebgs.backgroundsize.borderimage.borderradius.boxshadow.textshadow.opacity.cssanimations.csscolumns.cssgradients.no-cssreflections.csstransforms.no-csstransforms3d.csstransitions.fontface.video.audio.localstorage.sessionstorage.webworkers.applicationcache.svg.inlinesvg.smil.svgclippaths body form#form1 div.topContainerHome div.fltLft100 div div#ucHeader_divHeader div#ucHeader_divMenu.fltLft100 div#menu-wrapper.menu-wrapper ul.nav li a";
+	private final String csspath_GoldETFTAble="#dvGoldReal > table > tbody > tr:nth-child(1) > td > table";
+	private final String csspath_NonGoldETFTable="#dvNonGoldReal > table > tbody > tr:nth-child(1) > td > table";
 	private final String id_BSETAb="ctl00_BodyCPH_lnkBSE";
+	private final String id_NegativeValue="ctl00_BodyCPH_rptETFReatTime_Gold_ctl14_lblChange";
 	private final String id_NSETAb="ctl00_BodyCPH_lnkNSE";
+	private final String name_Underlying="ctl00$BodyCPH$ddlUnderLying";	
 	private final String id_SensexCurrentValue="ctl00_BodyCPH_ucExGraph_lblCurrentValue";
 	private final String id_SensexValueChange="ctl00_BodyCPH_ucExGraph_lblAbsoluteChange";
 	private final String id_SensexPercentageChange="ctl00_BodyCPH_ucExGraph_lblPercentChange";
+	private final String id_ETFZonePage="ctl00_BodyCPH_lblDocuments";
 	private final String xpath_MarketToday="//*[@id='divMarket']//div[contains(text(),'Market Today')]";
+	private final String csspath_ETFZoneTab ="#menu-wrapper > ul > li:nth-child(1) > div > div.nav-column > ul > li:nth-child(5) > a";//"html.js.flexbox.canvas.canvastext.webgl.no-touch.geolocation.postmessage.no-websqldatabase.indexeddb.hashchange.history.draganddrop.websockets.rgba.hsla.multiplebgs.backgroundsize.borderimage.borderradius.boxshadow.textshadow.opacity.cssanimations.csscolumns.cssgradients.no-cssreflections.csstransforms.no-csstransforms3d.csstransitions.fontface.video.audio.localstorage.sessionstorage.webworkers.applicationcache.svg.inlinesvg.smil.svgclippaths body form#aspnetForm div div div div#ctl00_ucHeader_divHeader div#ctl00_ucHeader_divMenu.fltLft100 div#menu-wrapper.menu-wrapper ul.nav li div.menu-div div.nav-column ul li a";
 	private final String csspath_OpenLowHighPreClose = "html.js.flexbox.canvas.canvastext.webgl.no-touch.geolocation.postmessage.no-websqldatabase.indexeddb.hashchange.history.draganddrop.websockets.rgba.hsla.multiplebgs.backgroundsize.borderimage.borderradius.boxshadow.textshadow.opacity.cssanimations.csscolumns.cssgradients.no-cssreflections.csstransforms.no-csstransforms3d.csstransitions.fontface.video.audio.localstorage.sessionstorage.webworkers.applicationcache.svg.inlinesvg.smil.svgclippaths body form#aspnetForm div div div div#divMarket div#mak_1 div.mak_info_grp div#divExchangeGraph div div.mar_OHLC";
 	@FindBy(css = csspath_MarketTab)
 	public WebElement we_MarketTab;
+	@FindBy(name = name_Underlying)
+	public WebElement we_Underlying;
+	@FindBy(css = csspath_GoldETFTAble)
+	public WebElement we_GoldETFTable;
+	@FindBy(css = csspath_NonGoldETFTable)
+	public WebElement we_NonGoldETFTable;
 	@FindBy(css = csspath_OpenLowHighPreClose)
 	public WebElement we_OpenLowHighPreClose;
+	@FindBy(css = csspath_ETFZoneTab)
+	public WebElement we_ETFZoneTab;
 	@FindBy(id = id_BSETAb)
 	public WebElement we_BSETab;
+	
+	
+	@FindBy(id = id_NegativeValue)
+	public WebElement we_NegativeValue;
+	@FindBy(id = id_ETFZonePage)
+	public WebElement we_ETFZonePage;
 	@FindBy(id = id_NSETAb)
 	public WebElement we_NSETab;
 	@FindBy(id = id_SensexCurrentValue)
@@ -36,7 +54,14 @@ public class MarketPage {
 	public WebElement we_SensexPercentageChange;
 	@FindBy(xpath = xpath_MarketToday)
 	public WebElement we_MarketToday;
-	//Function to click on Market Tab
+	
+	
+	/* Method Name: clickOnMarketTab
+     * Description: This function will click on Market tab.
+     * Parameters:  
+     * Created By: Rohit Miglani
+     * Created Date: 13-08-2014
+     * */
 	public void clickOnMarketTab()
 	{
 		try
@@ -50,7 +75,67 @@ public class MarketPage {
 		LoggerInstance.logger.info("Not able to click on Market Tab");
 		}
 	}
-	//Function to click on BSE tab
+	
+	/* Method Name: clickOnETFZoneTab
+     * Description: Function to click on ETFZone tab.
+     * Parameters:  
+     * Created By: Rohit Miglani
+     * Created Date: 13-08-2014
+     * */
+	
+	public void clickOnETFZoneTab()
+	{
+		try
+		{
+			FunctionLibrary.clickMenuItem(we_MarketTab, we_ETFZoneTab);
+			//FunctionLibrary.clickWebLink(we_ETFZoneTab);
+			LoggerInstance.logger.info("click on ETF Zone tab");
+		}
+		catch (Exception e) {
+			LoggerInstance.logger.info("not able to click ETF Zone tab");
+
+		}
+	}
+	
+	/* Method Name: selectValueFromUnderlying
+     * Description: Function to select value from Underlying dropdown
+     * Parameters:  
+     * Created By: Rohit Miglani
+     * Created Date: 13-08-2014
+     * */
+	public void selectValueFromUnderlying(String toselect){
+		try{
+			LoggerInstance.logger.info("Select Non Gold");
+			FunctionLibrary.selectItemFromWeblist(we_Underlying,toselect );
+		}catch (Exception e) {
+			LoggerInstance.logger.info("Unable to Select Non Gold");
+		}
+		
+	}
+	/* Method Name: verifyNegativeValueColor
+     * Description: Function to verify negative value color is red.
+     * Parameters:  
+     * Created By: Rohit Miglani
+     * Created Date: 13-08-2014
+     * */
+	public boolean verifyNegativeValueColor(){
+		boolean result = false;
+		try{
+			LoggerInstance.logger.info("verify the color of negative value is Red");
+		 result=FunctionLibrary.verifyElementColor(we_NegativeValue,"#FF0000");
+		}
+		catch(Exception e){
+			LoggerInstance.logger.info("unable to verify the color");
+		}
+		return result;
+	}
+	
+	/* Method Name: clickOnBSETab
+     * Description: Function to click on BSE tab.
+     * Parameters:  
+     * Created By: Rohit Miglani
+     * Created Date: 13-08-2014
+     * */
 	public void clickOnBSETab()
 	{
 		try
@@ -64,7 +149,12 @@ public class MarketPage {
 		LoggerInstance.logger.info("Not able to click on BSE Tab");
 		}
 	}
-	//Function to click on NSE tab
+	/* Method Name: clickOnNSETab
+     * Description: Function to click on NSE tab.
+     * Parameters:  
+     * Created By: Rohit Miglani
+     * Created Date: 13-08-2014
+     * */
 		public void clickOnNSETab()
 		{
 			try
@@ -78,7 +168,12 @@ public class MarketPage {
 			LoggerInstance.logger.info("Not able to click on NSE Tab");
 			}
 		}
-		
+		/* Method Name: verifyOpenLowHighPreCloseIsDisplayed
+	     * Description: Function to verify Open,Low,High,PreClose is displayed.
+	     * Parameters:  
+	     * Created By: Rohit Miglani
+	     * Created Date: 13-08-2014
+	     * */
 		public boolean verifyOpenLowHighPreCloseIsDisplayed(){
 			boolean result= false;
 			try{
@@ -93,7 +188,12 @@ public class MarketPage {
 				return result;
 				}
 		}
-		
+		/* Method Name: verifyMarketPageIsDisplayed
+	     * Description: Function to verify Market Page is displayed.
+	     * Parameters:  
+	     * Created By: Rohit Miglani
+	     * Created Date: 13-08-2014
+	     * */
 		public boolean verifyMarketPageIsDisplayed(){
 			boolean result= false;
 			try{
@@ -108,6 +208,75 @@ public class MarketPage {
 				return result;
 				}
 		}
+		
+		/* Method Name: verifyETFZonePageIsDisplayed
+	     * Description: Function to verify ETFZone Page is displayed.
+	     * Parameters:  
+	     * Created By: Rohit Miglani
+	     * Created Date: 13-08-2014
+	     * */
+		public boolean verifyETFZonePageIsDisplayed(){
+			boolean result= false;
+			try{
+			 result=we_ETFZonePage.isDisplayed();
+			 if (result==true)
+			 LoggerInstance.logger.info("User is navigated to ETFZone Page");
+			 return result;
+				}
+			catch (Exception e) 
+				{
+				LoggerInstance.logger.info("User is not navigated to ETFZone Page");
+				return result;
+				}
+		}
+		/* Method Name: verifyGoldETFTableIsDisplayed
+	     * Description: Function to verify Gold ETF Table is displayed.
+	     * Parameters:  
+	     * Created By: Rohit Miglani
+	     * Created Date: 13-08-2014
+	     * */
+		public boolean verifyGoldETFTableIsDisplayed(){
+			boolean result= false;
+			try{
+			 result=we_GoldETFTable.isDisplayed();
+			 if (result==true)
+			 LoggerInstance.logger.info("User is navigated to Gold ETF Table");
+			 return result;
+				}
+			catch (Exception e) 
+				{
+				LoggerInstance.logger.info("User is not navigated to Gold ETF Table");
+				return result;
+				}
+		}
+		
+		/* Method Name: verifyNonGoldETFTableIsDisplayed
+	     * Description: Function to verify Non Gold ETF Table is displayed.
+	     * Parameters:  
+	     * Created By: Rohit Miglani
+	     * Created Date: 13-08-2014
+	     * */
+		public boolean verifyNonGoldETFTableIsDisplayed(){
+			boolean result= false;
+			try{
+			 result=we_NonGoldETFTable.isDisplayed();
+			 if (result==true)
+			 LoggerInstance.logger.info("User is navigated to Gold ETF Table");
+			 return result;
+				}
+			catch (Exception e) 
+				{
+				LoggerInstance.logger.info("User is not navigated to Gold ETF Table");
+				return result;
+				}
+		}
+		
+		/* Method Name: verifyCurrentValueOfSensexIsDisplayed
+	     * Description: Function to verify Current value of Sensex is displayed.
+	     * Parameters:  
+	     * Created By: Rohit Miglani
+	     * Created Date: 13-08-2014
+	     * */
 		public boolean verifyCurrentValueOfSensexIsDisplayed(){
 			boolean result= false;
 			try{
@@ -122,6 +291,12 @@ public class MarketPage {
 				return result;
 				}
 		}
+		/* Method Name: verifyCurrentValueOfNiftyIsDisplayed
+	     * Description: Function to verify Current value of Nifty is displayed.
+	     * Parameters:  
+	     * Created By: Rohit Miglani
+	     * Created Date: 13-08-2014
+	     * */
 		public boolean verifyCurrentValueOfNiftyIsDisplayed(){
 			boolean result= false;
 			try{
@@ -136,6 +311,13 @@ public class MarketPage {
 				return result;
 				}
 		}
+		
+		/* Method Name: verifyValueChangeOfNiftyIsDisplayed
+	     * Description: Function to verify value Change of Nifty is displayed.
+	     * Parameters:  
+	     * Created By: Rohit Miglani
+	     * Created Date: 13-08-2014
+	     * */
 		public boolean verifyValueChangeOfNiftyIsDisplayed(){
 			boolean result= false;
 			try{
@@ -150,6 +332,12 @@ public class MarketPage {
 				return result;
 				}
 		}
+		/* Method Name: verifyValueChangeOfSensexIsDisplayed
+	     * Description: Function to verify value Change of Sensex is displayed.
+	     * Parameters:  
+	     * Created By: Rohit Miglani
+	     * Created Date: 13-08-2014
+	     * */
 		public boolean verifyValueChangeOfSensexIsDisplayed(){
 			boolean result= false;
 			try{
@@ -165,7 +353,12 @@ public class MarketPage {
 				}
 		}
 		
-	
+		/* Method Name: verifyPercentageChangeOfSensexIsDisplayed
+	     * Description: Function to verify Percentage Change of Sensex is displayed.
+	     * Parameters:  
+	     * Created By: Rohit Miglani
+	     * Created Date: 13-08-2014
+	     * */
 		
 		public boolean verifyPercentageChangeOfSensexIsDisplayed(){
 			boolean result= false;
@@ -181,6 +374,13 @@ public class MarketPage {
 				return result;
 				}
 		}
+		
+		/* Method Name: verifyPercentageChangeOfNiftyIsDisplayed
+	     * Description: Function to verify Percentage Change of Nifty is displayed.
+	     * Parameters:  
+	     * Created By: Rohit Miglani
+	     * Created Date: 13-08-2014
+	     * */
 		public boolean verifyPercentageChangeOfNiftyIsDisplayed(){
 			boolean result= false;
 			try{

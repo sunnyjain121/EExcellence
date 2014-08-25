@@ -23,9 +23,7 @@ public class LoggerInstance {
 	{
 		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 		Date date = new Date();
-		System.out.println(date);
 		String current_dateTime = dateFormat.format(date);
-		System.out.println(current_dateTime);
 		current_dateTime = current_dateTime.replace("-", "_");
 		current_dateTime = current_dateTime.replace(" ", "_") ;
 		current_dateTime = current_dateTime.replace(":", "_") ;
@@ -34,10 +32,8 @@ public class LoggerInstance {
 		if(!f1.exists()){
 			f1.mkdir();
 		}
-		//System.out.println("00 " + str_logFilePath);
 		
 		String str_logFilePath1 = str_logFilePath+File.separator+"AutomationLogFile_"+current_dateTime+".log";
-		//System.out.println("11 " + str_logFilePath1);
 	
 		File f2 =  new File(str_logFilePath1);
 		f2.createNewFile();

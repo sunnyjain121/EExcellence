@@ -1,6 +1,6 @@
 package FunctionLibraries;
 
-import static org.junit.Assert.assertEquals;
+
 
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -8,6 +8,7 @@ import java.awt.image.BufferedImage;
 import java.awt.image.PixelGrabber;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -20,6 +21,7 @@ import java.util.Locale;
 
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
+
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -27,7 +29,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.interactions.Actions;
@@ -37,205 +38,202 @@ import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+
 import Logger.LoggerInstance;
 
 public class FunctionLibrary {
-
-	 static WebDriver driver = null;
+	static WebDriver driver = null;
 	
-/* Method Name: GetTooltipValue
+	  /* Method Name: GetTooltipValue
        * Description: 
-        *            This method will return the ToolTip value i.e. title
+       *            This method will return the ToolTip value i.e. title
        * Parameters: 
-        *            1. WebDriver Object- Page for which we need the name/title
-                       2. WebElement object - Get the locator value.
+       *            1. WebElement object 
        * Created By: Anjul Tiwari
        * Created Date: 11-08-2014
        * */
 
-	public void GetTooltipValue (By ByValue, String googleTooltip)     {
+	public static String getTooltipValue (WebElement toolTipObject)     {
+		String googleTooltip = null;
 	   try {
-			WebElement toolTipObject = driver.findElement(ByValue);
-			googleTooltip = toolTipObject.getAttribute("title");
-			System.out.println("Tooltip : " + googleTooltip); // This will print Tooltip display value
+			 LoggerInstance.logger.info("Get the tool tip value");
+		    googleTooltip = toolTipObject.getAttribute("title");
+			return googleTooltip;
 		}
 	  catch(Exception e) {
-					System.out.println("Exception - > " + e.toString());
+		  LoggerInstance.logger.info("Not able to get the tool tip value");
+			return googleTooltip;
+					
 		  }
 	}
 
 	
-	/* Class Name    : WebDriverBrowser
-	* Method Name    : getWebDriver 
-	 * Description   : This method will return Webdriver object depending on browser type.
-	* Parameters     : 
-	 *    1. broswerName : Broswer Name as String 
-	 * Created By     : Kuldeep Singh 
-	 * Created Date   : 11-08-2014
-	*/
+	   /* Class Name    : WebDriverBrowser
+		* Method Name   : getWebDriver 
+		* Description   : This method will return WebDriver object depending on browser type.
+		* Parameters    : 1. broswerName : Browser Name as String 
+		* Created By    : Kuldeep Singh 
+		* Created Date  : 11-08-2014
+		*/
 	
 	public static WebDriver getWebDriver(String browserName) {
-        try {   
+        driver =null;
+       // browserName = 
+		try {   
 	        switch(browserName) {
 	        case "firefox":
+	        	LoggerInstance.logger.info("Firefox browser is initialized");
 	        	 driver = new FirefoxDriver(); 
 	        	break;
 	        case "chrome" :
+	        	LoggerInstance.logger.info("Crome browser is initialized");
 	        	System.setProperty("webdriver.chrome.driver", "");
 	        	break;
 	        case "ie" :
+	        	LoggerInstance.logger.info("Internet Explorer browser is initialized");
 	        	driver = new InternetExplorerDriver();
 	        	break;
 	        }
         } catch (Exception e) {
-        	System.out.println(e.getMessage());
-        	driver = null;
+        		LoggerInstance.logger.info("Browser is not initialized");
         }
-        return driver;
+        	return driver;
       }
 
 
-/*
-  * Method Name    : clickWebLink 
-   * Description   : This method will click on web link.
-  * Parameters     : 1. btnWebElement : Webelement for web link xpath 
-   * Created By    : Kuldeep Singh 
-   * Created Date  : 11-08-2014
-  */
-
 	/*
      * Method Name    : clickWebLink 
-      * Description    : This method will click on web link.
+     * Description    : This method will click on web link.
      * Parameters     : 1. btnWebElement : Webelement for web link xpath 
-      * Created By     : Kuldeep Singh 
-      * Created Date   : 11-08-2014
+     * Created By     : Kuldeep Singh 
+     * Created Date   : 11-08-2014
      */
 
      public static void clickWebLink(WebElement webLinkWebElement) {
            try {
                  if (webLinkWebElement.isEnabled()) {
-                       webLinkWebElement.click();
-                 } else {
-                       System.out.println("Web Link is not Enabled");
+                	 LoggerInstance.logger.info("Click on"+webLinkWebElement);
+                     webLinkWebElement.click();
                  }
            } catch (Exception e) {
-                 System.out.println("Exception Occurred --> " + e.getMessage());
+        	   		LoggerInstance.logger.info("Not able to click on"+webLinkWebElement);
            }
      }
 
-/*
-  * Method Name    : clickBtn 
-   * Description   : This method will click on button.
-  * Parameters     : 1. btnWebElement : Webelement for button xpath 
-   * Created By    : Kuldeep Singh 
-   * Created Date  : 11-08-2014
-  */
+	/*
+	 * Method Name   : clickButton 
+	 * Description   : This method will click on button.
+	 * Parameters    : 1. btnWebElement : Webelement for button xpath 
+	 * Created By    : Kuldeep Singh 
+	 * Created Date  : 11-08-2014
+	 */
 
       public void clickButton(WebElement btnWebElement) {
             try {
                   if (btnWebElement.isEnabled()) {
-                        btnWebElement.click();
-                  } else {
-                        System.out.println("Button is not Enabled");
-                  }
+                	  LoggerInstance.logger.info("click on "+btnWebElement);
+                      btnWebElement.click();
+                                   }
             } catch (Exception e) {
-                  System.out.println("Exception Occurred --> " + e.getMessage());
+            		LoggerInstance.logger.info("Unable to click on "+btnWebElement);
             }
       }
 
 	  
-/* Method Name: waitTillElementPresent
-       * Description: 
-        *            This function will wait for a pre-defined time untill an element is present on the DOM of a page.
-        * Parameters: 
-		*	1.	sDriver – variable name used for driver 
-		*	2.	iTimeOut – value in seconds for pre-defined time, function will wait for
-		*	3.	sIdentifier – variable for identifier type by which object will be located
-		*	4.	wElement - variable for identifier value by which object will be located
-       * Created By: Darwin Bhandari
-       * Created Date: 12-08-2014
-       * */
+	/* Method Name: waitTillElementPresent
+	 * Description: This function will wait for a pre-defined time until an element is present on the DOM of a page.
+	 * Parameters: 
+	 *	1.	sDriver – variable name used for driver 
+	 *	2.	iTimeOut – value in seconds for pre-defined time, function will wait for
+     *	3.	sIdentifier – variable for identifier type by which object will be located
+	 *	4.	wElement - variable for identifier value by which object will be located
+	 * Created By: Darwin Bhandari
+	 * Created Date: 12-08-2014
+	 * */
 
 public static void waitTillElementPresent(WebDriver driver, int iTimeOut, By byVal) {
 		try {
+			LoggerInstance.logger.info("wait for Element to present");
 			WebDriverWait wait = new WebDriverWait(driver, iTimeOut);
 			wait.until(ExpectedConditions.presenceOfElementLocated(byVal));
 		    }
 		catch (Exception e) {
-			System.out.println("Exception: " + e.getMessage());
+			LoggerInstance.logger.info("Element is not present");
 		}
 
-}	/* Method Name: waitTillElementVisible
-       * Description: 
-        *            This function will wait for a pre-defined time till an element is visible on web page.
-					 Visibility means that the element is not only displayed but also has a height and width that is greater than 0
-		* Parameters: 
-		*	1.	sDriver – variable name used for driver 
-		*	2.	iTimeOut – variable for pre-defined time, function will wait for
-		*	3.	sIdentifier – variable for identifier type by which object will be located
-		*	4.	wElement - variable for identifier value by which object will be located
-       * Created By: Darwin Bhandari
-       * Created Date: 12-08-2014
-* */
+}	
+	/* Method Name: waitTillElementVisible
+	 * Description: This function will wait for a pre-defined time till an element is visible on web page.
+					Visibility means that the element is not only displayed but also has a height and width that is greater than 0
+	 * Parameters: 
+	 *	1.	sDriver – variable name used for driver 
+	 *	2.	iTimeOut – variable for pre-defined time, function will wait for
+	 *	3.	sIdentifier – variable for identifier type by which object will be located
+	 *	4.	wElement - variable for identifier value by which object will be located
+	 * Created By: Darwin Bhandari
+	 * Created Date: 12-08-2014
+	 * */
 
 public static void waitTillElementVisible(int iTimeOut, By byVal) {
 		try {
 			WebDriverWait wait = new WebDriverWait(driver, iTimeOut);
+			LoggerInstance.logger.info("wait for Element to Visible");
 			wait.until(ExpectedConditions.visibilityOfElementLocated(byVal));
 		    }
 		catch (Exception e) {
-			System.out.println("Exception: " + e.getMessage());
+			LoggerInstance.logger.info("Element is not Visible");
 		}
 }
 
-/* Method Name: readcellvalue
-       * Description: 
-        *           This function will fetch the cell value
-        * Parameters: 
-		*	1.	Xls or xlsx file path
-		*	2.	Sheet name
-		*	3.	Row number
-		*	4.	Column number
-       * Created By: Aman Saraf Jain
-       * Created Date: 12-08-2014
-* */
+	/* Method Name: readCellValue
+	 * Description: This function will fetch the cell value
+	 * Parameters: 
+	 *	1.	xls or xlsx file path
+	 *	2.	Sheet name
+	 *	3.	Row number
+	 *	4.	Column number
+	 * Created By: Aman Saraf Jain
+	 * Created Date: 12-08-2014
+	* */
 
 //Way to Call function :  readcellvalue("D:\\testfolder\\test.xlsx","sheet1",52,4);
 
 
-public static XSSFCell readcellvalue(String excelFilepath,String sheetName,int rowNum,int colNum) throws IOException {
-		InputStream ExcelFileToRead = new FileInputStream(excelFilepath);
-		XSSFWorkbook wb = new XSSFWorkbook(ExcelFileToRead);
-		XSSFSheet sheet=wb.getSheet(sheetName);
-		XSSFCell cell = null;
+ 	public static String readCellValue(String excelFilepath,String sheetName,int rowNum,int colNum) throws IOException {
+			InputStream ExcelFileToRead = new FileInputStream(excelFilepath);
+			XSSFWorkbook wb = new XSSFWorkbook(ExcelFileToRead);
+			XSSFSheet sheet=wb.getSheet(sheetName);
+			XSSFCell cell = null;
+			String cellvalue=null;
 		try{
-		cell = sheet.getRow(rowNum-1).getCell(colNum-1);
-		System.out.println(cell);
-		return cell;
+			cellvalue = sheet.getRow(rowNum-1).getCell(colNum-1).toString();
+			LoggerInstance.logger.info("return cell value");
+			return cellvalue;
 		}
 		catch(Exception e){
-			System.out.print("Unable to read cell  --> "+e.getMessage());
-			return cell;
+			LoggerInstance.logger.info("unable to fetch the value for required cell");
+			return cellvalue;
 	  }
 }
 
 	/* Method Name: waitTillElementEnable
-       * Description: 
-        *            This function will wait for a pre-defined time untill an element is enable on the DOM of a page.
-        * Parameters:  
-		*	1.	iTimeOut – value in seconds for pre-defined time, function will wait for
-		*	2. byVal: By Type variable
-       * Created By: Darwin Bhandari
-       * Created Date: 13-08-2014
-       * */
+     * Description: This function will wait for a pre-defined time untill an element is enable on the DOM of a page.
+     * Parameters:  
+	 *	1. iTimeOut – value in seconds for pre-defined time, function will wait for
+	 *	2. byVal: By Type variable
+     * Created By: Darwin Bhandari
+     * Created Date: 13-08-2014
+     * */
 
 public static void waitTillElementEnable(int iTimeOut, By byVal) {
 		try {
+			
 			WebDriverWait wait = new WebDriverWait(driver, iTimeOut);
+			LoggerInstance.logger.info("Wait for element to enabled.");
 			wait.until(ExpectedConditions.elementToBeClickable(byVal));
 		    }
 		catch (Exception e) {
-			System.out.println("Exception: " + e.getMessage());
+			LoggerInstance.logger.info("Element is not enabled.");
 		}
 }
 	/* Method Name: waitTillPageLoaded
@@ -250,97 +248,101 @@ public static void waitTillElementEnable(int iTimeOut, By byVal) {
 
   	public void waitTillPageLoaded(int iTimeOut) {
                 ExpectedCondition<Boolean> expectation = new
-                     ExpectedCondition<Boolean>(){     
+                ExpectedCondition<Boolean>(){     
               public Boolean  apply(WebDriver driver){
                 return ((JavascriptExecutor)driver).executeScript("return document.readyState").equals("complete");
                }
              };
-             FluentWait<WebDriver> wait = new WebDriverWait(driver, iTimeOut);
+                FluentWait<WebDriver> wait = new WebDriverWait(driver, iTimeOut);
              try {
-                   wait.until(expectation);
+                wait.until(expectation);
              } catch (Exception e) {
-                    System.out.println("Exception: " + e.getMessage());
+            	LoggerInstance.logger.info("Unable to wait till page load");
           }
         }
   	
 
-/* Method Name: 
-       * Description: getElementColor
-        *            This method will return the color of the element.
-        * Parameters: 
-        *            1. WebElement object identifier  - Get the locator value.
-       * Created By: Sunny Jain
-       * Created Date: 14-08-2014
-       * */
-	public static String getElementColor(By ByValue) {
+	/* Method Name: 
+	       * Description: verifyElementColor
+	        *            This method will return the color of the element.
+	        * Parameters: 
+	        *            1. WebElement object identifier  - Get the locator value.
+	        *            2. Color code.
+	       * Created By: Sunny Jain
+	       * Created Date: 14-08-2014
+	       * */
+	public static boolean verifyElementColor(WebElement webelement, String colorcode) {
+		
 		try{
-			WebElement e = driver.findElement(ByValue);
-			String rgb = e.getCssValue("color");
-			return rgb;
+			
+			String rgb = webelement.getCssValue("color");
+			if (rgb==colorcode){
+				LoggerInstance.logger.info("Actual color is same as expected color");
+				return true;
+			}
+			else {
+				LoggerInstance.logger.info("Actual color is not same as expected color");
+				return false;
+			}
 		} catch(Exception e) {
-			System.out.println("Exception - > " + e.toString());
-			return e.toString();
+				LoggerInstance.logger.info("Unable to verify the color");
+				return false;
 	  }
 			
 	}			
 
-/* Method Name: 
-       * Description: navigateToPage
-        *            This method to navigate to page url.
-        * Parameters: 
-        *            1. Page Url.
-       * Created By: Sunny Jain
-       * Created Date: 14-08-2014
-       * */
+	/* Method Name: 
+	       * Description: navigateToPage
+	       *            This method to navigate to page url.
+	       * Parameters: 
+	       *            1. Url of the page.
+	       * Created By: Sunny Jain
+	       * Created Date: 14-08-2014
+	       * */
 
-public static void navigateToPage(String url){
+	public static void navigateToPage(String url){
 			try{
 				driver.get(url);
+				LoggerInstance.logger.info("Navigate to"+url);
 			  
 			} catch(Exception e) {
-				  
-				  System.out.println("Exception - > " + e.toString());
-			  }
+				LoggerInstance.logger.info("Unable to navigate to"+url);
+			}
 			
 		}
 
 	
-/* Method Name: selectItemFromWeblist
-       * Description: 
-        *            This method will select the value from weblist.
-        * Parameters: 
-        *            1. WebElement object identifier  - Get the locator value.
-                     2. TextValue  - to select particular value from weblist
-       * Created By: Sunny Jain
-       * Created Date: 12-08-2014
-       * */
+	/* Method Name: selectItemFromWeblist
+	       * Description: This method will select the value from weblist.
+	       * Parameters: 
+	       *            1. WebElement object identifier  - Get the locator value.
+	                    2. TextValue  - to select particular value from weblist
+	       * Created By: Sunny Jain
+	       * Created Date: 12-08-2014
+	       * */
 
-public static String selectItemFromWeblist(By ByValue,String textValue) {
+	public static void selectItemFromWeblist(WebElement webelement,String textValue) {
 		try{
-			   
-		    WebElement element = driver.findElement(ByValue);	
-		    Select selectElement = new Select(element);
-		    selectElement.selectByVisibleText(textValue);
-		    //System.out.println(selectElement.getFirstSelectedOption().getText());
-		    return selectElement.getFirstSelectedOption().getText();
-		  } catch(Exception e) {
-			  System.out.println("Exception - > " + e.toString());
-			  return e.getMessage();   
+  		    	Select selectElement = new Select(webelement);
+  		    	LoggerInstance.logger.info("select " +textValue+ "value from the dropdown");
+  		    	selectElement.selectByVisibleText(textValue);
+		        
+			} catch(Exception e) {
+			  	LoggerInstance.logger.info("unale to select " +textValue+ "value from the dropdown");
+			  
 		  }
 		
 	} 
 
-/* Method Name: getContentFromWebList
-       * Description: 
-        *            This method will select the value from weblist.
-        * Parameters: 
-        *            1. WebElement object identifier  - Get the locator value.
-      
-       * Created By: Sunny Jain
-       * Created Date: 12-08-2014
-       * */
+	/* Method Name: getContentFromWebList
+	       * Description: This method will select the value from weblist.
+	       * Parameters: 
+	       *            1. WebElement object identifier  - Get the locator value.
+	       * Created By: Sunny Jain
+	       * Created Date: 12-08-2014
+	       * */
 
-public static List getContentFromWebList(By ByValue) {
+	public static List<String> getContentFromWebList(By ByValue) {
 		
 		List <String> webList = new ArrayList <String>();
 		
@@ -352,212 +354,247 @@ public static List getContentFromWebList(By ByValue) {
 		     
 	         for(int k = 1; k<i; k++) {
 	        	 webList.add(theseOptions.get(k).getText());
-		     }      
+		     }  
+	         LoggerInstance.logger.info("return weblist");
 	         return  webList;
-	  } 
-	  catch(Exception e) {
-		  System.out.println("Exception - > " + e.toString());
-		  webList= null;
-		  return  webList;
+		} 
+		catch(Exception e) {
+			LoggerInstance.logger.info("unable to return weblist");
+			webList= null;
+			return  webList;
 		   
 	  }
 }
 
 
-public static String sortAlphabetically(Boolean ascending, String listDataSplittedBySpace) {
-        Collator col = Collator.getInstance(new Locale("en", "EN"));
-        String s = listDataSplittedBySpace;
-        String[] s1= s.split(" ");
-        Arrays.sort(s1, col);
-        String sorted = "";
-        String sortedDesecding = "";
-        
-        try {
-        for (int i = 0; i < s1.length; i++)
-        {
-          sorted += s1[i] + " ";
-        }
-        for (int j=s1.length; j>0; j--)
-        {
-            sortedDesecding += s1[j-1] + " ";
-        }
-        if(ascending==true){
-            return sorted;
-        }
-        else if(ascending==false){
-            sorted="";
-            sorted+=sortedDesecding;
-            return sorted;
-        }
-        else{
-            JOptionPane.showMessageDialog(null,"Please choose True for ascending or False for descending");
-        }
-        
-        }
-        catch(Exception e) {
-            System.out.println("Exception Occurred --> "+e.getMessage());
-            return null;
-        }
-        return sortedDesecding;
- }
+	/* Method Name: enterValueInTextBox
+	 * Description: This method will select the value from weblist.
+	 * Parameters: 
+	 *            1. WebElement object 
+	 *            2. String 
+	 * Created By: 
+	 * Created Date: 12-08-2014
+	 * */
  
  
-public static boolean webEdit(WebElement element,String text){
-    String editBoxText  = "" ;
-    try{
-        element.sendKeys(text);
-		editBoxText = element.getText();
-		Assert.assertEquals(editBoxText, text);
-
-    }catch(AssertionError ae) {
-         LoggerInstance.logger.info("failed to insert value in TextBox "+ ae );
-         return false; 
-    }
-    catch (Exception e) {
-         LoggerInstance.logger.info("failed to insert value in TextBox  "+e);
-         return false;
-    }
+	public static void enterValueInTextBox(WebElement element,String text){
     
-    return true; 
-}
-
-
-
-public static void exampleInputRadio(List<WebElement> element, int optionval) {
-    try
-		{
-			List<WebElement> radios = element;
-			if (optionval > 0 && optionval <= radios.size()) {
-				System.out.println(element.get(optionval -1).getText());
-				radios.get(optionval - 1).click();                        
-             } 
-		} catch (Exception e) {
-            System.out.println("Element is not present" +e);
-           }
-}
-
-public static void checkingCheckbox(WebElement element)
-{  
-      
-      try
-      {
-		boolean checkstatus;  
-		checkstatus=element.isSelected();  
-		if (checkstatus==true){  
-		      LoggerInstance.logger.info("Checkbox is already checked");
-		   
-		}  
-		else {  
-		   element.click();  
-		   LoggerInstance.logger.info("Checked the checkbox");
-		}  
-	} catch(Exception e) {
-		   LoggerInstance.logger.info("Checked the checkbox" + e);
-		}
-}
-
-
-public void unCheckingCheckbox(WebElement element) {  
-    try
-    {
-		boolean checkstatus;  
-		checkstatus=element.isSelected();  
-		if (checkstatus==true){  
-		    element.click();  
-		    LoggerInstance.logger.info("Checkbox is unchecked");    
-		}  
-		else  
-		{  
-		    LoggerInstance.logger.info("Checkbox is already unchecked");
-		}  
-    } catch(Exception e) {
-          LoggerInstance.logger.info("Checked the checkbox");
-    }
-}
-
-
-
-
-public  static void  verifytextWebelement(WebElement element ,String text)
-
-{
-	try
-	{
-		String stringverify=element.getText();
-	
-		//Assert.assertEquals(text, stringverify);
-	}catch(Exception e)
-	{
-		System.out.println("the element is not present" +e);
-	}
-}
-
-
-@SuppressWarnings("finally")
-public static boolean isTextPresent(String txtValue) {
-       WebDriver driver = null; 
-       boolean b = false;
-	     try{
-	         b = driver.getPageSource().contains(txtValue);
-	         return b;
-	     }
-	     catch (Exception e){
-	         System.out.println(e.getMessage());
-	     } 
-     
-	     finally{
-	      return b;
-	     }
-	}
-
-/* Method Name: clickMenuItem
- * Description: 
- * 		This function will click on Sub menu item of the main link
- * Parameters: Function accepts 3 parameters
- * 		1. WebDriver Object- Page on which the menu exists
- * 		2. mainLink: WebElement- This is the main menu link of Web Element type
- * 		3. subLink: WebElemet- This is the link that exists under the main menu 
- * Created By: Bal Govind
- * Created Date: 08-08-2014
- * */
-
-public void clickMenuItem(WebElement mainLink, WebElement subLink) {
-	try {
-		System.out.println("click menu");	
-		Actions actions = new Actions(driver);
-			
-			if(mainLink !=null && mainLink.isDisplayed()) {
-				actions.moveToElement(mainLink).build().perform();
-				Thread.sleep(3000);
+	    try{
+	    	element.clear();
+	    	LoggerInstance.logger.info("Enter value "+text+" in text box");
+	        element.sendKeys(text);
 				
-				if(subLink !=null && subLink.isDisplayed()) {
-					actions.moveToElement(subLink).build().perform();
-					actions.moveToElement(subLink).click().build().perform();
-				} else {
-					System.out.println("Sublink not found");
-				}
-			}
-    } catch (Exception e) {
-    	System.out.println(e.getMessage());
-    }
+	    }catch(AssertionError ae) {
+	        LoggerInstance.logger.info("failed to insert value in TextBox ");
+	          
+	    }
+    
 }
 
-/* Method Name: webPageName
- * Description: 
- * 		This method will return the WebPage name i.e. title
- * Parameters: 
- * 		1. WebDriver Object- Page for which we need the name/title
- * Created By: Bal Govind
- * Created Date: 08-08-2014
- * */
+	/* Method Name: exampleInputRadio
+	 * Description: This method will click on the radio button.
+	 * Parameters: 
+	 *            1. WebElement List 
+	 *            2. index of radio button
+	 * Created By: 
+	 * Created Date: 12-08-2014
+	 * */
+ 
+
+
+	public static void selectRadioButton(List<WebElement> elementList, int optionval) {
+	    try
+			{
+	    		List<WebElement> radios = elementList;
+				if (optionval > 0 && optionval <= radios.size()) {
+				LoggerInstance.logger.info("Select radio Button");
+				radios.get(optionval - 1).click();                        
+	             } 
+			} catch (Exception e) {
+				LoggerInstance.logger.info("Unable to select radio Button");
+	           }
+	}
+
+	
+	/* Method Name: checkingCheckbox
+	 * Description: This method will check the check box .
+	 * Parameters: 
+	 *            1. WebElement object
+	 * Created By: 
+	 * Created Date: 12-08-2014
+	 * */
+	public static void checkingCheckbox(WebElement element)
+	{  
+	      
+	      try
+	      {
+			boolean checkstatus;  
+			checkstatus=element.isSelected();  
+			if (checkstatus==true){  
+			    LoggerInstance.logger.info("Checkbox is already checked");
+			   }  
+			else {  
+			   element.click();  
+			   	LoggerInstance.logger.info("Checked the checkbox");
+			}  
+		} catch(Exception e) {
+				LoggerInstance.logger.info("unable to check the check box");
+			}
+	}
+
+	/* Method Name: unCheckingCheckbox
+	 * Description: This method will uncheck the check box .
+	 * Parameters: 
+	 *            1. WebElement object
+	 * Created By: 
+	 * Created Date: 12-08-2014
+	 * */
+
+	public void unCheckingCheckbox(WebElement element) {  
+	    try
+	    {
+			boolean checkstatus;  
+			checkstatus=element.isSelected();  
+			if (checkstatus==true){  
+			    element.click();  
+			    LoggerInstance.logger.info("Checkbox is unchecked");    
+			}  
+			else  
+			{  
+			    LoggerInstance.logger.info("Checkbox is already unchecked");
+			}  
+	    } catch(Exception e) {
+	          	LoggerInstance.logger.info("Unable to uncheck the checkbox");
+	    }
+	}
+
+
+	/* Method Name: verifyTextWebelement
+	 * Description: This method will verify text of webelement
+	 * Parameters: 
+	 * 				1. String to compare
+	 *            	2. WebElement object
+	 * Created By: 
+	 * Created Date: 12-08-2014
+	 * */
+
+	public  static boolean  verifyTextWebelement(String text, WebElement element)
+	
+	{
+		try
+		{
+			String stringverify=element.getText();
+		if (stringverify==text){
+			LoggerInstance.logger.info("Text are same");
+			return true;}
+		else {
+			LoggerInstance.logger.info("Text are not same");
+			return false;}
+		}catch(Exception e)
+		{
+			LoggerInstance.logger.info("Unable to verify the text");
+			return false;
+		}
+	}
+
+	/* Method Name: verifyStringsAreSame
+	 * Description: This method will verify  two Strings are same or not
+	 * Parameters: 
+	 * 				1. String 1 to compare
+	 *            	2. String 2 to compare
+	 * Created By: Rohit Miglani
+	 * Created Date: 24-08-2014
+	 * */
+public  static boolean  verifyStringsAreSame(String text1, String text2)
+	
+	{
+		try
+		{
+			
+		if (text1==text2){
+			LoggerInstance.logger.info("Strings are same");
+			return true;}
+		else {
+			LoggerInstance.logger.info("Strings are not same");
+			return false;}
+		}catch(Exception e)
+		{
+			LoggerInstance.logger.info("Unable to verify String are same or not");
+			return false;
+		}
+	}
+	/* Method Name: isTextPresent
+	 * Description: This method will check that text is present on the page.
+	 * Parameters: 
+	 *            1. WebElement object
+	 *            2. String
+	 * Created By: 
+	 * Created Date: 12-08-2014
+	 * */
+
+
+public static boolean isTextPresent(WebDriver driver, String txtValue) {
+       
+       boolean result = false;
+	     try{
+	    	 result = driver.getPageSource().contains(txtValue);
+	         LoggerInstance.logger.info("Text is present on the page");
+	          }
+	     catch (Exception e){
+	    	 LoggerInstance.logger.info("Unable to find the text on the page");
+	     } 
+	      return result;
+	     
+	}
+
+	/* Method Name: clickMenuItem
+	 * Description: This function will click on Sub menu item of the main link.
+	 * Parameters: Function accepts 3 parameters
+	 * 		1. WebDriver Object- Page on which the menu exists
+	 * 		2. mainLink: WebElement- This is the main menu link of Web Element type
+	 * 		3. subLink: WebElemet- This is the link that exists under the main menu 
+	 * Created By: Bal Govind
+	 * Created Date: 08-08-2014
+	 * */
+
+	public static void clickMenuItem(WebElement mainLink, WebElement subLink) {
+		try {
+			
+			Actions actions = new Actions(driver);
+						
+				if(mainLink !=null && mainLink.isDisplayed()) {
+					actions.moveToElement(mainLink).build().perform();
+					LoggerInstance.logger.info("Mouse over "+mainLink); 
+					Thread.sleep(3000);
+					if(subLink !=null && mainLink.isDisplayed()) {
+						actions.moveToElement(subLink).build().perform();
+						actions.moveToElement(subLink).click().build().perform();
+						LoggerInstance.logger.info("Click on "+subLink);
+					} else {
+						LoggerInstance.logger.info("Unable to click on sublink");
+					}
+				}
+	    } catch (Exception e) {
+	    	LoggerInstance.logger.info("Unable to navigate to sublink");
+	    }
+	}
+
+	/* Method Name: webPageName
+	 * Description: 
+	 * 		This method will return the WebPage name i.e. title
+	 * Parameters: 
+	 * 		1. WebDriver Object- Page for which we need the name/title
+	 * Created By: Bal Govind
+	 * Created Date: 08-08-2014
+	 * */
 
 	public String webPageName() {
-		String pageTitle;
+		String pageTitle=null;
 		try {
 			pageTitle = driver.getTitle();
+			LoggerInstance.logger.info("Get the page name");
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			pageTitle = e.getMessage();
+			LoggerInstance.logger.info("Unable to get the page name");
 		}
 		return pageTitle;
 	}
@@ -575,25 +612,25 @@ public void clickMenuItem(WebElement mainLink, WebElement subLink) {
 	
 	public void scrollPage(String scrollCase, int pixelToScroll) {
 		try {
-			
 				JavascriptExecutor jsExecutor = (JavascriptExecutor)driver;
-				
 				switch(scrollCase) {
 				case "DOWN":
-					jsExecutor.executeScript("scrollBy(0," + pixelToScroll + ")");
-					break;
-					
+						jsExecutor.executeScript("scrollBy(0," + pixelToScroll + ")");
+						LoggerInstance.logger.info("Scrolled page down by "+pixelToScroll);
+						break;
 				case "UP":
 						jsExecutor.executeScript("scrollBy(0," + -pixelToScroll + ")");
+						LoggerInstance.logger.info("Scrolled page up by "+pixelToScroll);
 						break;
 				}
-		} catch (Exception e) {
-				System.out.println(e.getMessage());
+		} 
+		catch (Exception e) {
+				LoggerInstance.logger.info("Unable to Scroll the page");
 		}
 		
 	}
 	
-	/* Method Name: verifyLogo
+	/* Method Name: verifyImage
 	 * Description: 
 	 * 		It will verify the logo of application
 	 * Parameters: Function accepts 3 parameters
@@ -604,15 +641,15 @@ public void clickMenuItem(WebElement mainLink, WebElement subLink) {
 	 * Created Date: 08-08-2014
 	 * */
 	
-	public boolean verifyLogo(By byValLogo, String dynamicLogoPath, String staticLogoPath) throws IOException {
-		WebElement appLogo = driver.findElement(byValLogo);
+	public boolean verifyImage(By byValImage, String dynamicImagePath, String staticImagePath) throws IOException {
+		WebElement appLogo = driver.findElement(byValImage);
 		String ul =appLogo.getAttribute("src");
 		URL url = new URL(ul);
 		BufferedImage bufferedImage = ImageIO.read(url);
-		ImageIO.write(bufferedImage, "jpg", new File(dynamicLogoPath));
+		ImageIO.write(bufferedImage, "jpg", new File(dynamicImagePath));
 		
-		Image imgStaticLogo = Toolkit.getDefaultToolkit().getImage(staticLogoPath);
-		Image imgDownloadedLogo = Toolkit.getDefaultToolkit().getImage(dynamicLogoPath);
+		Image imgStaticLogo = Toolkit.getDefaultToolkit().getImage(staticImagePath);
+		Image imgDownloadedLogo = Toolkit.getDefaultToolkit().getImage(dynamicImagePath);
 		
 		try {
 				PixelGrabber grab11 = new PixelGrabber(imgStaticLogo, 0, 0, -1, -1, false);
@@ -635,56 +672,70 @@ public void clickMenuItem(WebElement mainLink, WebElement subLink) {
 			     array2 = new int[widthPic2 * heightPic2];
 			     array2 = (int[]) grab21.getPixels();
 			    }
-			    System.out.println((java.util.Arrays.equals(array1, array2 ) ? "Pixels equal: Equal" : "Pixels equal: Not Equal"));
-			    
+			    LoggerInstance.logger.info("Compare Image");
 			    return (java.util.Arrays.equals(array1, array2) ? true : false);
-			    
 				} catch (Exception e) {
-					System.out.println(e.getMessage());
+					LoggerInstance.logger.info("Unable to compare the img.");
 					return false;
-					
 				}
 		}
 	
-	public static void verifyValueOrText(Object expected, Object actual) {
-		try {
-			assertEquals(expected, actual);
-			System.out.println(expected + " is  equal to " + actual);
-		} catch (Error e) {
-			System.out.println(expected + " is not equal to " + actual);
-		}
-	}
+//	public static void verifyValueOrText(Object expected, Object actual) {
+//		try {
+//			
+//			assertEquals(expected, actual);
+//			System.out.println(expected + " is  equal to " + actual);
+//		} catch (Error e) {
+//			System.out.println(expected + " is not equal to " + actual);
+//		}
+//	}
 	
+	/* Method Name: getCalendarCurrentMonthAndYear
+	 * Description: This method will return current month and year
+	 * Parameters: No parameters
+	 * Created By: 
+	 * Created Date: 08-08-2014
+	 * */
 	public static String getCalendarCurrentMonthAndYear() {
-		String currentMonthAndYear = "";
+		String currentMonthAndYear = null;
 		try {
 			String[] monthName = { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
 			Calendar cal = Calendar.getInstance();
 			String month = monthName[cal.get(Calendar.MONTH)];
 			String year = cal.get(Calendar.YEAR) + "";
 			currentMonthAndYear = month + " " + year;
+			LoggerInstance.logger.info("get the current month and year");
 		} catch (Error e) {
+			LoggerInstance.logger.info("Unable to get the current month and year");
 		}
 		return currentMonthAndYear;
 	}
 	
-	public static String getrgbaColor(WebElement divColorWebElement) {
-		try {
-			String text = divColorWebElement.getCssValue("background-color").toString();
-			// Split css value of rgb
-			String[] numbers = text.replace("rgba(", "").replace(")", "").split(",");
-			int number1 = Integer.parseInt(numbers[0]);
-			numbers[1] = numbers[1].trim();
-			int number2 = Integer.parseInt(numbers[1]);
-			numbers[2] = numbers[2].trim();
-			int number3 = Integer.parseInt(numbers[2]);
-			String hex = String.format("#%02X%02X%02X", number1, number2, number3);
-			return hex;
-		} catch (Exception e) {
-			System.out.println("Exception Occurred --> " + e.getMessage());
-			return "";
-		}
-	}
+//	public static String getrgbaColor(WebElement divColorWebElement) {
+//		try {
+//			String text = divColorWebElement.getCssValue("background-color").toString();
+//			// Split css value of rgb
+//			String[] numbers = text.replace("rgba(", "").replace(")", "").split(",");
+//			int number1 = Integer.parseInt(numbers[0]);
+//			numbers[1] = numbers[1].trim();
+//			int number2 = Integer.parseInt(numbers[1]);
+//			numbers[2] = numbers[2].trim();
+//			int number3 = Integer.parseInt(numbers[2]);
+//			String hex = String.format("#%02X%02X%02X", number1, number2, number3);
+//			return hex;
+//		} catch (Exception e) {
+//			System.out.println("Exception Occurred --> " + e.getMessage());
+//			return "";
+//		}
+//	}
+	
+	/* Method Name: getMonthIntValue
+     * Description:This method will return month number by passing month name.
+      * Parameters: 
+      *            1. String month name
+     * Created By: 
+     * Created Date: 21-08-2014
+     * */
 	
 	public static int getMonthIntValue(String month) {
 		int monthIndex = 0;
@@ -693,12 +744,141 @@ public void clickMenuItem(WebElement mainLink, WebElement subLink) {
 			for (String string : monthName) {
 				monthIndex++;
 				if (string.equals(month)) {
+					LoggerInstance.logger.info("Return Month index");
 					return monthIndex;
 				}
 			}
 		} catch (Error e) {
-			e.printStackTrace();
+			LoggerInstance.logger.info("Unable to return Month index");
+			return monthIndex;
 		}
 		return monthIndex;
 	}
-}
+	
+	
+	
+	/* Method Name: 
+	       * Description:This method will check list is sorted in ascending or descending order
+	       * Parameters: 
+	       *            1. String list  - provide list value.
+	                    2. sortedBy- True (It will check list provided is in ascending order)
+	                                  False(It will check list provided is in descending order)
+	       * Created By: Aman Saraf Jain
+	       * Created Date: 21-08-2014
+	       * */
+	 public static Boolean checkSortingOrder(List<String> list,Boolean sortedby){
+		           
+		        try {
+		        	if(list == null || list.isEmpty())
+		                {
+		        			LoggerInstance.logger.info("Provided list is empty");
+		        			return false;
+		                }           
+		        	if(list.size() == 1)  {
+		        			LoggerInstance.logger.info("List is sorted as it has only one element");
+		        			return true;
+		        		}
+		            for(int i=1; i<list.size();i++)
+		            {
+		                String current = list.get(i).toString();
+		                String previous = list.get(i-1).toString();
+	
+	
+		                if (sortedby==true){
+		                              if(current.compareTo(previous)<0){
+		                              LoggerInstance.logger.info("List is not in acsending order");  
+		                            return false;
+		                              }
+		                    }
+		                if (sortedby==false) {
+		                       if(current.compareTo(previous)>0){
+		                            LoggerInstance.logger.info("List is not in desending order"); 
+		                            return false;
+		                       }
+		                }
+		               }
+		            if (sortedby==true){
+		            	LoggerInstance.logger.info("List is in acsending order");  
+		            return true;}
+		            else {
+		            	LoggerInstance.logger.info("List is not in desending order");
+		            	return false;
+		            }
+		            
+		  
+		        }
+		        catch(Exception e){
+		        	LoggerInstance.logger.info("Unable to check the acsending/desending ");
+		            return null;
+		        }
+		        
+	 	}
+	 /* Method Name: getHeaderListOfTable
+	     * Description: 
+	     *            function to get all List of the table Header by passing Xpath of the table header to it.
+	     * Parameters: 
+	     *            1. xpath of table header and driver
+	     * Created By: Rohit Miglani
+	     * Created Date: 08-08-2014
+	     * */
+		  public static List<String> getHeaderListOfTable(WebDriver driver, String xpathOfTableHeader)
+		  {
+			  	List<String> List_HeaderOfTable = null;
+		    	List<WebElement> List_TableHeaderFields=null;
+		    	try
+		    	{
+		    		
+		    		List_TableHeaderFields= driver.findElements(By.xpath(xpathOfTableHeader));
+		    		int size= List_TableHeaderFields.size();
+		    		for (int i=0; i<size; i++)
+		    		{
+		    			List_HeaderOfTable.add(List_TableHeaderFields.get(i).getText());
+		    		}
+		    		LoggerInstance.logger.info("Return List");
+		    	    return List_HeaderOfTable;
+		    	}
+		    	
+		    	catch (Exception ex)
+		    	{
+					LoggerInstance.logger.info("Can not able to Return List of table header");
+				    return List_HeaderOfTable;
+			    }   	
+		    	
+		 }	//End of Function
+		  
+		  /* Method Name: getHeaderListOfTable
+		     * Description: 
+		     *            function to get all value of the table column by passing Xpath of the table and index of that column.
+		     * Parameters: 
+		     *            1. xpath of table and driver
+		     *            2. index of column
+		     * Created By: Rohit Miglani
+		     * Created Date: 08-11-2014
+		     * */
+		
+		  public static List<String> getListOfElementForColumn(WebDriver driver, String xpathOfTable, Integer indexOfColumn)
+		  {
+		    	List<String> List_AllRowsForColumn=null;
+		    	List<WebElement> List_ColumnOfTable=null;
+		    	try
+		    	{
+		    		String xpathOFColumn=xpathOfTable+"//tr/td["+indexOfColumn+"]";
+		    		List_ColumnOfTable= driver.findElements(By.xpath(xpathOFColumn));
+		    		int size= List_ColumnOfTable.size();
+		    		for (int i=0; i<size; i++)
+		    		{
+		    		  		List_AllRowsForColumn.add(List_ColumnOfTable.get(i).getText());
+			    	}
+		    		LoggerInstance.logger.info("Return List of all the rows for particulat column");
+		    		return List_AllRowsForColumn;
+		    	}
+		    	
+		    	catch (Exception ex)
+		    	{
+					LoggerInstance.logger.info("Can not able to Return List of all the rows for particulat column");
+				    return List_AllRowsForColumn;
+			    }   	
+		    	
+		 }	//End of Function
+	
+	}
