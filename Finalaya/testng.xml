@@ -3,21 +3,12 @@
 <suite name="Suite" parallel="none">
   <test name="Test">
     <classes>
-      <class name="TestCases.VerifyIPOCalendar"/>
-      <class name="TestCases.VerifyCompaniesTabTest"/>
-      <class name="TestCases.ReportPageTest"/>
-      <class name="TestCases.ReportsPageTest"/>
-      <class name="TestCases.ResourceTest"/>
-      <class name="TestCases.VerifyCurrentIPO"/>
-      <class name="TestCases.MonthlyScoreCardTest"/>
-      <class name="TestCases.CompareFundsTest"/>
-      <class name="TestCases.VerifyClosedIPO"/>
-      <class name="TestCases.MutualFundsTest"/>
-      <class name="TestCases.TestCase_ReportPage"/>
-      <class name="TestCases.MarketPageTest"/>
-      <class name="TestCases.TestCases_HomePage"/>
-      <class name="TestCases.VerifyPastIPO"/>
-      <class name="TestCases.VerifyCompaniesSubTabPage"/>
+      <class name="TestCases.Companies_Page"/>
+      <class name="TestCases.Home_Page"/>
+      <class name="TestCases.Reports_Page"/>
+      <class name="TestCases.Market_Page"/>
+      <class name="TestCases.Resources_page"/>
+      <class name="TestCases.IPO_Page"/>
     </classes>
   </test> <!-- Test -->
 </suite> <!-- Suite -->
