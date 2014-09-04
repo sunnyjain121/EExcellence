@@ -1,7 +1,8 @@
 package PageObjects;
 
-//package com.finalaya.page;
 
+
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
@@ -10,6 +11,10 @@ import Logger.LoggerInstance;
 
 public class MarketPage {
 	
+	WebDriver driver;
+	public MarketPage(){
+		this.driver= driver;
+	}
 	private final String csspath_MarketTab = "#menu-wrapper > ul > li:nth-child(1) > a";//"html.js.flexbox.canvas.canvastext.webgl.no-touch.geolocation.postmessage.no-websqldatabase.indexeddb.hashchange.history.draganddrop.websockets.rgba.hsla.multiplebgs.backgroundsize.borderimage.borderradius.boxshadow.textshadow.opacity.cssanimations.csscolumns.cssgradients.no-cssreflections.csstransforms.no-csstransforms3d.csstransitions.fontface.video.audio.localstorage.sessionstorage.webworkers.applicationcache.svg.inlinesvg.smil.svgclippaths body form#form1 div.topContainerHome div.fltLft100 div div#ucHeader_divHeader div#ucHeader_divMenu.fltLft100 div#menu-wrapper.menu-wrapper ul.nav li a";
 	private final String csspath_GoldETFTAble="#dvGoldReal > table > tbody > tr:nth-child(1) > td > table";
 	private final String csspath_NonGoldETFTable="#dvNonGoldReal > table > tbody > tr:nth-child(1) > td > table";
@@ -22,7 +27,7 @@ public class MarketPage {
 	private final String id_SensexPercentageChange="ctl00_BodyCPH_ucExGraph_lblPercentChange";
 	private final String id_ETFZonePage="ctl00_BodyCPH_lblDocuments";
 	private final String xpath_MarketToday="//*[@id='divMarket']//div[contains(text(),'Market Today')]";
-	private final String csspath_ETFZoneTab ="#menu-wrapper > ul > li:nth-child(1) > div > div.nav-column > ul > li:nth-child(5) > a";//"html.js.flexbox.canvas.canvastext.webgl.no-touch.geolocation.postmessage.no-websqldatabase.indexeddb.hashchange.history.draganddrop.websockets.rgba.hsla.multiplebgs.backgroundsize.borderimage.borderradius.boxshadow.textshadow.opacity.cssanimations.csscolumns.cssgradients.no-cssreflections.csstransforms.no-csstransforms3d.csstransitions.fontface.video.audio.localstorage.sessionstorage.webworkers.applicationcache.svg.inlinesvg.smil.svgclippaths body form#aspnetForm div div div div#ctl00_ucHeader_divHeader div#ctl00_ucHeader_divMenu.fltLft100 div#menu-wrapper.menu-wrapper ul.nav li div.menu-div div.nav-column ul li a";
+	private final String csspath_ETFZoneTab ="#menu-wrapper > ul > li:nth-child(1) > div > div.nav-column > ul > li:nth-child(5) > a";
 	private final String csspath_OpenLowHighPreClose = "html.js.flexbox.canvas.canvastext.webgl.no-touch.geolocation.postmessage.no-websqldatabase.indexeddb.hashchange.history.draganddrop.websockets.rgba.hsla.multiplebgs.backgroundsize.borderimage.borderradius.boxshadow.textshadow.opacity.cssanimations.csscolumns.cssgradients.no-cssreflections.csstransforms.no-csstransforms3d.csstransitions.fontface.video.audio.localstorage.sessionstorage.webworkers.applicationcache.svg.inlinesvg.smil.svgclippaths body form#aspnetForm div div div div#divMarket div#mak_1 div.mak_info_grp div#divExchangeGraph div div.mar_OHLC";
 	@FindBy(css = csspath_MarketTab)
 	public WebElement we_MarketTab;
@@ -38,8 +43,6 @@ public class MarketPage {
 	public WebElement we_ETFZoneTab;
 	@FindBy(id = id_BSETAb)
 	public WebElement we_BSETab;
-	
-	
 	@FindBy(id = id_NegativeValue)
 	public WebElement we_NegativeValue;
 	@FindBy(id = id_ETFZonePage)
@@ -66,7 +69,6 @@ public class MarketPage {
 	{
 		try
 		{
-		
 			LoggerInstance.logger.info("click on Market Tab");
 			FunctionLibrary.clickWebLink(we_MarketTab);
 		}
@@ -83,17 +85,16 @@ public class MarketPage {
      * Created Date: 13-08-2014
      * */
 	
-	public void clickOnETFZoneTab()
+	public void clickOnETFZoneTab(WebDriver driver)
 	{
 		try
 		{
-			FunctionLibrary.clickMenuItem(we_MarketTab, we_ETFZoneTab);
+			FunctionLibrary.clickMenuItem(driver,we_MarketTab, we_ETFZoneTab);
 			//FunctionLibrary.clickWebLink(we_ETFZoneTab);
 			LoggerInstance.logger.info("click on ETF Zone tab");
 		}
 		catch (Exception e) {
 			LoggerInstance.logger.info("not able to click ETF Zone tab");
-
 		}
 	}
 	
@@ -105,10 +106,10 @@ public class MarketPage {
      * */
 	public void selectValueFromUnderlying(String toselect){
 		try{
-			LoggerInstance.logger.info("Select Non Gold");
+			LoggerInstance.logger.info("Select value "+toselect+" from underlying dropdown");
 			FunctionLibrary.selectItemFromWeblist(we_Underlying,toselect );
 		}catch (Exception e) {
-			LoggerInstance.logger.info("Unable to Select Non Gold");
+			LoggerInstance.logger.info("Unable to Select "+toselect+"from underlying dropdown");
 		}
 		
 	}
@@ -122,7 +123,8 @@ public class MarketPage {
 		boolean result = false;
 		try{
 			LoggerInstance.logger.info("verify the color of negative value is Red");
-		 result=FunctionLibrary.verifyElementColor(we_NegativeValue,"#FF0000");
+			String result2=FunctionLibrary.getrgbaColor(we_NegativeValue);
+			result= FunctionLibrary.verifyStringsAreSame(result2,"#FF0000");
 		}
 		catch(Exception e){
 			LoggerInstance.logger.info("unable to verify the color");
@@ -140,13 +142,12 @@ public class MarketPage {
 	{
 		try
 		{
-		
 			LoggerInstance.logger.info("click on BSE Tab");
 			FunctionLibrary.clickWebLink(we_BSETab);
 		}
 		catch(Exception e)
 		{
-		LoggerInstance.logger.info("Not able to click on BSE Tab");
+			LoggerInstance.logger.info("Not able to click on BSE Tab");
 		}
 	}
 	/* Method Name: clickOnNSETab
@@ -159,13 +160,12 @@ public class MarketPage {
 		{
 			try
 			{
-			
 				LoggerInstance.logger.info("click on NSE Tab");
 				FunctionLibrary.clickWebLink(we_NSETab);
 			}
 			catch(Exception e)
 			{
-			LoggerInstance.logger.info("Not able to click on NSE Tab");
+				LoggerInstance.logger.info("Not able to click on NSE Tab");
 			}
 		}
 		/* Method Name: verifyOpenLowHighPreCloseIsDisplayed
@@ -177,16 +177,16 @@ public class MarketPage {
 		public boolean verifyOpenLowHighPreCloseIsDisplayed(){
 			boolean result= false;
 			try{
-			 result=we_OpenLowHighPreClose.isDisplayed();
-			 if (result==true)
-			 LoggerInstance.logger.info("Open, low, Hig, Pre Close is displayed");
-			 return result;
-				}
+				 result=we_OpenLowHighPreClose.isDisplayed();
+				 if (result==true)
+				 LoggerInstance.logger.info("Open, low, Hig, Pre Close is displayed");
+				 return result;
+			}
 			catch (Exception e) 
-				{
+			{
 				LoggerInstance.logger.info("Open, low, Hig, Pre Close is not displayed");
 				return result;
-				}
+			}
 		}
 		/* Method Name: verifyMarketPageIsDisplayed
 	     * Description: Function to verify Market Page is displayed.
@@ -197,16 +197,16 @@ public class MarketPage {
 		public boolean verifyMarketPageIsDisplayed(){
 			boolean result= false;
 			try{
-			 result=we_MarketToday.isDisplayed();
-			 if (result==true)
-			 LoggerInstance.logger.info("User is navigated to Market Page");
-			 return result;
-				}
+				 result=we_MarketToday.isDisplayed();
+				 if (result==true)
+				 LoggerInstance.logger.info("User is navigated to Market Page");
+				 return result;
+			}
 			catch (Exception e) 
-				{
+			{
 				LoggerInstance.logger.info("User is not navigated to Market Page");
 				return result;
-				}
+			}
 		}
 		
 		/* Method Name: verifyETFZonePageIsDisplayed
@@ -218,16 +218,16 @@ public class MarketPage {
 		public boolean verifyETFZonePageIsDisplayed(){
 			boolean result= false;
 			try{
-			 result=we_ETFZonePage.isDisplayed();
-			 if (result==true)
-			 LoggerInstance.logger.info("User is navigated to ETFZone Page");
-			 return result;
-				}
+				 result=we_ETFZonePage.isDisplayed();
+				 if (result==true)
+				 LoggerInstance.logger.info("User is navigated to ETFZone Page");
+				 return result;
+			}
 			catch (Exception e) 
-				{
+			{
 				LoggerInstance.logger.info("User is not navigated to ETFZone Page");
 				return result;
-				}
+			}
 		}
 		/* Method Name: verifyGoldETFTableIsDisplayed
 	     * Description: Function to verify Gold ETF Table is displayed.
@@ -238,16 +238,16 @@ public class MarketPage {
 		public boolean verifyGoldETFTableIsDisplayed(){
 			boolean result= false;
 			try{
-			 result=we_GoldETFTable.isDisplayed();
-			 if (result==true)
-			 LoggerInstance.logger.info("User is navigated to Gold ETF Table");
-			 return result;
-				}
+				 result=we_GoldETFTable.isDisplayed();
+				 if (result==true)
+				 LoggerInstance.logger.info("User is navigated to Gold ETF Table");
+				 return result;
+			}
 			catch (Exception e) 
-				{
+			{
 				LoggerInstance.logger.info("User is not navigated to Gold ETF Table");
 				return result;
-				}
+			}
 		}
 		
 		/* Method Name: verifyNonGoldETFTableIsDisplayed
@@ -259,16 +259,16 @@ public class MarketPage {
 		public boolean verifyNonGoldETFTableIsDisplayed(){
 			boolean result= false;
 			try{
-			 result=we_NonGoldETFTable.isDisplayed();
-			 if (result==true)
-			 LoggerInstance.logger.info("User is navigated to Gold ETF Table");
-			 return result;
-				}
+				 result=we_NonGoldETFTable.isDisplayed();
+				 if (result==true)
+				 LoggerInstance.logger.info("User is navigated to Gold ETF Table");
+				 return result;
+			}
 			catch (Exception e) 
-				{
+			{
 				LoggerInstance.logger.info("User is not navigated to Gold ETF Table");
 				return result;
-				}
+			}
 		}
 		
 		/* Method Name: verifyCurrentValueOfSensexIsDisplayed
@@ -280,16 +280,16 @@ public class MarketPage {
 		public boolean verifyCurrentValueOfSensexIsDisplayed(){
 			boolean result= false;
 			try{
-			 result=we_SensexCurrentValue.isDisplayed();
-			 if (result==true)
-			 LoggerInstance.logger.info("Current value of Sensex is displayed");
-			 return result;
-				}
+				 result=we_SensexCurrentValue.isDisplayed();
+				 if (result==true)
+				 LoggerInstance.logger.info("Current value of Sensex is displayed");
+				 return result;
+			}
 			catch (Exception e) 
-				{
+			{
 				LoggerInstance.logger.info("Current value of Sensex is not displayed");
 				return result;
-				}
+			}
 		}
 		/* Method Name: verifyCurrentValueOfNiftyIsDisplayed
 	     * Description: Function to verify Current value of Nifty is displayed.
@@ -300,16 +300,16 @@ public class MarketPage {
 		public boolean verifyCurrentValueOfNiftyIsDisplayed(){
 			boolean result= false;
 			try{
-			 result=we_SensexCurrentValue.isDisplayed();
-			 if (result==true)
-			 LoggerInstance.logger.info("Current value of Nifty is displayed");
-			 return result;
-				}
+				 result=we_SensexCurrentValue.isDisplayed();
+				 if (result==true)
+				 LoggerInstance.logger.info("Current value of Nifty is displayed");
+				 return result;
+			}
 			catch (Exception e) 
-				{
+			{
 				LoggerInstance.logger.info("Current value of Nifty is not displayed");
 				return result;
-				}
+			}
 		}
 		
 		/* Method Name: verifyValueChangeOfNiftyIsDisplayed
@@ -321,16 +321,16 @@ public class MarketPage {
 		public boolean verifyValueChangeOfNiftyIsDisplayed(){
 			boolean result= false;
 			try{
-			 result=we_SensexValueChange.isDisplayed();
-			 if (result==true)
-			 LoggerInstance.logger.info("Value chnage of Nifty is displayed");
-			 return result;
-				}
+				 result=we_SensexValueChange.isDisplayed();
+				 if (result==true)
+				 LoggerInstance.logger.info("Value chnage of Nifty is displayed");
+				 return result;
+			}
 			catch (Exception e) 
-				{
+			{
 				LoggerInstance.logger.info("Value change of Nifty is not displayed");
 				return result;
-				}
+			}
 		}
 		/* Method Name: verifyValueChangeOfSensexIsDisplayed
 	     * Description: Function to verify value Change of Sensex is displayed.
@@ -341,16 +341,16 @@ public class MarketPage {
 		public boolean verifyValueChangeOfSensexIsDisplayed(){
 			boolean result= false;
 			try{
-			 result=we_SensexValueChange.isDisplayed();
-			 if (result==true)
-			 LoggerInstance.logger.info("Value chnage of Sensex is displayed");
-			 return result;
-				}
+				 result=we_SensexValueChange.isDisplayed();
+				 if (result==true)
+				 LoggerInstance.logger.info("Value chnage of Sensex is displayed");
+				 return result;
+			}
 			catch (Exception e) 
-				{
+			{
 				LoggerInstance.logger.info("Value change of Sensex is not displayed");
 				return result;
-				}
+			}
 		}
 		
 		/* Method Name: verifyPercentageChangeOfSensexIsDisplayed
@@ -363,16 +363,16 @@ public class MarketPage {
 		public boolean verifyPercentageChangeOfSensexIsDisplayed(){
 			boolean result= false;
 			try{
-			 result=we_SensexPercentageChange.isDisplayed();
-			 if (result==true)
-			 LoggerInstance.logger.info("Percentage chnage of Sensex is displayed");
-			 return result;
-				}
+				 result=we_SensexPercentageChange.isDisplayed();
+				 if (result==true)
+				 LoggerInstance.logger.info("Percentage chnage of Sensex is displayed");
+				 return result;
+			}
 			catch (Exception e) 
-				{
+			{
 				LoggerInstance.logger.info("Percentage change of Sensex is not displayed");
 				return result;
-				}
+			}
 		}
 		
 		/* Method Name: verifyPercentageChangeOfNiftyIsDisplayed
@@ -384,16 +384,16 @@ public class MarketPage {
 		public boolean verifyPercentageChangeOfNiftyIsDisplayed(){
 			boolean result= false;
 			try{
-			 result=we_SensexPercentageChange.isDisplayed();
-			 if (result==true)
-			 LoggerInstance.logger.info("Percentage chnage of Nifty is displayed");
-			 return result;
-				}
+				 result=we_SensexPercentageChange.isDisplayed();
+				 if (result==true)
+				 LoggerInstance.logger.info("Percentage chnage of Nifty is displayed");
+				 return result;
+			}
 			catch (Exception e) 
-				{
+			{
 				LoggerInstance.logger.info("Percentage change of Nifty is not displayed");
 				return result;
-				}
+			}
 		}
 		
 }

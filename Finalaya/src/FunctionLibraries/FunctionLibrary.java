@@ -8,19 +8,17 @@ import java.awt.image.BufferedImage;
 import java.awt.image.PixelGrabber;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.text.Collator;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import javax.imageio.ImageIO;
-import javax.swing.JOptionPane;
 
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -37,7 +35,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
 
 import Logger.LoggerInstance;
 
@@ -112,11 +109,11 @@ public class FunctionLibrary {
      public static void clickWebLink(WebElement webLinkWebElement) {
            try {
                  if (webLinkWebElement.isEnabled()) {
-                	 LoggerInstance.logger.info("Click on"+webLinkWebElement);
+//                	 LoggerInstance.logger.info("Click on"+webLinkWebElement.getText());
                      webLinkWebElement.click();
                  }
            } catch (Exception e) {
-        	   		LoggerInstance.logger.info("Not able to click on"+webLinkWebElement);
+        	   		LoggerInstance.logger.info("Not able to click on Weblink");
            }
      }
 
@@ -375,15 +372,12 @@ public static void waitTillElementEnable(int iTimeOut, By byVal) {
 	 * Created By: 
 	 * Created Date: 12-08-2014
 	 * */
- 
- 
 	public static void enterValueInTextBox(WebElement element,String text){
     
 	    try{
 	    	element.clear();
 	    	LoggerInstance.logger.info("Enter value "+text+" in text box");
 	        element.sendKeys(text);
-				
 	    }catch(AssertionError ae) {
 	        LoggerInstance.logger.info("failed to insert value in TextBox ");
 	          
@@ -400,8 +394,6 @@ public static void waitTillElementEnable(int iTimeOut, By byVal) {
 	 * Created Date: 12-08-2014
 	 * */
  
-
-
 	public static void selectRadioButton(List<WebElement> elementList, int optionval) {
 	    try
 			{
@@ -415,7 +407,6 @@ public static void waitTillElementEnable(int iTimeOut, By byVal) {
 	           }
 	}
 
-	
 	/* Method Name: checkingCheckbox
 	 * Description: This method will check the check box .
 	 * Parameters: 
@@ -468,7 +459,6 @@ public static void waitTillElementEnable(int iTimeOut, By byVal) {
 	    }
 	}
 
-
 	/* Method Name: verifyTextWebelement
 	 * Description: This method will verify text of webelement
 	 * Parameters: 
@@ -484,11 +474,10 @@ public static void waitTillElementEnable(int iTimeOut, By byVal) {
 		try
 		{
 			String stringverify=element.getText();
-		if (stringverify==text){
-			LoggerInstance.logger.info("Text are same");
-			return true;}
+		if (stringverify.equals(text)){
+			return true;
+			}
 		else {
-			LoggerInstance.logger.info("Text are not same");
 			return false;}
 		}catch(Exception e)
 		{
@@ -510,8 +499,7 @@ public  static boolean  verifyStringsAreSame(String text1, String text2)
 	{
 		try
 		{
-			
-		if (text1==text2){
+		if (text1.equals(text2)){
 			LoggerInstance.logger.info("Strings are same");
 			return true;}
 		else {
@@ -557,19 +545,17 @@ public static boolean isTextPresent(WebDriver driver, String txtValue) {
 	 * Created Date: 08-08-2014
 	 * */
 
-	public static void clickMenuItem(WebElement mainLink, WebElement subLink) {
+	public static void clickMenuItem(WebDriver driver, WebElement mainLink, WebElement subLink) {
 		try {
 			
 			Actions actions = new Actions(driver);
 						
 				if(mainLink !=null && mainLink.isDisplayed()) {
 					actions.moveToElement(mainLink).build().perform();
-					LoggerInstance.logger.info("Mouse over "+mainLink); 
 					Thread.sleep(3000);
 					if(subLink !=null && mainLink.isDisplayed()) {
 						actions.moveToElement(subLink).build().perform();
 						actions.moveToElement(subLink).click().build().perform();
-						LoggerInstance.logger.info("Click on "+subLink);
 					} else {
 						LoggerInstance.logger.info("Unable to click on sublink");
 					}
@@ -615,12 +601,12 @@ public static boolean isTextPresent(WebDriver driver, String txtValue) {
 				JavascriptExecutor jsExecutor = (JavascriptExecutor)driver;
 				switch(scrollCase) {
 				case "DOWN":
+						//Scrolled page down
 						jsExecutor.executeScript("scrollBy(0," + pixelToScroll + ")");
-						LoggerInstance.logger.info("Scrolled page down by "+pixelToScroll);
 						break;
 				case "UP":
+						//Scrolled page up	
 						jsExecutor.executeScript("scrollBy(0," + -pixelToScroll + ")");
-						LoggerInstance.logger.info("Scrolled page up by "+pixelToScroll);
 						break;
 				}
 		} 
@@ -680,15 +666,6 @@ public static boolean isTextPresent(WebDriver driver, String txtValue) {
 				}
 		}
 	
-//	public static void verifyValueOrText(Object expected, Object actual) {
-//		try {
-//			
-//			assertEquals(expected, actual);
-//			System.out.println(expected + " is  equal to " + actual);
-//		} catch (Error e) {
-//			System.out.println(expected + " is not equal to " + actual);
-//		}
-//	}
 	
 	/* Method Name: getCalendarCurrentMonthAndYear
 	 * Description: This method will return current month and year
@@ -704,31 +681,64 @@ public static boolean isTextPresent(WebDriver driver, String txtValue) {
 			String month = monthName[cal.get(Calendar.MONTH)];
 			String year = cal.get(Calendar.YEAR) + "";
 			currentMonthAndYear = month + " " + year;
-			LoggerInstance.logger.info("get the current month and year");
+			LoggerInstance.logger.info("Get the current month and year");
 		} catch (Error e) {
 			LoggerInstance.logger.info("Unable to get the current month and year");
 		}
 		return currentMonthAndYear;
 	}
 	
-//	public static String getrgbaColor(WebElement divColorWebElement) {
-//		try {
-//			String text = divColorWebElement.getCssValue("background-color").toString();
-//			// Split css value of rgb
-//			String[] numbers = text.replace("rgba(", "").replace(")", "").split(",");
-//			int number1 = Integer.parseInt(numbers[0]);
-//			numbers[1] = numbers[1].trim();
-//			int number2 = Integer.parseInt(numbers[1]);
-//			numbers[2] = numbers[2].trim();
-//			int number3 = Integer.parseInt(numbers[2]);
-//			String hex = String.format("#%02X%02X%02X", number1, number2, number3);
-//			return hex;
-//		} catch (Exception e) {
-//			System.out.println("Exception Occurred --> " + e.getMessage());
-//			return "";
-//		}
-//	}
+	/* Method Name: getrgbaColor
+     * Description:This method will return background color .
+      * Parameters: 
+      *            1. WebElement divColorWebElement
+     * Created By: Kuldeep Singh
+     * Created Date: 21-08-2014
+     * */
 	
+	public static String getrgbaBackgroundColor(WebElement divColorWebElement) {
+		try {
+			String text = divColorWebElement.getCssValue("background-color").toString();
+			// Split css value of rgb
+			String[] numbers = text.replace("rgba(", "").replace(")", "").split(",");
+			int number1 = Integer.parseInt(numbers[0]);
+			numbers[1] = numbers[1].trim();
+			int number2 = Integer.parseInt(numbers[1]);
+			numbers[2] = numbers[2].trim();
+			int number3 = Integer.parseInt(numbers[2]);
+			String hex = String.format("#%02X%02X%02X", number1, number2, number3);
+			return hex;
+		} catch (Exception e) {
+			LoggerInstance.logger.info("Unable to get the back griund colcor");
+			return "";
+		}
+	}
+	
+	/* Method Name: getrgbaColor
+     * Description:This method will return color of the element in hexadecimal value.
+      * Parameters: 
+      *            1. WebElement divColorWebElement
+     * Created By: Kuldeep Singh
+     * Created Date: 21-08-2014
+     * */
+	
+	public static String getrgbaColor(WebElement divColorWebElement) {
+		try {
+			String text = divColorWebElement.getCssValue("color").toString();
+			// Split css value of rgb
+			String[] numbers = text.replace("rgba(", "").replace(")", "").split(",");
+			int number1 = Integer.parseInt(numbers[0]);
+			numbers[1] = numbers[1].trim();
+			int number2 = Integer.parseInt(numbers[1]);
+			numbers[2] = numbers[2].trim();
+			int number3 = Integer.parseInt(numbers[2]);
+			String hex = String.format("#%02X%02X%02X", number1, number2, number3);
+			return hex;
+		} catch (Exception e) {
+			LoggerInstance.logger.info("Unable to get the back griund colcor");
+			return "";
+		}
+	}
 	/* Method Name: getMonthIntValue
      * Description:This method will return month number by passing month name.
       * Parameters: 
@@ -782,8 +792,6 @@ public static boolean isTextPresent(WebDriver driver, String txtValue) {
 		            {
 		                String current = list.get(i).toString();
 		                String previous = list.get(i-1).toString();
-	
-	
 		                if (sortedby==true){
 		                              if(current.compareTo(previous)<0){
 		                              LoggerInstance.logger.info("List is not in acsending order");  
@@ -880,5 +888,57 @@ public static boolean isTextPresent(WebDriver driver, String txtValue) {
 			    }   	
 		    	
 		 }	//End of Function
-	
+		  
+		  /* Method Name: checkDateSortingOrder
+	       * Description:This method will check date list is sorted in ascending or descending order
+	       * Parameters: 
+	       *            1. String list  - provide date list value.
+	                    2. sortedBy- True (It will check list provided is in ascending order)
+	                                  False(It will check list provided is in descending order)
+	       * Created By: Kuldeep Singh
+	       * Created Date: 27-08-2014
+	       * */
+	public static Boolean checkDateSortingOrder(List<String> list, Boolean sortedby) {
+		DateFormat format = new SimpleDateFormat("dd-MMM-yyyy");
+		try {
+			if (list == null || list.isEmpty()) {
+				LoggerInstance.logger.info("Provided list is empty");
+				return false;
+			}
+			if (list.size() == 1) {
+				LoggerInstance.logger.info("List is sorted as it has only one element");
+				return true;
+			}
+			for (int i = 1; i < list.size(); i++) {
+				String current = list.get(i).toString();
+				String previous = list.get(i - 1).toString();
+				Date currentDate = format.parse(current);
+				Date previousDate = format.parse(previous);
+				if (sortedby == true) {
+					if (currentDate.compareTo(previousDate) < 0) {
+						LoggerInstance.logger.info("List is not in acsending order");
+						return false;
+					}
+				}
+				if (sortedby == false) {
+					if (currentDate.compareTo(previousDate) > 0) {
+						LoggerInstance.logger.info("List is not in desending order");
+						return false;
+					}
+				}
+			}
+			if (sortedby == true) {
+				LoggerInstance.logger.info("List is in acsending order");
+				return true;
+			} else {
+				LoggerInstance.logger.info("List is in desending order");
+				return true;
+			}
+
+		} catch (Exception e) {
+			LoggerInstance.logger.info("Unable to check the acsending/desending");
+			return null;
+		}
+
 	}
+}

@@ -49,7 +49,6 @@ public final class WebDriverBrowser {
 			// Create a new instance of ie driver
 			System.setProperty(AutomationConstants.WEBDRIVER_IE_DRIVER,System.getProperty(AutomationConstants.USER_DIR)+prop.getProperty(AutomationConstants.IEDRIVER));
 			driver = new InternetExplorerDriver(ieCapabilities);
-			driver = new InternetExplorerDriver();
 		} else {
 			driver = new FirefoxDriver();
 		}
