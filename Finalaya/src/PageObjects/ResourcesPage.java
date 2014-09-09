@@ -1,11 +1,8 @@
 package PageObjects;
 
 
-
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-
 import FunctionLibraries.FunctionLibrary;
 import Logger.LoggerInstance;
 
@@ -24,7 +21,6 @@ public class ResourcesPage {
 	public WebElement we_ResourceTab;
 	@FindBy(xpath = Xpathpath_Key_Economic_Indicators)
 	public WebElement we_Key_Economic;
-	// XPath_GeneralEconomicIndicators
 	@FindBy(xpath = XPath_GeneralEconomicIndicators)
 	public WebElement we_GeneralEconomicIndicators;
 	@FindBy(xpath = Xpath_CCilIndicatorsIndices)
@@ -56,7 +52,7 @@ public class ResourcesPage {
 	}
 
 	
-	/* Method Name: 
+	/* Method Name: KeyEconomic Indicators Page is Displayed
      * Description: Verify SubTab KeyEconomic Indicators Page is Displayed
      * Created By: Mohd Suhail
      * Created Date: 13-08-2014
@@ -76,8 +72,8 @@ public class ResourcesPage {
 
 	
 
-	/* Method Name: 
-     * Description: Verify verify GeneralEconomicIndicators is displayed
+	/* Method Name: GeneralEconomicIndicators is displayed
+     * Description: Verify  GeneralEconomicIndicators is displayed
      * Created By: Mohd Suhail
      * Created Date: 13-08-2014
      * */
@@ -97,9 +93,8 @@ public class ResourcesPage {
 		}
 	}
 
-	// Function verify CCilIndicatorsIndices is displayed
 	
-	/* Method Name: 
+	/* Method Name: Verify CCilIndicatorsIndices is displayed
      * Description: Verify  CCilIndicatorsIndices is displayed
      * Created By: Mohd Suhail
      * Created Date: 13-08-2014
@@ -121,7 +116,7 @@ public class ResourcesPage {
 
 	
 	
-		/* Method Name: 
+		/* Method Name:  NSE FIMMDA Indicators is displayed 
 	     * Description: Verify  NSE FIMMDA Indicators is displayed 
 	     * Created By: Mohd Suhail
 	     * Created Date: 13-08-2014
@@ -140,7 +135,7 @@ public class ResourcesPage {
 	}
 	
 
-	/* Method Name: 
+	/* Method Name: General Economic Contains Indicator Name Column
      * Description: Verify General Economic Contains Indicator Name
      * Created By: Mohd Suhail
      * Created Date: 13-08-2014
@@ -155,18 +150,18 @@ public class ResourcesPage {
 			if (result == true)
 
 				LoggerInstance.logger
-						.info("General Economic Contains IndicatorName.");
+						.info("General Economic Contains IndicatorName Column.");
 			return result;
 
 		} catch (Exception e) {
 			LoggerInstance.logger
-					.info("GeneralEconomicIndicators does not contains IndicatorName.");
+					.info("GeneralEconomicIndicators does not contains IndicatorName Column.");
 			return result;
 		}
 	}
 
 	
-	/* Method Name: 
+	/* Method Name: General Economic Contains RBI Policy Indicator Column.
      * Description: General Economic Contains RBI Policy Indicator.
      * Created By: Mohd Suhail
      * Created Date: 13-08-2014
@@ -180,17 +175,17 @@ public class ResourcesPage {
 		try {
 			if (result == true)
 				LoggerInstance.logger
-						.info("General Economic Contains RBI Policy Indicator.");
+						.info("General Economic Contains RBI Policy Indicator Column.");
 			return result;
 		} catch (Exception e) {
 			LoggerInstance.logger
-					.info("GeneralEconomicIndicators does not contains RBI Policy Indicator.");
+					.info("GeneralEconomicIndicators does not contains RBI Policy Indicator Column.");
 			return result;
 		}
 	}
 
 	
-	/* Method Name: 
+	/* Method Name: General Economic Contains RBI Reference Exchange Rates Column.
      * Description: General Economic Contains RBI Reference Exchange Rates.
      * Created By: Mohd Suhail
      * Created Date: 13-08-2014
@@ -204,11 +199,11 @@ public class ResourcesPage {
 			if (result == true)
 
 				LoggerInstance.logger
-						.info("General Economic Contains RBI Reference Exchange Rates.");
+						.info("General Economic Contains RBI Reference Exchange Rates Column.");
 			return result;
 		} catch (Exception e) {
 			LoggerInstance.logger
-					.info("GeneralEconomicIndicators does not contains RBI Reference Exchange Rates.");
+					.info("GeneralEconomicIndicators does not contains RBI Reference Exchange Rates Column.");
 			return result;
 		}
 

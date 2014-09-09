@@ -1,8 +1,8 @@
 package TestCases;
 
 /* Description: Verification of Resource Page.
- * Created By: Kuldeep Singh
- * Created Date: 19 Aug 2014
+ * Created By: Mohd Suhail
+ * Created Date: 13 Aug 2014
  * */
 
 
@@ -24,7 +24,7 @@ import PageObjects.ResourcesPage;
 
 public class Resources_Page {
 
-	private ResourcesPage resourcePage;
+	private ResourcesPage obj_resourcePage;
 	static WebDriver driver;
 
 	Properties prop = new Properties();
@@ -67,42 +67,49 @@ public class Resources_Page {
 		}
 	}
 
-	// Scenario 1 :This test case will navigate to the Resource tab  & Verify  Sub Tab Page are Displayed.
+	// Scenario 1 :This test case will navigate to the Resource tab  & Verify  General Economic Indicator Page is displayed and General Economic Contains RBI Reference Exchange Column.
 	@Test
-	public void Resource_VerifySubTab() throws Exception {
+	public void Resource_VerifyGeneralEconmicIndicatorPage() throws Exception {
 
 		try {
-			LoggerInstance.logger.info("*********************** Resource Page Sub tab Page Started*********************************");
+			LoggerInstance.logger.info("*********************** Resource_VerifyGeneralEconmicIndicatorPage() Started*********************************");
 
-			// Initialize Page Factory For IPO Page
-			resourcePage = PageFactory.initElements(driver, ResourcesPage.class);
+			// Initialize Page Factory For Resource  Page
+			obj_resourcePage = PageFactory.initElements(driver, ResourcesPage.class);
 
 			//Click on Resource Tab
-			resourcePage.clickOnResourceTab();
-			LoggerInstance.logger.info("Verify General Economic Indicator Page is displayed");
-		    
-			resourcePage.verify_GeneralEconomicIndicatorsIsDisplayed();
-			LoggerInstance.logger.info("Verify KeyEconomic Page is displayed");
-		    
-			resourcePage.verify_KeyEconomic();
-			LoggerInstance.logger.info("Verify CCil Indicators Indices Page is displayed");
-			resourcePage.verify_CCilIndicatorsIndicesIsDisplayed();
-			LoggerInstance.logger.info("Verify NSE FIMMDA Indicators Page is displayed");
-			resourcePage.verify_NSEFIMMDAIndicatorsIsDisplayed();
+			obj_resourcePage.clickOnResourceTab();
+			//Verify that General Economic Indicator Is Displayed.
+			LoggerInstance.logger.info("Verify General Economic Indicator Page is displayed.");
+			obj_resourcePage.verify_GeneralEconomicIndicatorsIsDisplayed();
+		    //Verify that KeyEconomic Page is displayed
+			LoggerInstance.logger.info("Verify KeyEconomic Page is displayed.");
+			obj_resourcePage.verify_KeyEconomic();
+		    //Verify CCil Indicators Indices Page is displayed.
+			LoggerInstance.logger.info("Verify CCil Indicators Indices Page is displayed.");
+			obj_resourcePage.verify_CCilIndicatorsIndicesIsDisplayed();
+			//Verify NSE FIMMDA Indicators Page is displayed .
+			LoggerInstance.logger.info("Verify NSE FIMMDA Indicators Page is displayed.");
+			obj_resourcePage.verify_NSEFIMMDAIndicatorsIsDisplayed();
+			
+			//Verify General Economic Contains Indicator Column.
 			LoggerInstance.logger.info("Verify General Economic Contains Indicator Column");
-			resourcePage.verify_GeneralEconomicContainsIndicator();
+			obj_resourcePage.verify_GeneralEconomicContainsIndicator();
+			//Verify General Economic Contains RBIPolicy Indicator Column.
 			LoggerInstance.logger.info("Verify General Economic Contains RBIPolicy Indicator Column");
-			resourcePage.verify_GeneralEconomicContainsRBIPolicyIndicator();
+			obj_resourcePage.verify_GeneralEconomicContainsRBIPolicyIndicator();
+			
+			//Verify General Economic Contains RBI Reference Exchange Column.
 			LoggerInstance.logger.info("Verify General Economic Contains RBI Reference Exchange Column");
-			resourcePage.verify_GeneralEconomicContainsRBIReferenceExchange();
+			obj_resourcePage.verify_GeneralEconomicContainsRBIReferenceExchange();
 			
 
-			LoggerInstance.logger.info("***********************Resource Page Sub tab Page  Ended*********************************");
+			LoggerInstance.logger.info("***********************Resource_VerifyGeneralEconmicIndicatorPage()  Ended*********************************");
 		} catch (Exception e) {
 			LoggerInstance.logger.info("Exception occured.");
 			e.printStackTrace();
 		} finally {
-			resourcePage = null;
+			obj_resourcePage = null;
 		}
 	}
 

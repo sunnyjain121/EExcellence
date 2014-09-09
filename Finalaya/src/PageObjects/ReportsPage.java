@@ -210,15 +210,23 @@ public class ReportsPage {
        * Created By: Sunny Jain
        * Created Date: 25-08-2014
        * */
-	public void verifyTitle() {
-
+	public boolean verifyTitle() {
+		boolean result = false;
 		try {
 			LoggerInstance.logger.info("verify the tilte");
-			FunctionLibrary.verifyTextWebelement("Home » Research Reports",
+			result = FunctionLibrary.verifyTextWebelement("Home » Research Reports",
 					we_csspath_Title);
+			if (result == true){
+				LoggerInstance.logger.info("title is verified");
+			return result;
+			}
+			else{
+				LoggerInstance.logger.info("title is not same");
+				return result;
+			}
 		} catch (Exception e) {
-			LoggerInstance.logger.info("title is not matched");
-
+			LoggerInstance.logger.info("unable to verify title");
+			return result;
 		}
 	}	
 	 /* Method Name: clickOnReportLink
@@ -275,14 +283,23 @@ public class ReportsPage {
        * Created By: Sunny Jain
        * Created Date: 25-08-2014
        * */
-	public void verifyNewWindowTitle() {
+	public boolean verifyNewWindowTitle() {
+		  boolean result = false;
 
 		try {
-			LoggerInstance.logger.info("verify the tilte");
-			FunctionLibrary.verifyTextWebelement("Research Reports",we_csspath_NewWindowTitle);
+			LoggerInstance.logger.info("verify the tilte of newly opened window");
+			result = FunctionLibrary.verifyTextWebelement("Research Reports",we_csspath_NewWindowTitle);
+		if (result == true){
+			LoggerInstance.logger.info("title is verified");
+			return result;
+			}
+		else{
+			LoggerInstance.logger.info("title is not same");
+			return result;
+			}	
 		} catch (Exception e) {
 			LoggerInstance.logger.info("title is not matched");
-
+			return result;
 		}
 	}
 	

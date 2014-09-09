@@ -9,6 +9,7 @@
       <class name="TestCases.Market_Page"/>
       <class name="TestCases.Resources_page"/>
       <class name="TestCases.IPO_Page"/>
+      <class name="TestCases.Resources_Page"/>
     </classes>
   </test> <!-- Test -->
 </suite> <!-- Suite -->

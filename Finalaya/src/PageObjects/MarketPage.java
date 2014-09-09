@@ -11,7 +11,7 @@ import Logger.LoggerInstance;
 
 public class MarketPage {
 	
-	WebDriver driver;
+	 WebDriver driver;
 	public MarketPage(){
 		this.driver= driver;
 	}
