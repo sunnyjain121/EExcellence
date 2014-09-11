@@ -2,7 +2,10 @@ package FunctionLibraries;
 
 
 
+import java.awt.AWTException;
 import java.awt.Image;
+import java.awt.Rectangle;
+import java.awt.Robot;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.awt.image.PixelGrabber;
@@ -17,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Properties;
 
 import javax.imageio.ImageIO;
 
@@ -627,43 +631,84 @@ public static boolean isTextPresent(WebDriver driver, String txtValue) {
 	 * Created Date: 08-08-2014
 	 * */
 	
-	public boolean verifyImage(By byValImage, String dynamicImagePath, String staticImagePath) throws IOException {
-		WebElement appLogo = driver.findElement(byValImage);
-		String ul =appLogo.getAttribute("src");
+	public static boolean verifyImage(WebElement imageElement, String staticImagePath) throws IOException {
+		try {
+		
+		Properties prop = new Properties();
+		InputStream inputConfig = new FileInputStream(AutomationConstants.PROPERTY_FILE_NAME);
+		prop.load(inputConfig);
+		
+		String folder = prop.getProperty(AutomationConstants.SCREENSHOT_FOLDER);
+		
+		File directory = new File ("");
+		
+		String absolutepath	=	directory.getAbsolutePath();
+		
+		//This is to get location for creating log file. This value is comming from build.xml 
+		String snapshotFolder = absolutepath+File.separator+folder;
+		
+		File f1 = new File(snapshotFolder);
+		
+		if(!f1.exists())
+			f1.mkdir();
+		
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+		Date date = new Date();
+		String logoDirName = dateFormat.format(date);
+		
+		File currentDateSnapshot = new File(snapshotFolder + "\\" + logoDirName);
+		if(!currentDateSnapshot.exists())
+			currentDateSnapshot.mkdir();
+		
+		
+		
+		int imageCount = currentDateSnapshot.list().length + 1;
+		String imageName = "Logo" + imageCount;
+		String imagePath = currentDateSnapshot + "\\" + imageName + ".png";
+		
+		
+		//WebElement appLogo = driver.findElement(By);
+		
+		String ul =imageElement.getAttribute("src");
+		
 		URL url = new URL(ul);
+		
 		BufferedImage bufferedImage = ImageIO.read(url);
-		ImageIO.write(bufferedImage, "jpg", new File(dynamicImagePath));
+		ImageIO.write(bufferedImage, "jpg", new File(imagePath));
 		
 		Image imgStaticLogo = Toolkit.getDefaultToolkit().getImage(staticImagePath);
-		Image imgDownloadedLogo = Toolkit.getDefaultToolkit().getImage(dynamicImagePath);
+		Image imgDownloadedLogo = Toolkit.getDefaultToolkit().getImage(imagePath);
 		
-		try {
-				PixelGrabber grab11 = new PixelGrabber(imgStaticLogo, 0, 0, -1, -1, false);
-				PixelGrabber grab21 = new PixelGrabber(imgDownloadedLogo, 0, 0, -1, -1, false);
-						
-				int[] array1= null;
 		
-			    if (grab11.grabPixels()) {
-			     int widthPic1 = grab11.getWidth();
-			     int heightPic1 = grab11.getHeight();
-			     array1= new int[widthPic1 * heightPic1];
-			     array1= (int[]) grab11.getPixels();
-			    }
-		
-			    int[] array2 = null;
-		
-			    if (grab21.grabPixels()) {
-			     int widthPic2 = grab21.getWidth();
-			     int heightPic2 = grab21.getHeight();
-			     array2 = new int[widthPic2 * heightPic2];
-			     array2 = (int[]) grab21.getPixels();
-			    }
-			    LoggerInstance.logger.info("Compare Image");
-			    return (java.util.Arrays.equals(array1, array2) ? true : false);
-				} catch (Exception e) {
-					LoggerInstance.logger.info("Unable to compare the img.");
-					return false;
-				}
+			PixelGrabber grab11 = new PixelGrabber(imgStaticLogo, 0, 0, -1, -1, false);
+			PixelGrabber grab21 = new PixelGrabber(imgDownloadedLogo, 0, 0, -1, -1, false);
+					
+			int[] array1= null;
+	
+		    if (grab11.grabPixels()) {
+		     int widthPic1 = grab11.getWidth();
+		     int heightPic1 = grab11.getHeight();
+		     array1= new int[widthPic1 * heightPic1];
+		     array1= (int[]) grab11.getPixels();
+		    }
+		    
+		    int[] array2 = null;
+	
+		    if (grab21.grabPixels()) {
+		     int widthPic2 = grab21.getWidth();
+		     int heightPic2 = grab21.getHeight();
+		     array2 = new int[widthPic2 * heightPic2];
+		     array2 = (int[]) grab21.getPixels();
+		    }
+		    
+		    //LoggerInstance.logger.info("Compare Image");
+		    
+		    System.out.println(java.util.Arrays.equals(array1, array2) ? true : false);
+		    return (java.util.Arrays.equals(array1, array2) ? true : false);
+			} catch (Exception e) {
+				LoggerInstance.logger.info("Unable to compare the img.");
+				return false;
+			}
 		}
 	
 	
@@ -940,5 +985,58 @@ public static boolean isTextPresent(WebDriver driver, String txtValue) {
 			return null;
 		}
 
+	}
+	
+	/* Method Name: captureScreenshot
+     * Description:This method will capture the screenshot of the screen
+     * Parameters: 
+     *            
+     * Created By: Bal Govind
+     * Created Date: 05-09-2014
+     * */
+	
+	public String captureScreenshot() throws AWTException, IOException
+	{
+		Properties prop = new Properties();
+		InputStream inputConfig = new FileInputStream(AutomationConstants.PROPERTY_FILE_NAME);
+		prop.load(inputConfig);
+		
+		String folder = prop.getProperty(AutomationConstants.SCREENSHOT_FOLDER);
+		
+		File directory = new File ("");
+		
+		String absolutepath	=	directory.getAbsolutePath();
+		
+		//This is to get location for creating log file. This value is comming from build.xml 
+		String snapshotFolder = absolutepath+File.separator+folder;
+		
+		System.out.println(snapshotFolder + "Snapshot");	
+		File f1 = new File(snapshotFolder);
+		
+		if(!f1.exists())
+			f1.mkdir();
+		
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+		Date date = new Date();
+		String snapshotDirName = dateFormat.format(date);
+		File currentDateSnapshot = new File(snapshotFolder + "\\" + snapshotDirName);
+		if(!currentDateSnapshot.exists())
+			currentDateSnapshot.mkdir();
+		
+		
+		boolean isSnapshotTaken = false;
+		boolean isFileCreated = false;
+
+		int imageCount = currentDateSnapshot.list().length + 1;
+		String imageName = "Snapshot" + imageCount;
+		String imagePath = currentDateSnapshot + "\\" + imageName + ".png";
+		
+		Rectangle screenRect = new Rectangle(Toolkit.getDefaultToolkit().getScreenSize());
+		BufferedImage capture = new Robot().createScreenCapture(screenRect);
+		isSnapshotTaken = ImageIO.write(capture, "png", new File(imagePath));
+		System.out.println(isSnapshotTaken == true ? "Snapshot is taken." : "Snapshot is not taken.");
+		
+		return imagePath;
+		
 	}
 }

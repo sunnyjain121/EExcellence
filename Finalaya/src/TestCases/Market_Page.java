@@ -7,6 +7,8 @@ package TestCases;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.io.PrintWriter;
+import java.lang.reflect.Method;
 import java.util.Properties;
 
 import org.openqa.selenium.WebDriver;
@@ -16,10 +18,12 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import FunctionLibraries.AutomationConstants;
+import FunctionLibraries.FunctionLibrary;
 import FunctionLibraries.WebDriverBrowser;
 import Logger.LoggerInstance;
 import PageObjects.HomePage;
 import PageObjects.MarketPage;
+import Reports.CustomMethodReport;
 
 
 public class Market_Page {
@@ -29,11 +33,21 @@ public class Market_Page {
 	
 	Properties prop = new Properties();
 	
+	CustomMethodReport cmr = new CustomMethodReport();
+	FunctionLibrary fLib = new FunctionLibrary();
+	PrintWriter printWrite = null;
+	boolean isVerificationPassed= true;
+	
 	// This method would be run before each method present in testcase file & will launch browser & will open application.
 	@BeforeMethod
-	public void setUp() throws Exception {
+	public void setUp(Method method) throws Exception {
 		String browser = null;
 		String url = null;
+		
+		// Create the html file internal verification
+		printWrite = cmr.createWriter(method.getName());
+		cmr.startHtmlPage(printWrite);
+		
 		// Create input stream object of property file.
 		InputStream inputConfig = new FileInputStream(AutomationConstants.PROPERTY_FILE_NAME);
 		// Create the logger instance object
@@ -67,42 +81,123 @@ public class Market_Page {
 		obj_marketPage.clickOnMarketTab();
 		// Verify user is navigated to Market page
 		LoggerInstance.logger.info("Verify user is navigated to Market page.");
-		obj_marketPage.verifyMarketPageIsDisplayed();
+		boolean isVerifyMarketPageIsDisplayed = obj_marketPage.verifyMarketPageIsDisplayed();
+		
+		if(isVerifyMarketPageIsDisplayed)
+			cmr.generateExecutionReport(printWrite, "Verify if User is navigated to Market Page.", "User is navigated to Market Page.", "User is navigated to Market Page.", true, null);
+		else {
+			isVerificationPassed=false;
+			cmr.generateExecutionReport(printWrite, "Verify if User is navigated to Market Page.", "User is navigated to Market Page.", "User is not navigated to Market Page.", false, fLib.captureScreenshot());
+		}
+		
 		// Click On BSE Tab.
 		obj_marketPage.clickOnBSETab();
+		
 		// Verify current value of sensex is displayed.
 		LoggerInstance.logger.info("Verify current value of sensex is displayed.");
-		obj_marketPage.verifyCurrentValueOfSensexIsDisplayed();
+		boolean isverifyCurrentValueOfSensexIsDisplayed=obj_marketPage.verifyCurrentValueOfSensexIsDisplayed();
+		
+		if(isverifyCurrentValueOfSensexIsDisplayed)
+			cmr.generateExecutionReport(printWrite, "Verify if current values of sensex is displayed.", "Current Value of sensex is displayed.", "Current Values of sensex is displayed.", true, null);
+		else {
+			isVerificationPassed=false;
+			cmr.generateExecutionReport(printWrite, "Verify if current values of sensex is displayed.", "Current Value of sensex is displayed.", "Current Values of sensex is not displayed.", false, fLib.captureScreenshot());
+		}
+		
 		// Verify value change of sensex is displayed.
 		LoggerInstance.logger.info("Verify value change of sensex is displayed.");
-		obj_marketPage.verifyValueChangeOfSensexIsDisplayed();
+		boolean isVerifyValueChangeOfSensexIsDisplayed = obj_marketPage.verifyValueChangeOfSensexIsDisplayed();
+		if(isVerifyValueChangeOfSensexIsDisplayed)
+			cmr.generateExecutionReport(printWrite, "Verify if value change of sensex is displayed.", "Values change of sensex is displayed.", "Value change of sensex is displayed.", true, null);
+		else {
+			isVerificationPassed= false;
+			cmr.generateExecutionReport(printWrite, "Verify if value change of sensex is displayed.", "Values change of sensex is displayed.", "Value change of sensex is not displayed.", false, fLib.captureScreenshot());
+		}
+		
 		// Verify Percentage change of sensex is displayed.
 		LoggerInstance.logger.info("Verify Percentage change of sensex is displayed.");
-		obj_marketPage.verifyPercentageChangeOfSensexIsDisplayed();
+		boolean isVerifyPercentageChangeOfSensexIsDisplayed = obj_marketPage.verifyPercentageChangeOfSensexIsDisplayed();
+		
+		if(isVerifyPercentageChangeOfSensexIsDisplayed)
+			cmr.generateExecutionReport(printWrite, "Verify if Percentage change of sensex is displayed.", "Percentage change of sensex is displayed.", "Percentage change of sensex is displayed.", true, null);
+		else {
+			isVerificationPassed=false;
+			cmr.generateExecutionReport(printWrite, "Verify if Percentage change of sensex is displayed.", "Percentage change of sensex is displayed.", "Percentage change of sensex is not displayed.", false, fLib.captureScreenshot());
+		}
+		
 		// Verify Open, Low, High and Pre Close of Sensex is displayed.
 		LoggerInstance.logger.info("Verify Open, Low, High and Pre Close of Sensex is displayed.");
-		obj_marketPage.verifyOpenLowHighPreCloseIsDisplayed();
+		boolean isVerifyOpenLowHighPreCloseIsDisplayed = obj_marketPage.verifyOpenLowHighPreCloseIsDisplayed();
+		
+		if(isVerifyOpenLowHighPreCloseIsDisplayed)
+			cmr.generateExecutionReport(printWrite, "Verify if Open, Low, High and PreClose of sensex is displayed.", "Open, Low, igh and PreClose of sensex is displayed.", "Open, Low, igh and PreClose of sensex is displayed.", true, null);
+		else {
+			isVerificationPassed=false;
+			cmr.generateExecutionReport(printWrite, "Verify if Open, Low, High and PreClose of sensex is displayed.", "Open, Low, igh and PreClose of sensex is displayed.", "Open, Low, igh and PreClose of sensex is not displayed.", false, fLib.captureScreenshot());
+		}
+		
 		// Click On NSE Tab.
 		obj_marketPage.clickOnNSETab();
+		
 		// Verify current value of Nifty is displayed.
 		LoggerInstance.logger.info("Verify current value of Nifty is displayed.");
-		obj_marketPage.verifyCurrentValueOfNiftyIsDisplayed();
+		boolean isVerifyCurrentValueOfNiftyIsDisplayed =obj_marketPage.verifyCurrentValueOfNiftyIsDisplayed();
+		
+		if(isVerifyCurrentValueOfNiftyIsDisplayed)
+			cmr.generateExecutionReport(printWrite, "Verify if Current Value of nifty is displayed.", "Current value of nifty is displayed.", "Current Value of nifty is displayed.", true, null);
+		else{
+			isVerificationPassed=false;
+			cmr.generateExecutionReport(printWrite, "Verify if Current Value of nifty is displayed.", "Current value of nifty is displayed.", "Current Value of nifty is not displayed.", false, fLib.captureScreenshot());
+		}
+		
 		// Verify Percentage change of Nifty is displayed.
 		LoggerInstance.logger.info("Verify Percentage change of Nifty is displayed.");
-		obj_marketPage.verifyPercentageChangeOfNiftyIsDisplayed();
+		boolean isVerifyPercentageChangeOfNiftyIsDisplayed = obj_marketPage.verifyPercentageChangeOfNiftyIsDisplayed();
+		
+		if(isVerifyPercentageChangeOfNiftyIsDisplayed)
+			cmr.generateExecutionReport(printWrite, "Verify if Percentage change of Nifty is displayed.", "Percentage change of Nifty is displayed.", "Percentage change of Nifty is displayed.", true, null);
+		else{
+			isVerificationPassed= false;
+			cmr.generateExecutionReport(printWrite, "Verify if Percentage change of Nifty is displayed.", "Percentage change of Nifty is displayed.", "Percentage change of Nifty is not displayed.", false, fLib.captureScreenshot());
+		}
+		
 		// Verify value change of Nifty is displayed.
 		LoggerInstance.logger.info("Verify value change of Nifty is displayed.");
-		obj_marketPage.verifyValueChangeOfNiftyIsDisplayed();
+		boolean isVerifyValueChangeOfNiftyIsDisplayed = obj_marketPage.verifyValueChangeOfNiftyIsDisplayed();
+		
+		if(isVerifyValueChangeOfNiftyIsDisplayed)
+			cmr.generateExecutionReport(printWrite, "Verify if Value change of Nifty is displayed.", "Value change of Nifty is displayed.", "Value change of Nifty is displayed.", true, null);
+		else{
+			isVerificationPassed=false;
+			cmr.generateExecutionReport(printWrite, "Verify if Value change of Nifty is displayed.", "Value change of Nifty is displayed.", "Value change of Nifty is not displayed.", false, fLib.captureScreenshot());
+		}
+		
 		// Verify Open, Low, High and Pre Close of Nifty is displayed.
 		LoggerInstance.logger.info("Verify Open, Low, High and Pre Close of Nifty is displayed.");
-		obj_marketPage.verifyOpenLowHighPreCloseIsDisplayed();
+		boolean isVerifyOpenLowHighPreCloseIsDisplayedNifty=obj_marketPage.verifyOpenLowHighPreCloseIsDisplayed();
+		
+		if(isVerifyOpenLowHighPreCloseIsDisplayedNifty)
+			cmr.generateExecutionReport(printWrite, "Verify if Open, Low, High and Pre Close of Nifty is displayed.", "Open, Low, High and Pre Close of Nifty is displayed.", "Open, Low, High and Pre Close of Nifty is displayed.", true, null);
+		else{
+			isVerificationPassed=false;
+			cmr.generateExecutionReport(printWrite, "Verify if Open, Low, High and Pre Close of Nifty is displayed.", "Open, Low, High and Pre Close of Nifty is displayed.", "Open, Low, High and Pre Close of Nifty is not displayed.", false, fLib.captureScreenshot());
+		}
+		
 		LoggerInstance.logger.info("***********************Market Verify MarketTab() Ended*********************************");
-
+		
+		if(!isVerificationPassed) {
+			org.testng.Assert.fail();
+		}
+		
 		} catch (Exception e) {
 			LoggerInstance.logger.info("Exception occured.");
 			e.printStackTrace();
 		} finally {
 			obj_marketPage = null;
+			if(!isVerificationPassed) {
+				isVerificationPassed=true;
+				org.testng.Assert.fail();
+			}
 		}
 			
 	}
@@ -116,37 +211,83 @@ public class Market_Page {
 		// Navigate to ETF Zone tab.
 		LoggerInstance.logger.info("Navigate to ETF Zone tab");
 		obj_marketPage.clickOnETFZoneTab(driver);
+		
 		// Verify user is navigated to ETF Zone page.
 		LoggerInstance.logger.info("Verify user is navigated to ETF Zone page.");
-		obj_marketPage.verifyETFZonePageIsDisplayed();
+		boolean isVerifyETFZonePageIsDisplayed = obj_marketPage.verifyETFZonePageIsDisplayed();
+		if(isVerifyETFZonePageIsDisplayed)
+			cmr.generateExecutionReport(printWrite, "Verify if User is navigated to ETF Zone.", "User is navigated to ETF Zone.", "User is navigated to ETF Zone.", true, null);
+		else{
+			isVerificationPassed= false;
+			cmr.generateExecutionReport(printWrite, "Verify if User is navigated to ETF Zone.", "User is navigated to ETF Zone.", "User is not navigated to ETF Zone.", false, fLib.captureScreenshot());
+		}
+		
 		// Verify Gold ETF Table is displayed on the ETF Zone page.
 		LoggerInstance.logger.info("Verify Gold ETF Table is displayed on the ETF Zone page.");
-		obj_marketPage.verifyGoldETFTableIsDisplayed();
+		boolean isVerifyGoldETFTableIsDisplayed = obj_marketPage.verifyGoldETFTableIsDisplayed();
+		
+		if(isVerifyGoldETFTableIsDisplayed)
+			cmr.generateExecutionReport(printWrite, "Verify if Gold ETF Table is displayed on the ETF zone page.", "Gold ETF Table is displayed on the ETF zone page.", "Gold ETF Table is displayed on the ETF zone page.", true, null);
+		else {
+			isVerificationPassed=false;
+			cmr.generateExecutionReport(printWrite, "Verify if Gold ETF Table is displayed on the ETF zone page.", "Gold ETF Table is displayed on the ETF zone page.", "Gold ETF Table is not displayed on the ETF zone page.", false, fLib.captureScreenshot());
+		}
+		
 		// Verify Verify Non Gold ETF Table is displayed on the ETF Zone page.
 		LoggerInstance.logger.info("Verify Non Gold ETF Table is displayed on the ETF Zone page.");
-		obj_marketPage.verifyNonGoldETFTableIsDisplayed();
+		boolean isVerifyNonGoldETFTableIsDisplayed = obj_marketPage.verifyNonGoldETFTableIsDisplayed();
+		
+		if(isVerifyNonGoldETFTableIsDisplayed)
+			cmr.generateExecutionReport(printWrite, "Verify if Non Gold ETF Table is displayed on the ETF zone page.", "Non Gold ETF Table is displayed on the ETF zone page.", "Non Gold ETF Table is displayed on the ETF zone page.", true, null);
+		else{
+			isVerificationPassed=false;
+			cmr.generateExecutionReport(printWrite, "Verify if Non Gold ETF Table is displayed on the ETF zone page.", "Non Gold ETF Table is displayed on the ETF zone page.", "Non Gold ETF Table is not displayed on the ETF zone page.", false, fLib.captureScreenshot());
+		}
+		
 		// Select Non Gold from Underlying dropdown.
 		LoggerInstance.logger.info("Select Non Gold from Underlying dropdown");
 		obj_marketPage.selectValueFromUnderlying("Non Gold");
+		
+		
+		
 		// Verify Non Gold ETF Table is displayed on the ETF Zone page.
 		LoggerInstance.logger.info("Verify Non Gold ETF Table is displayed on the ETF Zone page.");
 		obj_marketPage.verifyNonGoldETFTableIsDisplayed();
+		
 		// Select Gold from Underlying dropdown.
 		LoggerInstance.logger.info("Select Gold from Underlying dropdown");
 		obj_marketPage.selectValueFromUnderlying("Gold");
+		
 		// Verify Gold ETF Table is displayed on the ETF Zone page.
 		LoggerInstance.logger.info("Verify Gold ETF Table is displayed on the ETF Zone page.");
 		obj_marketPage.verifyNonGoldETFTableIsDisplayed();
 		// Verify negative value is displayed in red color
 		LoggerInstance.logger.info("Verify negative value is displayed in red color");
-		obj_marketPage.verifyNegativeValueColor();
+		boolean isVerifyNegativeValueColor = obj_marketPage.verifyNegativeValueColor();
+		
+		if(isVerifyNegativeValueColor)
+			cmr.generateExecutionReport(printWrite, "Verify if Negative value is displayed in red color.", "Negative value is displayed in red color.", "Negative value is displayed in red color.", true, null);
+		else{
+			isVerificationPassed= false;
+			cmr.generateExecutionReport(printWrite, "Verify if Negative value is displayed in red color.", "Negative value is displayed in red color.", "Negative value is not displayed in red color.", false, fLib.captureScreenshot());
+		}
+		
 		LoggerInstance.logger.info("***********************Market Verify ETFTab() Ended*********************************");
+		
+		if(!isVerificationPassed){
+			org.testng.Assert.fail();
+		}
 		
 	} catch (Exception e) {
 		LoggerInstance.logger.info("Exception occured.");
 		e.printStackTrace();
 	} finally {
 		obj_marketPage = null;
+		if(!isVerificationPassed){
+			isVerificationPassed = true;
+			org.testng.Assert.fail();
+		}
+		
 	}
 	}
 	// This method will be run after each method present in testcase file& will close the all browser windows.
@@ -155,5 +296,7 @@ public class Market_Page {
 		driver.close();
 		driver.quit();
 		LoggerInstance.logger.info("Browser closed.");
+		cmr.endHtmlPage(printWrite);
+		printWrite.flush();
 	}
 }

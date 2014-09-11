@@ -8,6 +8,8 @@ package TestCases;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.io.PrintWriter;
+import java.lang.reflect.Method;
 import java.util.Properties;
 
 import org.openqa.selenium.WebDriver;
@@ -17,25 +19,33 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import FunctionLibraries.AutomationConstants;
+import FunctionLibraries.FunctionLibrary;
 import FunctionLibraries.WebDriverBrowser;
 import Logger.LoggerInstance;
 import PageObjects.ResourcesPage;
+import Reports.CustomMethodReport;
 
 
 public class Resources_Page {
 
 	private ResourcesPage obj_resourcePage;
+	
 	static WebDriver driver;
 
 	Properties prop = new Properties();
-
+	CustomMethodReport cmr = new CustomMethodReport();
+	FunctionLibrary fLib = new FunctionLibrary();
+	PrintWriter printWrite = null;
+	boolean isVerificationPassed= true;
 
 	// This method would be run before each method present in testcase file & will launch browser & will open application.
 	@BeforeMethod
-	public void setUp() throws Exception {
+	public void setUp(Method method) throws Exception {
 		String browser = null;
 		String url = null;
-
+		
+		cmr.createWriter(method.getName());
+		cmr.startHtmlPage(printWrite);
 		// Create input stream object of property file.
 		InputStream inputConfig = new FileInputStream(AutomationConstants.PROPERTY_FILE_NAME);
 
@@ -79,37 +89,92 @@ public class Resources_Page {
 
 			//Click on Resource Tab
 			obj_resourcePage.clickOnResourceTab();
+			
 			//Verify that General Economic Indicator Is Displayed.
 			LoggerInstance.logger.info("Verify General Economic Indicator Page is displayed.");
-			obj_resourcePage.verify_GeneralEconomicIndicatorsIsDisplayed();
-		    //Verify that KeyEconomic Page is displayed
+			boolean isVerify_GeneralEconomicIndicatorsIsDisplayed = obj_resourcePage.verify_GeneralEconomicIndicatorsIsDisplayed();
+			if(isVerify_GeneralEconomicIndicatorsIsDisplayed)
+				cmr.generateExecutionReport(printWrite, "Verify if General Economic Indicator Page is displayed.", "General Economic Indicator Page is displayed.", "General Economic Indicator Page is displayed.", true, null);
+			else{
+				isVerificationPassed=false;
+				cmr.generateExecutionReport(printWrite, "Verify if General Economic Indicator Page is displayed.", "General Economic Indicator Page is displayed.", "General Economic Indicator Page is not displayed.", false, fLib.captureScreenshot());
+			}
+			//Verify that KeyEconomic Page is displayed
 			LoggerInstance.logger.info("Verify KeyEconomic Page is displayed.");
-			obj_resourcePage.verify_KeyEconomic();
-		    //Verify CCil Indicators Indices Page is displayed.
+			boolean isVerify_KeyEconomic = obj_resourcePage.verify_KeyEconomic();
+			if(isVerify_KeyEconomic)
+				cmr.generateExecutionReport(printWrite, "Verify if KeyEconomic Page is displayed.", "KeyEconomic Page is displayed.", "KeyEconomic Page is displayed.", true, null);
+			else{
+				isVerificationPassed=false;
+				cmr.generateExecutionReport(printWrite, "Verify if KeyEconomic Page is displayed.", "KeyEconomic Page is displayed.", "KeyEconomic Page is not displayed.", false, fLib.captureScreenshot());
+			}
+			
+			//Verify CCil Indicators Indices Page is displayed.
 			LoggerInstance.logger.info("Verify CCil Indicators Indices Page is displayed.");
-			obj_resourcePage.verify_CCilIndicatorsIndicesIsDisplayed();
+			boolean isVerify_CCilIndicatorsIndicesIsDisplayed =obj_resourcePage.verify_CCilIndicatorsIndicesIsDisplayed();
+			
+			if(isVerify_CCilIndicatorsIndicesIsDisplayed)
+				cmr.generateExecutionReport(printWrite, "Verify if CCil IndicatorsIndices Page is displayed.", "CCil IndicatorsIndices Page is displayed.", "CCil IndicatorsIndices Page is displayed.", true, null);
+			else {
+				isVerificationPassed=false;
+				cmr.generateExecutionReport(printWrite, "Verify if CCil IndicatorsIndices Page is displayed.", "CCil IndicatorsIndices Page is displayed.", "CCil IndicatorsIndices Page is not displayed.", false, fLib.captureScreenshot());
+			}
+			
 			//Verify NSE FIMMDA Indicators Page is displayed .
 			LoggerInstance.logger.info("Verify NSE FIMMDA Indicators Page is displayed.");
-			obj_resourcePage.verify_NSEFIMMDAIndicatorsIsDisplayed();
+			boolean isVerify_NSEFIMMDAIndicatorsIsDisplayed = obj_resourcePage.verify_NSEFIMMDAIndicatorsIsDisplayed();
+			if(isVerify_NSEFIMMDAIndicatorsIsDisplayed)
+				cmr.generateExecutionReport(printWrite, "Verify NSE FIMMDA Indicators Page is displayed.", "NSE FIMMDA Indicators Page is displayed.", "NSE FIMMDA Indicators Page is displayed.", true, null);
+			else{
+				isVerificationPassed=false;
+				cmr.generateExecutionReport(printWrite, "Verify NSE FIMMDA Indicators Page is displayed.", "NSE FIMMDA Indicators Page is displayed.", "NSE FIMMDA Indicators Page is not displayed.", false, fLib.captureScreenshot());
+			}
 			
 			//Verify General Economic Contains Indicator Column.
 			LoggerInstance.logger.info("Verify General Economic Contains Indicator Column");
-			obj_resourcePage.verify_GeneralEconomicContainsIndicator();
+			boolean isVerify_GeneralEconomicContainsIndicator = obj_resourcePage.verify_GeneralEconomicContainsIndicator();
+			if(isVerify_GeneralEconomicContainsIndicator)
+				cmr.generateExecutionReport(printWrite, "Verify if General Economic contains Indicator coulmn.", "General Economic contains Indicator coulmn.", "General Economic contains Indicator coulmn.", true, null);
+			else{
+				isVerificationPassed=false;
+				cmr.generateExecutionReport(printWrite, "Verify if General Economic contains Indicator coulmn.", "General Economic contains Indicator coulmn.", "General Economic does not contain Indicator coulmn.", false, fLib.captureScreenshot());
+			}
+			
 			//Verify General Economic Contains RBIPolicy Indicator Column.
 			LoggerInstance.logger.info("Verify General Economic Contains RBIPolicy Indicator Column");
-			obj_resourcePage.verify_GeneralEconomicContainsRBIPolicyIndicator();
+			boolean isVerify_GeneralEconomicContainsRBIPolicyIndicator =obj_resourcePage.verify_GeneralEconomicContainsRBIPolicyIndicator();
+			if(isVerify_GeneralEconomicContainsRBIPolicyIndicator)
+				cmr.generateExecutionReport(printWrite, "Verify if General Economic contains RBIPocily Indicator column." , "General Economic contains RBIPocily Indicator column.", "General Economic contains RBIPocily Indicator column.", true, null);
+			else{
+				isVerificationPassed=false;
+				cmr.generateExecutionReport(printWrite, "Verify if General Economic contains RBIPocily Indicator column." , "General Economic contains RBIPocily Indicator column.", "General Economic does not contain RBIPocily Indicator column.", false, fLib.captureScreenshot());
+			}
 			
 			//Verify General Economic Contains RBI Reference Exchange Column.
 			LoggerInstance.logger.info("Verify General Economic Contains RBI Reference Exchange Column");
 			obj_resourcePage.verify_GeneralEconomicContainsRBIReferenceExchange();
-			
+			boolean isVerify_GeneralEconomicContainsRBIReferenceExchange = obj_resourcePage.verify_GeneralEconomicContainsRBIReferenceExchange();
+			if(isVerify_GeneralEconomicContainsRBIReferenceExchange)
+				cmr.generateExecutionReport(printWrite, "Verify if General Economic contains RBI Reference Exchange column.", "General Economic contains RBI Reference Exchange column.", "General Economic contains RBI Reference Exchange column.", true, null);
+			else{
+				isVerificationPassed=false;
+				cmr.generateExecutionReport(printWrite, "Verify if General Economic contains RBI Reference Exchange column.", "General Economic contains RBI Reference Exchange column.", "General Economic does not contain RBI Reference Exchange column.", false, fLib.captureScreenshot());
+			}
 
 			LoggerInstance.logger.info("***********************Resource_VerifyGeneralEconmicIndicatorPage()  Ended*********************************");
+			if(!isVerificationPassed){
+				isVerificationPassed=true;
+				org.testng.Assert.fail();
+			}
 		} catch (Exception e) {
 			LoggerInstance.logger.info("Exception occured.");
 			e.printStackTrace();
 		} finally {
 			obj_resourcePage = null;
+			if(!isVerificationPassed){
+				isVerificationPassed=true;
+				org.testng.Assert.fail();
+			}
 		}
 	}
 
@@ -119,6 +184,8 @@ public class Resources_Page {
 		driver.close();
 		driver.quit();
 		LoggerInstance.logger.info("Browser closed");
+		cmr.endHtmlPage(printWrite);
+		printWrite.flush();
 	}
 
 }

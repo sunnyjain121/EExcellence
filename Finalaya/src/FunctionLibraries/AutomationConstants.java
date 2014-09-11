@@ -23,6 +23,12 @@ public interface AutomationConstants {
 
 	/** The screenshot folder. */
 	String SCREENSHOT_FOLDER = "screenShotFolder";
+	
+	/** Path for internal methods verification report*/
+	String INTERNAL_REPORT = "internalMethodReport";
+	
+	/** Path for Overall Execution Report*/
+	String FINAL_REPORT = "finalExecutionReport";
 
 	/** The double back slash. */
 	String DOUBLE_BACK_SLASH = "\\";

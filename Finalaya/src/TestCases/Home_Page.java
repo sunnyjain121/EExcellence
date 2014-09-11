@@ -7,6 +7,8 @@ package TestCases;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.io.PrintWriter;
+import java.lang.reflect.Method;
 import java.util.Properties;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
@@ -18,6 +20,7 @@ import FunctionLibraries.FunctionLibrary;
 import FunctionLibraries.WebDriverBrowser;
 import Logger.LoggerInstance;
 import PageObjects.HomePage;
+import Reports.CustomMethodReport;
 
 
 public class Home_Page {
@@ -26,11 +29,21 @@ public class Home_Page {
 	private HomePage homePage;
 
 	Properties prop = new Properties();
-
+	
+	CustomMethodReport cmr = new CustomMethodReport();
+	FunctionLibrary fLib = new FunctionLibrary();
+	PrintWriter printWrite = null;
+	boolean isVerificationPassed= true;
+	
 	@BeforeMethod
-	public void setUp() throws Exception {
+	public void setUp(Method method) throws Exception {
 		String browser = null;
 		String url = null;
+		
+		//Call create Writer method to generate the html file
+		printWrite = cmr.createWriter(method.getName());
+		cmr.startHtmlPage(printWrite);
+		
 		        // Create input stream object of property file.
 				InputStream inputConfig = new FileInputStream(AutomationConstants.PROPERTY_FILE_NAME);
 				// Create the logger instance object
@@ -65,7 +78,14 @@ public class Home_Page {
 
 			// Verifying HomePage tab
 			LoggerInstance.logger.info("Click on Home Page Tab.");
-			homePage.verifyTabDisplay();
+			boolean isVerifyTabDisplay = homePage.verifyTabDisplay();
+			
+			if(isVerifyTabDisplay)
+				cmr.generateExecutionReport(printWrite, "Verify if Home Page tab is displayed.", "Home Page Tab is displayed.", "Home Page Tab is displayed.", true, null);
+			else {
+				isVerificationPassed=false;
+				cmr.generateExecutionReport(printWrite, "Verify if Home Page tab is displayed.", "Home Page Tab is displayed.", "Home Page Tab is not displayed.", false, fLib.captureScreenshot());
+			}
 			
 			//Click on first square button and Verifying Market Today,SenSex Text
 			LoggerInstance.logger.info("Click on square button and verify Market today, sensex text.");
@@ -73,19 +93,40 @@ public class Home_Page {
 			
 			//Verify Latest News Section
 			LoggerInstance.logger.info("Verify latest news section.");
-			homePage.verifyLatestNewsSection();
+			boolean isVerifyLatestNewsSection = homePage.verifyLatestNewsSection();
+			
+			if(isVerifyLatestNewsSection) {
+				cmr.generateExecutionReport(printWrite, "Verify if latest news section is displayed.", "Latest news section is displayed.", "Latest news section is displayed.", true, null);
+			} else {
+				isVerificationPassed=false;
+				cmr.generateExecutionReport(printWrite, "Verify if latest news section is displayed.", "Latest news section is displayed.", "Latest news section is not displayed.", false, fLib.captureScreenshot());
+			}
 			
 			//Verify Search on home page
 			LoggerInstance.logger.info("Click on home page search.");
-			homePage.verifySearchOnHomePage();
-			
+			boolean isVerifySearchOnHomePage = homePage.verifySearchOnHomePage();
+			if(isVerifySearchOnHomePage){
+				cmr.generateExecutionReport(printWrite, "Verify if Company Name is searched.", "Company Name is searched.", "Company Name is searched.", true, null);
+			} else{
+				isVerificationPassed=false;
+				cmr.generateExecutionReport(printWrite, "Verify if Company Name is searched.", "Company Name is searched.", "Company Name is not searched.", false, fLib.captureScreenshot());
+			}
 			LoggerInstance.logger.info("***********************Home_VerifyTabValue() Ended*********************************");
+			
+			if(!isVerificationPassed) {
+				isVerificationPassed=true;
+				org.testng.Assert.fail();
+			}
 			
 		} catch (Exception e) {
 			LoggerInstance.logger.info("Exception occured.");
 			e.printStackTrace();
 		} finally {
 			homePage = null;
+			if(!isVerificationPassed) {
+				isVerificationPassed=true;
+				org.testng.Assert.fail();
+			}
 		}
 	}
 
@@ -95,6 +136,8 @@ public class Home_Page {
 		driver.close();
 		driver.quit();
 		LoggerInstance.logger.info("Browser closed.");
+		cmr.endHtmlPage(printWrite);
+		printWrite.flush();
 	}
 
 }

@@ -6,6 +6,8 @@ package TestCases;
  * */
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.io.PrintWriter;
+import java.lang.reflect.Method;
 import java.util.Properties;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
@@ -13,9 +15,11 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import FunctionLibraries.AutomationConstants;
+import FunctionLibraries.FunctionLibrary;
 import FunctionLibraries.WebDriverBrowser;
 import Logger.LoggerInstance;
 import PageObjects.ReportsPage;
+import Reports.CustomMethodReport;
 
 
 public class Reports_Page {
@@ -24,13 +28,21 @@ public class Reports_Page {
 	static WebDriver driver;
 
 	Properties prop = new Properties();
-
+	
+	CustomMethodReport cmr = new CustomMethodReport();
+	FunctionLibrary fLib = new FunctionLibrary();
+	PrintWriter printWrite = null;
+	boolean isVerificationPassed= true;
+	
 	// This method would be run before each method present in testcase file & will launch browser & will open application.
 	@BeforeMethod
-	public void setUp() throws Exception {
+	public void setUp(Method method) throws Exception {
 		String browser = null;
 		String url = null;
-
+		
+		cmr.createWriter(method.getName());
+		cmr.startHtmlPage(printWrite);
+		
 		// Create input stream object of property file.
 		InputStream inputConfig = new FileInputStream(AutomationConstants.PROPERTY_FILE_NAME);
 
@@ -79,27 +91,62 @@ public class Reports_Page {
 		
 		//Verify the title of the page.
 		LoggerInstance.logger.info("Verify user is navigated to Research reports page.");
-		obj_reportPage.verifyTitle();
-		
+		boolean isVerifyTitle = obj_reportPage.verifyTitle();
+		if(isVerifyTitle){
+			cmr.generateExecutionReport(printWrite, "Verify if user is navigaed to Research Reports Page.", "User is navigaed to Research Reports Page.", "User is navigated to Research Reports Page.", true, null);
+		}else {
+			isVerificationPassed=false;
+			cmr.generateExecutionReport(printWrite, "Verify if user is navigaed to Research Reports Page.", "User is navigaed to Research Reports Page.", "User is not navigated to Research Reports Page.", false, fLib.captureScreenshot());
+		}
 		// Verify the reports tab is displayed.
 		LoggerInstance.logger.info("Verify All reports tab is displayed.");
-		obj_reportPage.verifyAllReportsTabIsDisplayed();
+		
+		boolean isVerifyAllReportsTabIsDisplayed= obj_reportPage.verifyAllReportsTabIsDisplayed();
+		if(isVerifyAllReportsTabIsDisplayed)
+			cmr.generateExecutionReport(printWrite, "Verify if All Reports tab is displayed.", "All Reports tab is displayed.", "All Reports tab is displayed.", true, null);
+		else{
+			isVerificationPassed=false;
+			cmr.generateExecutionReport(printWrite, "Verify if All Reports tab is displayed.", "All Reports tab is displayed.", "All Reports tab is not displayed.", false, fLib.captureScreenshot());
+		}
 		
 		// Verify the premium tab is displayed.
 		LoggerInstance.logger.info("Verify premium tab is displayed.");
-		obj_reportPage.verifyPremiumTabIsDisplayed();
+		boolean isVerifyPremiumTabIsDisplayed =obj_reportPage.verifyPremiumTabIsDisplayed();
+		
+		if(isVerifyPremiumTabIsDisplayed)
+			cmr.generateExecutionReport(printWrite, "Verify if Premium Tab is displayed.", "Premium Tab is displayed.", "Premium Tab is displayed.", true, null);
+		else{
+			isVerificationPassed=true;
+			cmr.generateExecutionReport(printWrite, "Verify if Premium Tab is displayed.", "Premium Tab is displayed.", "Premium Tab is not displayed.", false, fLib.captureScreenshot());
+		}
 		
 		// Verify the latest tab is displayed.
 		LoggerInstance.logger.info("Verify latest tab is displayed.");
-		obj_reportPage.verifyLatestTabIsDisplayed();
+		boolean isVerifyLatestTabIsDisplayed = obj_reportPage.verifyLatestTabIsDisplayed();
+		
+		if(isVerifyLatestTabIsDisplayed)
+			cmr.generateExecutionReport(printWrite, "Verify if Latest tab is displayed.", "Latest tab is displayed.", "Latest tab is displayed.", true, null);
+		else{
+			isVerificationPassed=false;
+			cmr.generateExecutionReport(printWrite, "Verify if Latest tab is displayed.", "Latest tab is displayed.", "Latest tab is not displayed.", false, fLib.captureScreenshot());
+		}
 		
 		// Verify the most viewed tab is displayed.
 		LoggerInstance.logger.info("Verify Most viewed tab is displayed.");
-		obj_reportPage.verifyMostViewedTabIsDisplayed();
+		
+		boolean isVerifyMostViewedTabIsDisplayed = obj_reportPage.verifyMostViewedTabIsDisplayed();
+		if(isVerifyMostViewedTabIsDisplayed)
+			cmr.generateExecutionReport(printWrite, "Verify if Most Viewed Tab is displayed.", "Most Viewed Tab is displayed.", "Most Viewed Tab is displayed.", true, null);
+		else{
+			isVerificationPassed=false;
+			cmr.generateExecutionReport(printWrite, "Verify if Most Viewed Tab is displayed.", "Most Viewed Tab is displayed.", "Most Viewed Tab is not displayed.", false, fLib.captureScreenshot());
+		}
 		
 		// Click on the first report.
 		LoggerInstance.logger.info("Click on the first report link");
 		obj_reportPage.clickOnReportLink();
+		
+		
 		
 		// Switch to the newly opened window
 		LoggerInstance.logger.info("Switch to new window");
@@ -107,14 +154,27 @@ public class Reports_Page {
 		
 		// Verify the title of report opened in new window.
 		LoggerInstance.logger.info("Verify the title of new window");
-		obj_reportPage.verifyNewWindowTitle();
-		
+		boolean isVerifyNewWindowTitle = obj_reportPage.verifyNewWindowTitle();
+		if(isVerifyNewWindowTitle){
+			cmr.generateExecutionReport(printWrite, "Verify the title of new window.", "Title of the new window is matched.","Title of the new window is matched.", true, null);
+		} else{
+			isVerificationPassed=false;
+			cmr.generateExecutionReport(printWrite, "Verify the title of new window.", "Title of the new window is matched.","Title of the new window is matched.", false, fLib.captureScreenshot());
+		}
 		LoggerInstance.logger.info("***********************Reports_ResearchReports_VerifyReportsPage() Ended*********************************");
+		if(!isVerificationPassed){
+			isVerificationPassed=true;
+			org.testng.Assert.fail();
+		}
 	} catch (Exception e) {
 		LoggerInstance.logger.info("Exception occured.");
 		e.printStackTrace();
 	} finally {
 		obj_reportPage = null;
+		if(!isVerificationPassed){
+			isVerificationPassed=true;
+			org.testng.Assert.fail();
+		}
 	}
 }
 	
@@ -131,40 +191,83 @@ public class Reports_Page {
 		
 		// Verify the page is displayed or not.
 		LoggerInstance.logger.info("Verify Daily Market WrapPage Is displayed.");
-		obj_reportPage.VerifyDailyMarketWrapPageIsdisplayed();
-		
+		boolean isVerifyDailyMarketWrapPageIsdisplayed =obj_reportPage.VerifyDailyMarketWrapPageIsdisplayed();
+		if(isVerifyDailyMarketWrapPageIsdisplayed)
+			cmr.generateExecutionReport(printWrite, "Verify if Daily Market Wrap Page is displayed.", "Daily Market Wrap Page is displayed.", "Daily Market Wrap Page is displayed.", true, null);
+		else{
+			isVerificationPassed=false;
+			cmr.generateExecutionReport(printWrite, "Verify if Daily Market Wrap Page is displayed.", "Daily Market Wrap Page is displayed.", "Daily Market Wrap Page is not displayed.", false, fLib.captureScreenshot());
+		}
 		// Verify the cnx table is displayed .
 		LoggerInstance.logger.info("Verify CNX Table Is  displayed on Daily Market WrapPage Page.");
-		obj_reportPage.VerifyCNXTableIsdisplayed();
 		
+		boolean isVerifyCNXTableIsdisplayed = obj_reportPage.VerifyCNXTableIsdisplayed();
+		if(isVerifyCNXTableIsdisplayed)
+			cmr.generateExecutionReport(printWrite, "Verify if CNX table is displayed on Daily Market WrapPage page.", "CNX table is displayed on Daily Market WrapPage page.", "CNX table is displayed on Daily Market WrapPage page.", true, null);
+		else{
+			isVerificationPassed= false;
+			cmr.generateExecutionReport(printWrite, "Verify if CNX table is displayed on Daily Market WrapPage page.", "CNX table is displayed on Daily Market WrapPage page.", "CNX table is not displayed on Daily Market WrapPage page.", false, fLib.captureScreenshot());
+		}
 		//Verify the BSE sensex table is displayed.
 		LoggerInstance.logger.info("Verify BSE Sensex Table Is  displayed on Daily Market WrapPage Page.");
-		obj_reportPage.VerifyBSESensexTableIsdisplayed();
-	
+		boolean isVerifyBSESensexTableIsdisplayed = obj_reportPage.VerifyBSESensexTableIsdisplayed();
+		if(isVerifyBSESensexTableIsdisplayed)
+			cmr.generateExecutionReport(printWrite, "Verify if BSE sensex table is displayed on Daily Market Wrap Page.", "BSE sensex table is displayed on Daily Market Wrap Page.", "BSE sensex table is displayed on Daily Market Wrap Page.", true, null);
+		else{
+			isVerificationPassed=false;
+			cmr.generateExecutionReport(printWrite, "Verify if BSE sensex table is displayed on Daily Market Wrap Page.", "BSE sensex table is displayed on Daily Market Wrap Page.", "BSE sensex table is not displayed on Daily Market Wrap Page.", false, fLib.captureScreenshot());
+		}
 		
 		//Verify The CNX Table date
      	LoggerInstance.logger.info("Verify that CNX Table contains Last Three Dates.");
-     	obj_reportPage.VerifyCNXEffectiveDateDisplayed();
-		
+     	boolean isVerifyCNXEffectiveDateDisplayed = obj_reportPage.VerifyCNXEffectiveDateDisplayed();
+     	if(isVerifyCNXEffectiveDateDisplayed)
+			cmr.generateExecutionReport(printWrite, "Verify if CNX table contains last three dates.", "CNX table contains last three dates.", "CNX table contains last three dates.", true, null);
+		else{
+			isVerificationPassed= false;
+			cmr.generateExecutionReport(printWrite, "Verify if CNX table contains last three dates.", "CNX table contains last three dates.", "CNX table does not contain last three dates.", false, fLib.captureScreenshot());
+		}
 		//Verify The BSE Sensex Table date
 		LoggerInstance.logger.info("Verify that BSE SEnsex Table contains Last Three Dates.");
-		obj_reportPage.VerifyBSESensexTableDateDisplayed();
-		
+		boolean isVerifyBSESensexTableDateDisplayed =obj_reportPage.VerifyBSESensexTableDateDisplayed();
+		if(isVerifyBSESensexTableDateDisplayed)
+			cmr.generateExecutionReport(printWrite, "Verify if BSE sensex table contains last three dates.", "BSE sensex table contains last three dates.", "BSE sensex table contains last three dates.", true, null);
+		else{
+			isVerificationPassed=false;
+			cmr.generateExecutionReport(printWrite, "Verify if BSE sensex table contains last three dates.", "BSE sensex table contains last three dates.", "BSE sensex table does not contain last three dates.", false, fLib.captureScreenshot());
+		}
 		// Verify date and heading  daily wrap and scrap and heading
 		LoggerInstance.logger.info("Verify that Daily Scrap  contains Heading and 10 colmun.");
-		obj_reportPage.VerifyDailyWrapFrameContainsHeading();
-		
+		boolean isVerifyDailyWrapFrameContainsHeading = obj_reportPage.VerifyDailyWrapFrameContainsHeading();
+		if(isVerifyDailyWrapFrameContainsHeading)
+			cmr.generateExecutionReport(printWrite, "Verify if Daily Scrap contains heading and 10 column.", "Daily Scrap contains heading and 10 column.", "Daily Scrap contains heading and 10 column.", true, null);
+		else{
+			isVerificationPassed=false;
+			cmr.generateExecutionReport(printWrite, "Verify if Daily Scrap contains heading and 10 column.", "Daily Scrap contains heading and 10 column.", "Daily Scrap does not contain heading and 10 column.", false, fLib.captureScreenshot());
+		}
 		// Verify date and heading  daily wrap and scrap and heading on new loaded page
 		LoggerInstance.logger.info("Verify that Daily Scrap  contains Heading as on New Page.");
-		obj_reportPage.VerifyDailyWrapDatePageHeading();
-		
+		boolean isVerifyDailyWrapDatePageHeading =obj_reportPage.VerifyDailyWrapDatePageHeading();
+		if(isVerifyDailyWrapDatePageHeading)
+			cmr.generateExecutionReport(printWrite, "Verify if Daily Scrap contains heading as on New Page.", "Daily Scrap contains heading as on New Page.", "Daily Scrap contains heading as on New Page.", true, null);
+		else{
+			isVerificationPassed=false;
+			cmr.generateExecutionReport(printWrite, "Verify if Daily Scrap contains heading as on New Page.", "Daily Scrap contains heading as on New Page.", "Daily Scrap does not contain heading as on New Page.", false, fLib.captureScreenshot());
+		}
 		LoggerInstance.logger.info("***********************Reports_DailyWrap_VerifyDailyWrapPage()Ended*********************************");	
-
+		if(!isVerificationPassed){
+			isVerificationPassed=true;
+			org.testng.Assert.fail();
+		}
 	} catch (Exception e) {
 		LoggerInstance.logger.info("Exception occured.");
 		e.printStackTrace();
 	} finally {
 		obj_reportPage = null;
+		if(!isVerificationPassed){
+			isVerificationPassed=true;
+			org.testng.Assert.fail();
+		}
 	}	
 		
 	}
@@ -176,6 +279,8 @@ public class Reports_Page {
 		driver.close();
 		driver.quit();
 		LoggerInstance.logger.info("Browser closed");
+		cmr.endHtmlPage(printWrite);
+		printWrite.flush();
 	}
 
 }
