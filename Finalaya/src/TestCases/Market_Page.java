@@ -275,6 +275,7 @@ public class Market_Page {
 		LoggerInstance.logger.info("***********************Market Verify ETFTab() Ended*********************************");
 		
 		if(!isVerificationPassed){
+			isVerificationPassed = true;
 			org.testng.Assert.fail();
 		}
 		

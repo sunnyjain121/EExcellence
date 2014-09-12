@@ -40,7 +40,7 @@ public class Reports_Page {
 		String browser = null;
 		String url = null;
 		
-		cmr.createWriter(method.getName());
+		printWrite = cmr.createWriter(method.getName());
 		cmr.startHtmlPage(printWrite);
 		
 		// Create input stream object of property file.
@@ -116,7 +116,7 @@ public class Reports_Page {
 		if(isVerifyPremiumTabIsDisplayed)
 			cmr.generateExecutionReport(printWrite, "Verify if Premium Tab is displayed.", "Premium Tab is displayed.", "Premium Tab is displayed.", true, null);
 		else{
-			isVerificationPassed=true;
+			isVerificationPassed=false;
 			cmr.generateExecutionReport(printWrite, "Verify if Premium Tab is displayed.", "Premium Tab is displayed.", "Premium Tab is not displayed.", false, fLib.captureScreenshot());
 		}
 		

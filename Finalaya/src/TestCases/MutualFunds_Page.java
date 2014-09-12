@@ -43,7 +43,8 @@ public class MutualFunds_Page {
 		String browser = null;
 		String url = null;
 		
-		cmr.createWriter(method.getName());
+		printWrite = cmr.createWriter(method.getName());
+		cmr.startHtmlPage(printWrite);
 		
 		// Create input stream object of property file.
 		InputStream inputConfig = new FileInputStream(AutomationConstants.PROPERTY_FILE_NAME);
@@ -337,7 +338,7 @@ public void MutualFunds_MonthScoreCard_VerifyColorAndValue() {
 	LoggerInstance.logger.info("***********MutualFunds_MonthScoreCard_VerifyColorAndValue() Ended**************");
 	
 	if(!isVerificationPassed) {
-		isVerificationPassed=false;
+		isVerificationPassed=true;
 		org.testng.Assert.fail();
 	}
 	
@@ -347,7 +348,7 @@ public void MutualFunds_MonthScoreCard_VerifyColorAndValue() {
 	} finally {
 		obj_mutualfundspage = null;
 		if(!isVerificationPassed) {
-			isVerificationPassed=false;
+			isVerificationPassed=true;
 			org.testng.Assert.fail();
 		}
 	}	
@@ -374,6 +375,7 @@ public void MutualFunds_MonthScoreCard_VerifyColorAndValue() {
 		// Verify that expected text is displayed on Page
 		LoggerInstance.logger.info("Verify that expected text is displayed on Page");
 		boolean isVerifyTextCF =obj_mutualfundspage.verifyTextCF();
+		
 		if(isVerifyTextCF){
 			cmr.generateExecutionReport(printWrite, "Verify if expected text is displayed on page.", "Expected Text is displayed on page.", "Expected text is displayed on page.", true, null);
 		}else {

@@ -44,7 +44,7 @@ public class Resources_Page {
 		String browser = null;
 		String url = null;
 		
-		cmr.createWriter(method.getName());
+		printWrite= cmr.createWriter(method.getName());
 		cmr.startHtmlPage(printWrite);
 		// Create input stream object of property file.
 		InputStream inputConfig = new FileInputStream(AutomationConstants.PROPERTY_FILE_NAME);

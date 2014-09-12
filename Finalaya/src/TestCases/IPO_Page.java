@@ -42,7 +42,7 @@ public class IPO_Page {
 		String url = null;
 
 		//Call this method to generate the html file
-		cmr.createWriter(method.getName());
+		printWrite = cmr.createWriter(method.getName());
 		cmr.startHtmlPage(printWrite);
 		
 		// Create input stream object of property file.

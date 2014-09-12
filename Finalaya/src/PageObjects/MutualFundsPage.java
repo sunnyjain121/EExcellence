@@ -12,29 +12,29 @@ import Logger.LoggerInstance;
 public class MutualFundsPage {
 
 	final WebDriver driver;
-	private final String xpath_MutualFundTab = ".//*[@id='menu-wrapper']/ul/li[3]/a";
-	private final String xpath_FundHouses = ".//*[@id='menu-wrapper']/ul/li[3]/div/div[1]/ul/li[1]/a";
-	private final String xpath_FHHeader = ".//*[@id='aspnetForm']/div[5]/div/div[10]/div[1]/div/h1/span";
-	private final String xpath_Funds = ".//*[@id='menu-wrapper']/ul/li[3]/div/div[1]/ul/li[2]/a";
-	private final String xpath_FHeader = ".//*[@id='aspnetForm']/div[5]/div/div[10]/div[1]/div/span";
-	private final String xpath_FundScreener = ".//*[@id='menu-wrapper']/ul/li[3]/div/div[1]/ul/li[3]/a";
-	private final String xpath_FSHeader = ".//*[@id='aspnetForm']/div[5]/div/div[10]/div[1]/div/h1/span";
-	private final String xpath_PortChur = ".//*[@id='menu-wrapper']/ul/li[3]/div/div[1]/ul/li[4]/a";
-	private final String xpath_PCHeader = ".//*[@id='aspnetForm']/div[5]/div/div[10]/div[1]/div/h1/span";
-	private final String xpath_CompareFunds = ".//*[@id='menu-wrapper']/ul/li[3]/div/div[1]/ul/li[5]/a";
-	private final String xpath_CFHeader = ".//*[@id='NoLftRht']/h1/span";
-	private final String xpath_MonthlySCard = ".//*[@id='menu-wrapper']/ul/li[3]/div/div[1]/ul/li[6]/a";
-	private final String xpath_MSCHeader = ".//*[@id='aspnetForm']/div[5]/div/div[10]/table/tbody/tr[1]/td/div/span";
-	private final String xpath_NewFOffers = ".//*[@id='menu-wrapper']/ul/li[3]/div/div[1]/ul/li[7]/a";
-	private final String xpath_NFOHeader = ".//*[@id='aspnetForm']/div[5]/div/div[10]/div[1]/div/span/h1";
-	private final String xpath_Corpus = ".//*[@id='aspnetForm']/div[5]/div/div[10]/table/tbody/tr[4]/td/span";
-	private final String xpath_CorpusGainers = ".//*[@id='aspnetForm']/div[5]/div/div[10]/table/tbody/tr[7]/td[1]/span";
-	private final String xpath_CorpusLosers = ".//*[@id='aspnetForm']/div[5]/div/div[10]/table/tbody/tr[7]/td[3]/span";
-	private final String xpath_NAVGainers = ".//*[@id='aspnetForm']/div[5]/div/div[10]/table/tbody/tr[10]/td[1]/span";
-	private final String xpath_NAVLosers = ".//*[@id='aspnetForm']/div[5]/div/div[10]/table/tbody/tr[10]/td[3]/span";
-	private final String xpath_valueCorpusGainerFirstRow = ".//*[@id='aspnetForm']/div[5]/div/div[10]/table/tbody/tr[7]/td[1]/table/tbody/tr[1]/td[2]/span";
-	private final String xpath_valueCorpusLosersFirstRow = ".//*[@id='aspnetForm']/div[5]/div/div[10]/table/tbody/tr[7]/td[3]/table/tbody/tr[1]/td[2]/span";
-	private final String xpath_MutualFundCF = ".//*[@id='menu-wrapper']/ul/li[3]/div/div[1]/ul/li[5]/a";
+	private final String css_MutualFundTab = "#menu-wrapper > ul > li:nth-child(3) > a";
+	private final String css_FundHouses = "#menu-wrapper > ul > li:nth-child(3) > div > div.nav-column > ul > li:nth-child(1) > a";
+	private final String css_FHHeader = "#aspnetForm > div:nth-child(35) > div > div:nth-child(14) > div.mf_Header > div > h1 > span";
+	private final String css_Funds = "#menu-wrapper > ul > li:nth-child(3) > div > div.nav-column > ul > li:nth-child(2) > a";
+	private final String css_FHeader = "#aspnetForm > div:nth-child(35) > div > div:nth-child(14) > div.mf_Header > div > h1 > span";
+	private final String css_FundScreener = "#menu-wrapper > ul > li:nth-child(3) > div > div.nav-column > ul > li:nth-child(3) > a";
+	private final String css_FSHeader = "#aspnetForm > div:nth-child(36) > div > div:nth-child(14) > div.mf_Header > div > h1 > span";
+	private final String css_PortChur = "#menu-wrapper > ul > li:nth-child(3) > div > div.nav-column > ul > li:nth-child(4) > a";
+	private final String css_PCHeader = "#aspnetForm > div:nth-child(36) > div > div:nth-child(14) > div.mf_Header > div > h1 > span";
+	private final String css_CompareFunds = "#menu-wrapper > ul > li:nth-child(3) > div > div.nav-column > ul > li:nth-child(5) > a";
+	private final String css_CFHeader = "#NoLftRht > h1 > span";
+	private final String css_MonthlySCard = "#menu-wrapper > ul > li:nth-child(3) > div > div.nav-column > ul > li:nth-child(6) > a";
+	private final String css_MSCHeader = "#aspnetForm > div:nth-child(35) > div > div:nth-child(14) > table > tbody > tr:nth-child(1) > td > div > h1 > span";
+	private final String css_NewFOffers = "#menu-wrapper > ul > li:nth-child(3) > div > div.nav-column > ul > li:nth-child(7) > a";
+	private final String css_NFOHeader = "#aspnetForm > div:nth-child(35) > div > div:nth-child(14) > div.mf_Header > div > span > h1";
+	private final String css_Corpus = "#aspnetForm > div:nth-child(35) > div > div:nth-child(14) > table > tbody > tr:nth-child(4) > td > span";
+	private final String css_CorpusGainers = "#aspnetForm > div:nth-child(35) > div > div:nth-child(14) > table > tbody > tr:nth-child(7) > td:nth-child(1) > span";
+	private final String css_CorpusLosers = "#aspnetForm > div:nth-child(35) > div > div:nth-child(14) > table > tbody > tr:nth-child(7) > td:nth-child(3) > span";
+	private final String css_NAVGainers = "#aspnetForm > div:nth-child(35) > div > div:nth-child(14) > table > tbody > tr:nth-child(10) > td:nth-child(1) > span";
+	private final String css_NAVLosers = "#aspnetForm > div:nth-child(35) > div > div:nth-child(14) > table > tbody > tr:nth-child(10) > td:nth-child(3) > span";
+	private final String css_valueCorpusGainerFirstRow = "#aspnetForm > div:nth-child(35) > div > div:nth-child(14) > table > tbody > tr:nth-child(7) > td:nth-child(1) > table > tbody > tr:nth-child(1) > td:nth-child(2) > span";
+	private final String css_valueCorpusLosersFirstRow = "#aspnetForm > div:nth-child(35) > div > div:nth-child(14) > table > tbody > tr:nth-child(7) > td:nth-child(3) > table > tbody > tr:nth-child(1) > td:nth-child(2) > span";
+	private final String css_MutualFundCF = "#menu-wrapper > ul > li:nth-child(3) > div > div.nav-column > ul > li:nth-child(5) > a";
 	private final String id_actualValueOnCompPage = "ctl00_BodyCPH_ucLftPanel_lblAvgAUM";
 	private final String id_CorpusGainers_FirstRow = "ctl00_BodyCPH_rptAUMGainers_ctl01_lnkAMC";
 	private final String id_CorpusLosers_FirstRow = "ctl00_BodyCPH_rptAUMLosers_ctl01_lnkAMC";
@@ -58,51 +58,51 @@ public class MutualFundsPage {
 	private String valueCorpusGainersOnMSCPage;
 	private String valueCorpusLosersOnMSCPage;
 	
-	@FindBy(xpath = xpath_MutualFundTab)
+	@FindBy(css = css_MutualFundTab)
 	private WebElement we_MutualFundsTab;
 	@FindBy(id = id_ActualTextMF)
 	private WebElement we_ActualTextMF;
-	@FindBy(xpath = xpath_FundHouses)
+	@FindBy(css = css_FundHouses)
 	private WebElement we_FundHouses;
-	@FindBy(xpath = xpath_Funds)
+	@FindBy(css = css_Funds)
 	private WebElement we_Funds;
-	@FindBy(xpath = xpath_FundScreener)
+	@FindBy(css = css_FundScreener)
 	private WebElement we_FundScreener;
-	@FindBy(xpath = xpath_PortChur)
+	@FindBy(css = css_PortChur)
 	private WebElement we_PortChur;
-	@FindBy(xpath = xpath_CompareFunds)
+	@FindBy(css = css_CompareFunds)
 	private WebElement we_CompareFunds;
-	@FindBy(xpath = xpath_NewFOffers)
+	@FindBy(css = css_NewFOffers)
 	private WebElement we_NewFOffers;
-	@FindBy(xpath = xpath_FHHeader)
+	@FindBy(css = css_FHHeader)
 	private WebElement we_FHHeader;
-	@FindBy(xpath = xpath_FHeader)
+	@FindBy(css = css_FHeader)
 	private WebElement we_FHeader;
-	@FindBy(xpath = xpath_FSHeader)
+	@FindBy(css = css_FSHeader)
 	private WebElement we_FSHeader;
-	@FindBy(xpath = xpath_PCHeader)
+	@FindBy(css = css_PCHeader)
 	private WebElement we_PCHeader;
-	@FindBy(xpath = xpath_CFHeader)
+	@FindBy(css = css_CFHeader)
 	private WebElement we_CFHeader;
-	@FindBy(xpath = xpath_MSCHeader)
+	@FindBy(css = css_MSCHeader)
 	private WebElement we_MSCHeader;
-	@FindBy(xpath = xpath_NFOHeader)
+	@FindBy(css = css_NFOHeader)
 	private WebElement we_NFOHeader;
-	@FindBy(xpath = xpath_MonthlySCard)
+	@FindBy(css = css_MonthlySCard)
 	private WebElement we_MonthlySCard;
-	@FindBy(xpath = xpath_Corpus)
+	@FindBy(css = css_Corpus)
 	private WebElement we_Corpus;
-	@FindBy(xpath = xpath_CorpusGainers)
+	@FindBy(css = css_CorpusGainers)
 	private WebElement we_CorpusGainers;
-	@FindBy(xpath = xpath_CorpusLosers)
+	@FindBy(css = css_CorpusLosers)
 	private WebElement we_CorpusLosers;
-	@FindBy(xpath = xpath_NAVGainers)
+	@FindBy(css = css_NAVGainers)
 	private WebElement we_NAVGainers;
-	@FindBy(xpath = xpath_NAVLosers)
+	@FindBy(css = css_NAVLosers)
 	private WebElement we_NAVLosers;
-	@FindBy(xpath = xpath_valueCorpusGainerFirstRow)
+	@FindBy(css = css_valueCorpusGainerFirstRow)
 	private WebElement we_valueCorpusGainerFirstRow;
-	@FindBy(xpath = xpath_valueCorpusLosersFirstRow)
+	@FindBy(css = css_valueCorpusLosersFirstRow)
 	private WebElement we_valueCorpusLosersFirstRow;
 	@FindBy(id = id_actualValueOnCompPage)
 	private WebElement we_actualValueOnCompPage;
@@ -110,7 +110,7 @@ public class MutualFundsPage {
 	private WebElement we_CorpusGainers_FirstRow;
 	@FindBy(id = id_CorpusLosers_FirstRow)
 	private WebElement we_CorpusLosers_FirstRow;
-	@FindBy(xpath = xpath_MutualFundCF)
+	@FindBy(css = css_MutualFundCF)
 	private WebElement we_MutualFundCF;
 	@FindBy(id = id_ActualTextCF)
 	private WebElement we_ActualTextCF;
@@ -145,7 +145,6 @@ public class MutualFundsPage {
 	public void hoverMouse() {
 		try {
 			LoggerInstance.logger.info("Hover mouse over Mutual Funds tab");
-			FunctionLibrary.waitTillElementVisible(5, By.xpath(xpath_MutualFundTab));
 			Actions action = new Actions(driver);
 			action.moveToElement(we_MutualFundsTab).build().perform();
 		} catch (Exception e) {
@@ -442,8 +441,6 @@ public class MutualFundsPage {
 			return result;
 			}
 	}
-	
-	
 
 	/*
 	 * Method Name: verifyCorpusColour 
@@ -456,7 +453,10 @@ public class MutualFundsPage {
 		boolean result = false;
 		try {
 			LoggerInstance.logger.info("Verifying color of Top 5 Fund Houses in terms of Corpus displayed in BLUE");
-			result=FunctionLibrary.verifyElementColor(we_Corpus,expectedCorpusColor);
+			String colorcode = FunctionLibrary.getrgbaColor(we_Corpus);
+			if (colorcode==expectedCorpusColor)
+				result=true;
+				return result;
 		} catch (Exception e) {
 			LoggerInstance.logger.info("Not able to verify color of Top 5 Fund Houses in terms of Corpus displayed in BLUE");
 		}
@@ -580,7 +580,6 @@ public class MutualFundsPage {
 	public void hoverMouseCF() {
 		try {
 			LoggerInstance.logger.info("hover mouse over Compare Funds item");
-		FunctionLibrary.waitTillElementVisible(5, By.xpath(xpath_MutualFundCF));
 		Actions action = new Actions(driver);
 		action.moveToElement(we_MutualFundCF).build().perform();
 		} catch (Exception e) {
