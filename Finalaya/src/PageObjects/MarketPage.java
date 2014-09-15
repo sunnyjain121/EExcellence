@@ -2,18 +2,24 @@ package PageObjects;
 
 
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.apache.log4j.Logger;
+
+//import com.gargoylesoftware.htmlunit.WebConsole.Logger;
 
 import FunctionLibraries.FunctionLibrary;
 import Logger.LoggerInstance;
 
 public class MarketPage {
 	
-	 WebDriver driver;
+	WebDriver driver;
+	Logger logger;
 	public MarketPage(){
 		this.driver= driver;
+		//logger= LoggerInstance.logger;
 	}
 	private final String csspath_MarketTab = "#menu-wrapper > ul > li:nth-child(1) > a";//"html.js.flexbox.canvas.canvastext.webgl.no-touch.geolocation.postmessage.no-websqldatabase.indexeddb.hashchange.history.draganddrop.websockets.rgba.hsla.multiplebgs.backgroundsize.borderimage.borderradius.boxshadow.textshadow.opacity.cssanimations.csscolumns.cssgradients.no-cssreflections.csstransforms.no-csstransforms3d.csstransitions.fontface.video.audio.localstorage.sessionstorage.webworkers.applicationcache.svg.inlinesvg.smil.svgclippaths body form#form1 div.topContainerHome div.fltLft100 div div#ucHeader_divHeader div#ucHeader_divMenu.fltLft100 div#menu-wrapper.menu-wrapper ul.nav li a";
 	private final String csspath_GoldETFTAble="#dvGoldReal > table > tbody > tr:nth-child(1) > td > table";
@@ -26,9 +32,9 @@ public class MarketPage {
 	private final String id_SensexValueChange="ctl00_BodyCPH_ucExGraph_lblAbsoluteChange";
 	private final String id_SensexPercentageChange="ctl00_BodyCPH_ucExGraph_lblPercentChange";
 	private final String id_ETFZonePage="ctl00_BodyCPH_lblDocuments";
-	private final String xpath_MarketToday="//*[@id='divMarket']//div[contains(text(),'Market Today')]";
+	private final String css_MarketToday="#divMarket > table:nth-child(1) > tbody > tr:nth-child(2) > td > div > h1";//*[@id='divMarket']//div[contains(text(),'Market Today')]";
 	private final String csspath_ETFZoneTab ="#menu-wrapper > ul > li:nth-child(1) > div > div.nav-column > ul > li:nth-child(5) > a";
-	private final String csspath_OpenLowHighPreClose = "html.js.flexbox.canvas.canvastext.webgl.no-touch.geolocation.postmessage.no-websqldatabase.indexeddb.hashchange.history.draganddrop.websockets.rgba.hsla.multiplebgs.backgroundsize.borderimage.borderradius.boxshadow.textshadow.opacity.cssanimations.csscolumns.cssgradients.no-cssreflections.csstransforms.no-csstransforms3d.csstransitions.fontface.video.audio.localstorage.sessionstorage.webworkers.applicationcache.svg.inlinesvg.smil.svgclippaths body form#aspnetForm div div div div#divMarket div#mak_1 div.mak_info_grp div#divExchangeGraph div div.mar_OHLC";
+	private final String csspath_OpenLowHighPreClose = "#divExchangeGraph > div > div.mar_OHLC";
 	@FindBy(css = csspath_MarketTab)
 	public WebElement we_MarketTab;
 	@FindBy(name = name_Underlying)
@@ -55,7 +61,7 @@ public class MarketPage {
 	public WebElement we_SensexValueChange;
 	@FindBy(id = id_SensexPercentageChange)
 	public WebElement we_SensexPercentageChange;
-	@FindBy(xpath = xpath_MarketToday)
+	@FindBy(css = css_MarketToday)
 	public WebElement we_MarketToday;
 	
 	
@@ -122,6 +128,7 @@ public class MarketPage {
 	public boolean verifyNegativeValueColor(){
 		boolean result = false;
 		try{
+			
 			LoggerInstance.logger.info("verify the color of negative value is Red");
 			String result2=FunctionLibrary.getrgbaColor(we_NegativeValue);
 			result= FunctionLibrary.verifyStringsAreSame(result2,"#FF0000");
@@ -174,9 +181,10 @@ public class MarketPage {
 	     * Created By: Rohit Miglani
 	     * Created Date: 13-08-2014
 	     * */
-		public boolean verifyOpenLowHighPreCloseIsDisplayed(){
+		public boolean verifyOpenLowHighPreCloseIsDisplayed(WebDriver driver){
 			boolean result= false;
 			try{
+				FunctionLibrary.waitTillElementPresent(driver, 10, By.cssSelector(csspath_OpenLowHighPreClose));
 				 result=we_OpenLowHighPreClose.isDisplayed();
 				 if (result==true)
 				 LoggerInstance.logger.info("Open, low, Hig, Pre Close is displayed");
@@ -194,9 +202,10 @@ public class MarketPage {
 	     * Created By: Rohit Miglani
 	     * Created Date: 13-08-2014
 	     * */
-		public boolean verifyMarketPageIsDisplayed(){
+		public boolean verifyMarketPageIsDisplayed(WebDriver driver){
 			boolean result= false;
 			try{
+				FunctionLibrary.waitTillElementPresent(driver, 10, By.cssSelector(css_MarketToday));
 				 result=we_MarketToday.isDisplayed();
 				 if (result==true)
 				 LoggerInstance.logger.info("User is navigated to Market Page");
@@ -215,9 +224,10 @@ public class MarketPage {
 	     * Created By: Rohit Miglani
 	     * Created Date: 13-08-2014
 	     * */
-		public boolean verifyETFZonePageIsDisplayed(){
+		public boolean verifyETFZonePageIsDisplayed(WebDriver driver){
 			boolean result= false;
-			try{
+			try{	
+				FunctionLibrary.waitTillElementPresent(driver, 10, By.id(id_ETFZonePage));
 				 result=we_ETFZonePage.isDisplayed();
 				 if (result==true)
 				 LoggerInstance.logger.info("User is navigated to ETFZone Page");
@@ -235,9 +245,10 @@ public class MarketPage {
 	     * Created By: Rohit Miglani
 	     * Created Date: 13-08-2014
 	     * */
-		public boolean verifyGoldETFTableIsDisplayed(){
+		public boolean verifyGoldETFTableIsDisplayed(WebDriver driver){
 			boolean result= false;
 			try{
+				FunctionLibrary.waitTillElementPresent(driver, 10, By.cssSelector(csspath_GoldETFTAble));
 				 result=we_GoldETFTable.isDisplayed();
 				 if (result==true)
 				 LoggerInstance.logger.info("User is navigated to Gold ETF Table");
@@ -256,9 +267,11 @@ public class MarketPage {
 	     * Created By: Rohit Miglani
 	     * Created Date: 13-08-2014
 	     * */
-		public boolean verifyNonGoldETFTableIsDisplayed(){
+		public boolean verifyNonGoldETFTableIsDisplayed(WebDriver driver){
 			boolean result= false;
 			try{
+				//Thread.sleep(3000);
+					FunctionLibrary.waitTillElementPresent(driver, 10, By.cssSelector(csspath_NonGoldETFTable));
 				 result=we_NonGoldETFTable.isDisplayed();
 				 if (result==true)
 				 LoggerInstance.logger.info("User is navigated to Gold ETF Table");
@@ -277,9 +290,10 @@ public class MarketPage {
 	     * Created By: Rohit Miglani
 	     * Created Date: 13-08-2014
 	     * */
-		public boolean verifyCurrentValueOfSensexIsDisplayed(){
+		public boolean verifyCurrentValueOfSensexIsDisplayed(WebDriver driver){
 			boolean result= false;
 			try{
+				FunctionLibrary.waitTillElementPresent(driver, 10, By.id(id_SensexCurrentValue));
 				 result=we_SensexCurrentValue.isDisplayed();
 				 if (result==true)
 				 LoggerInstance.logger.info("Current value of Sensex is displayed");
@@ -297,9 +311,10 @@ public class MarketPage {
 	     * Created By: Rohit Miglani
 	     * Created Date: 13-08-2014
 	     * */
-		public boolean verifyCurrentValueOfNiftyIsDisplayed(){
+		public boolean verifyCurrentValueOfNiftyIsDisplayed(WebDriver driver){
 			boolean result= false;
 			try{
+				FunctionLibrary.waitTillElementPresent(driver, 10, By.id(id_SensexCurrentValue));
 				 result=we_SensexCurrentValue.isDisplayed();
 				 if (result==true)
 				 LoggerInstance.logger.info("Current value of Nifty is displayed");
@@ -318,12 +333,13 @@ public class MarketPage {
 	     * Created By: Rohit Miglani
 	     * Created Date: 13-08-2014
 	     * */
-		public boolean verifyValueChangeOfNiftyIsDisplayed(){
+		public boolean verifyValueChangeOfNiftyIsDisplayed(WebDriver driver){
 			boolean result= false;
 			try{
+				FunctionLibrary.waitTillElementPresent(driver, 10, By.id(id_SensexValueChange));
 				 result=we_SensexValueChange.isDisplayed();
 				 if (result==true)
-				 LoggerInstance.logger.info("Value chnage of Nifty is displayed");
+				 LoggerInstance.logger.info("Value  of Nifty is displayed");
 				 return result;
 			}
 			catch (Exception e) 
@@ -338,12 +354,13 @@ public class MarketPage {
 	     * Created By: Rohit Miglani
 	     * Created Date: 13-08-2014
 	     * */
-		public boolean verifyValueChangeOfSensexIsDisplayed(){
+		public boolean verifyValueChangeOfSensexIsDisplayed(WebDriver driver){
 			boolean result= false;
 			try{
+				FunctionLibrary.waitTillElementPresent(driver, 10, By.id(id_SensexValueChange));
 				 result=we_SensexValueChange.isDisplayed();
 				 if (result==true)
-				 LoggerInstance.logger.info("Value chnage of Sensex is displayed");
+				 LoggerInstance.logger.info("Value change of Sensex is displayed");
 				 return result;
 			}
 			catch (Exception e) 
@@ -360,12 +377,13 @@ public class MarketPage {
 	     * Created Date: 13-08-2014
 	     * */
 		
-		public boolean verifyPercentageChangeOfSensexIsDisplayed(){
+		public boolean verifyPercentageChangeOfSensexIsDisplayed(WebDriver driver){
 			boolean result= false;
 			try{
+				FunctionLibrary.waitTillElementPresent(driver, 10, By.id(id_SensexPercentageChange));
 				 result=we_SensexPercentageChange.isDisplayed();
 				 if (result==true)
-				 LoggerInstance.logger.info("Percentage chnage of Sensex is displayed");
+				 LoggerInstance.logger.info("Percentage change of Sensex is displayed");
 				 return result;
 			}
 			catch (Exception e) 
@@ -381,12 +399,13 @@ public class MarketPage {
 	     * Created By: Rohit Miglani
 	     * Created Date: 13-08-2014
 	     * */
-		public boolean verifyPercentageChangeOfNiftyIsDisplayed(){
+		public boolean verifyPercentageChangeOfNiftyIsDisplayed(WebDriver driver){
 			boolean result= false;
 			try{
+				FunctionLibrary.waitTillElementPresent(driver, 10, By.id(id_SensexPercentageChange));
 				 result=we_SensexPercentageChange.isDisplayed();
 				 if (result==true)
-				 LoggerInstance.logger.info("Percentage chnage of Nifty is displayed");
+				 LoggerInstance.logger.info("Percentage change of Nifty is displayed");
 				 return result;
 			}
 			catch (Exception e) 

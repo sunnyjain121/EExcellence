@@ -40,12 +40,13 @@ public class LoggerInstance {
 		String str_logFilePath1 = str_logFilePath+File.separator+"AutomationLogFile_"+current_dateTime+".log";
 		//creating log file 
 		File f2 =  new File(str_logFilePath1);
-		f2.createNewFile();
+		
 		
 		
 	if(logger==null)
 		{
 		try{
+			f2.createNewFile();
 			// Printing Finalaya in starting of the logger and formatting with spaces and next line
 			logger = Logger.getLogger("Finalaya");
 			FileAppender apndr = new FileAppender(new PatternLayout("%p %t %c - %m%n"),str_logFilePath1,true);

@@ -51,6 +51,8 @@ public class IPOPage {
 	private final String xpath_IPOPageListing_Text = ".//*[@id='rhtBig']/table/tbody/tr[4]/td/div/div[1]/span[4]";
 	private final String csspath_IPOCalDiv = "#calendar > div > div > div > div:nth-child(1) > div > span > a";
 	private final String csspath_IPOCalMicrositeName = "#ctl00_BodyCPH_lblHeading";
+	private final String csspath_IPOCalMicrositeTableHeader = ".bordered>thead>tr>th";
+	
 	private final String xpath_IPOCalMicrositeTableHeader_Overview = ".//*[@id='aspnetForm']/div[5]/div/div[10]/table/tbody/tr[4]/td/div[1]/table/tbody/tr[1]/td/table/thead/tr/th";
 	private final String xpath_IPOCalMicrositeTableHeader_IssueDetails = ".//*[@id='aspnetForm']/div[5]/div/div[10]/table/tbody/tr[4]/td/div[1]/table/tbody/tr[3]/td/table/thead/tr/th";
 	private final String xpath_IPOCalMicrositeTableHeader_ContactInformation = ".//*[@id='aspnetForm']/div[5]/div/div[10]/table/tbody/tr[4]/td/div[1]/table/tbody/tr[5]/td/table/thead/tr/th";
@@ -62,8 +64,14 @@ public class IPOPage {
 	private final String csspath_IPOForthcoming_Information = "#ctl00_BodyCPH_ForthcomingIssues_lnkViewIPOResult";
 	private final String csspath_IPOForthcoming_Documents = "#ctl00_BodyCPH_ForthcomingIssues_lnkViewDocumentResult";
 
-    private final String csspath_IPOForthcoming_TableHeader = ".bordered>thead>tr";
-    private final String csspath_IPOForthcoming_TableNoData = ".bordered>tbody>tr";
+//    private final String csspath_IPOForthcoming_TableHeader = ".bordered>thead>tr";
+//    private final String csspath_IPOForthcoming_TableNoData = ".bordered>tbody>tr";
+    
+    private final String csspath_IPOForthcoming_TableHeader = "#ctl00_BodyCPH_ForthcomingIssues_tblMessage>tbody>tr";
+    private final String csspath_IPOForthcoming_TableNoData = "#ctl00_BodyCPH_ForthcomingIssues_tblMessage>tbody>tr>td";
+    
+    private final String xpath_IPOForthcoming_TableHeader = "//table[@class='bordered']/thead/tr";
+    private final String xpath_IPOForthcoming_TableNoData = "//table[@class='bordered']/tbody/tr/td";
 
 	private final String csspath_IPOForthcoming_GuidedSearch = ".divGuiSearch>h3";
 	private final String csspath_IPOForthcoming_GuidedSearch_Contents = ".gray";
@@ -71,7 +79,7 @@ public class IPOPage {
 	private final String xpath_IPOPastLabel = ".//*[@id='divIPOInfo']/span";
 	private final String csspath_IPOPast_Information = "#ctl00_BodyCPH_PastIssues_lnkViewIPOResult";
 	private final String csspath_IPOPast_Documents = "#ctl00_BodyCPH_PastIssues_lnkViewDocumentResult";
-	private final String csspath_IPOPast_TableHeader = "html.js.flexbox.canvas.canvastext.webgl.no-touch.geolocation.postmessage.no-websqldatabase.indexeddb.hashchange.history.draganddrop.websockets.rgba.hsla.multiplebgs.backgroundsize.borderimage.borderradius.boxshadow.textshadow.opacity.cssanimations.csscolumns.cssgradients.no-cssreflections.csstransforms.no-csstransforms3d.csstransitions.fontface.video.audio.localstorage.sessionstorage.webworkers.applicationcache.svg.inlinesvg.smil.svgclippaths body form#aspnetForm div div div div div#lftBig div table#tblIssueList.bordered thead tr";
+	private final String csspath_IPOPast_TableHeader = "#tblIssueList>thead";
 	private final String csspath_IPOPast_TableHeader_CloseDate = "#ctl00_BodyCPH_PastIssues_rptIssueList_ctl00_lnkCloseDate";
 	private final String csspath_IPOPast_FromDate = "#ctl00_BodyCPH_PastIssues_txtFromDate";
 	private final String csspath_IPOPast_ToDate = "#ctl00_BodyCPH_PastIssues_txtToDate";
@@ -189,7 +197,13 @@ public class IPOPage {
 	private WebElement we_IPOForthcoming_TableHeader;
 
 	@FindBy(css = csspath_IPOForthcoming_TableNoData)
-	private WebElement we_IPOForthcoming_TableNoData;
+	private List<WebElement> we_IPOForthcoming_TableNoData;
+	
+	@FindBy(xpath = xpath_IPOForthcoming_TableHeader)
+	private WebElement we_IPOForthcoming_TableHeaderXpath;
+
+	@FindBy(xpath = xpath_IPOForthcoming_TableNoData)
+	private List<WebElement> we_IPOForthcoming_TableNoDataXpath;
 
 	@FindBy(css = csspath_IPOForthcoming_GuidedSearch)
 	private WebElement we_IPOForthcoming_GuidedSearch;
@@ -229,7 +243,11 @@ public class IPOPage {
 
 	@FindBy(css = csspath_IPOPast_CompanyLink)
 	private WebElement we_IPOPast_CompanyLink;
+	
+	@FindBy(css = csspath_IPOCalMicrositeTableHeader)
+	private List<WebElement> we_IPOCalMicrositeTableHeader;
 
+	
 	// This is a constructor, as every page need a base driver to find web
 	// elements
 	public IPOPage(WebDriver driver) {
@@ -480,20 +498,56 @@ public class IPOPage {
 	 */
 	public boolean verifyIPOMicrositeTableHeader() {
 		boolean result = false;
+		boolean flag1 = false;
+		boolean flag2 = false;
+		boolean flag3 = false;
+		boolean flag4 = false;
+		boolean flag5 = false;
+		boolean flag6 = false;
+		boolean flag7 = false;
 		try {
 			LoggerInstance.logger.info("Going to check table header");
-			boolean a = FunctionLibrary.verifyTextWebelement("Overview", we_IPOCalMicrositeTableHeader_Overview);
-			boolean b = FunctionLibrary.verifyTextWebelement("Issue Details", we_IPOCalMicrositeTableHeader_IssueDetails);
-			boolean c = FunctionLibrary.verifyTextWebelement("Contact information", we_IPOCalMicrositeTableHeader_ContactInformation);
-			boolean d = FunctionLibrary.verifyTextWebelement("IPO Managing Bodies", we_IPOCalMicrositeTableHeader_IPOManagingBodies);
-			boolean e = FunctionLibrary.verifyTextWebelement("Documents", we_IPOCalMicrositeTableHeader_Documents);
-			boolean f = FunctionLibrary.verifyTextWebelement("Research Reports", we_IPOCalMicrositeTableHeader_ResearchReports);
-			if (a && b && c && d && e && f) {
-				LoggerInstance.logger.info("All table header verified");
+			List<WebElement> th = we_IPOCalMicrositeTableHeader;
+			int col_position = 0;
+			for (int i = 0; i < th.size(); i++) {
+				if ("Overview".equalsIgnoreCase(th.get(i).getText())) {
+					col_position = i + 1;
+					flag1 = true;
+					LoggerInstance.logger.info("Overview displayed");
+					continue;
+				} else if ("Issue Details".equalsIgnoreCase(th.get(i).getText())) {
+					col_position = i + 1;
+					flag2 = true;
+					LoggerInstance.logger.info("Issue Details displayed");
+					continue;
+				} else if ("Contact information".equalsIgnoreCase(th.get(i).getText())) {
+					col_position = i + 1;
+					flag3 = true;
+					LoggerInstance.logger.info("Contact information displayed");
+					continue;
+				} else if ("IPO Managing Bodies".equalsIgnoreCase(th.get(i).getText())) {
+					col_position = i + 1;
+					flag4 = true;
+					LoggerInstance.logger.info("IPO Managing Bodies displayed");
+					continue;
+				} else if ("Documents".equalsIgnoreCase(th.get(i).getText())) {
+					col_position = i + 1;
+					flag5 = true;
+					LoggerInstance.logger.info("Documents displayed");
+					continue;
+				} else if ("Research Reports".equalsIgnoreCase(th.get(i).getText())) {
+					col_position = i + 1;
+					flag6 = true;
+					LoggerInstance.logger.info("Research Reports displayed");
+					continue;
+				}
+			}
+			if (flag1 && flag2 && flag3 && flag4 && flag5 && flag6) {
 				result = true;
+				LoggerInstance.logger.info("Columns displayed as Company, Open, Close, Price Band (Rs), Size (Rs. Cr.), MOQ, Grade");
 			}
 		} catch (Exception e) {
-			LoggerInstance.logger.info("Table header are not displayed");
+			LoggerInstance.logger.info(" Table header are not displayed");
 			result = false;
 		}
 		return result;
@@ -578,7 +632,7 @@ public class IPOPage {
 
 		try {
 			LoggerInstance.logger.info("Going to verify that Columns displayed as Company, Open, Close, Price Band (Rs), Size (Rs. Cr.), MOQ, Grade");
-			List<WebElement> th = we_IPOForthcoming_TableHeader.findElements(By.tagName("th"));
+			List<WebElement> th = we_IPOForthcoming_TableHeaderXpath.findElements(By.tagName("th"));
 			int col_position = 0;
 			for (int i = 0; i < th.size(); i++) {
 				if ("Company".equalsIgnoreCase(th.get(i).getText())) {
@@ -640,14 +694,22 @@ public class IPOPage {
         boolean result = false;
         try {
             LoggerInstance.logger.info("Going to verify If no records, altenate text 'There is no Current IPO Available' is displayed");
-            List<WebElement> td = we_IPOForthcoming_TableNoData.findElements(By.tagName("td"));
-            if(td.size()>0){
-                LoggerInstance.logger.info("Records are displaying");
-                result=true;
-            }else{
-                result=true;
-                LoggerInstance.logger.info("Altenate text 'There is no Current IPO Available' is displayed");
-            }
+            List<WebElement> td = we_IPOForthcoming_TableNoDataXpath;
+            int col_position = 0;
+            for (int i = 0; i < td.size(); i++) {
+            	if(td.size()==1 && td.get(i).findElement(By.tagName("span")).isDisplayed()){
+            		WebElement span = td.get(i).findElement(By.tagName("span"));
+            		if(("There is no Forthcoming IPO available.").equals(span.getText())){
+            			LoggerInstance.logger.info("Altenate text 'There is no Current IPO Available' is displayed");
+            			break;
+            		}
+            	}else if (td.size()>0) {
+					col_position = i + 1;
+					result=true;
+					LoggerInstance.logger.info("Records are displaying");
+					break;
+				} 
+			}
             //result = FunctionLibrary.verifyTextWebelement("There is no Forthcoming IPO available.", we_IPOForthcoming_TableNoData);
             return result;
         } catch (Exception e) {
@@ -842,7 +904,7 @@ public class IPOPage {
 			LoggerInstance.logger.info("Going to click on Close Date Column");
 			FunctionLibrary.clickWebLink(we_IPOPast_TableHeader_CloseDate);
 			driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
-
+			Thread.sleep(3000);
 			List<WebElement> rowList = we_IPOPast_InfoTab_Row.findElements(By.tagName("tr"));
 			Iterator<WebElement> i = rowList.iterator();
 			int k = 0;

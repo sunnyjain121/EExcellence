@@ -42,7 +42,7 @@ public class IPO_Page {
 		String url = null;
 
 		//Call this method to generate the html file
-		printWrite = cmr.createWriter(method.getName());
+		printWrite= cmr.createWriter(method.getName());
 		cmr.startHtmlPage(printWrite);
 		
 		// Create input stream object of property file.
@@ -78,7 +78,7 @@ public class IPO_Page {
 
 	
 	// Scenario 1 :This test case will navigate to the forthcoming menu of the IPO tab & will verify the displayed columns & records.
-	@Test
+	@Test(enabled=false)
 	public void IPO_Forthcoming_VerifyForthcomingTab() throws Exception {
 
 		try {
@@ -168,7 +168,7 @@ public class IPO_Page {
 
 	
 	// Scenario 2: This test case will navigate to the calender menu of the IPO tab & will verify the displayed calender for companies, different sections displayed.
-	@Test
+	@Test(enabled=false)
 	public void IPO_Calender_VerifyCalenderTab() throws Exception {
 		try {
 			LoggerInstance.logger.info("***********************IPO_Calender_VerifyCalenderTab() Started*********************************");
@@ -244,7 +244,7 @@ public class IPO_Page {
 
 	
 	// Scenario 3 :This test case will navigate to IPO tab & will verify the displayed calender for current Month is displayed ,labels navigation buttons .
-	@Test
+	@Test(enabled=false)
 	public void IPO_VerifyCalenderOnIPOPage() throws Exception { 
 
 		try {

@@ -30,7 +30,7 @@ public final class WebDriverBrowser {
 		WebDriver driver = null;
 		FirefoxProfile profile;
 		DesiredCapabilities ieCapabilities = DesiredCapabilities.internetExplorer();
-		ieCapabilities.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS, true);
+		ieCapabilities.setCapability(InternetExplorerDriver.REQUIRE_WINDOW_FOCUS, true);
 		Properties prop = new Properties();
 		InputStream inputConfig = new FileInputStream(AutomationConstants.PROPERTY_FILE_NAME);
 		prop.load(inputConfig);
