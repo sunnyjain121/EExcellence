@@ -272,7 +272,6 @@ public class Reports_Page {
 		
 	}
 	
-
 	// This method will be run after each method present in testcase file& will close the all browser windows.
 	@AfterMethod
 	public void tearDown() throws Exception {

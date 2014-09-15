@@ -1,6 +1,7 @@
 package PageObjects;
 
 
+import java.io.File;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.WebDriver;
@@ -167,6 +168,30 @@ public class HomePage {
 	return result;
 	}
 }	
+	public boolean verifyLogoImage() {
+		boolean result=false;
+		
+		try{
+		LoggerInstance.logger.info("verify logo image");
+		
+		File directory = new File ("");
+		
+		String absolutepath	=	directory.getAbsolutePath();
+		
+		String logoFile = absolutepath + "\\finalaya_logo.jpg";
+		
+		result=FunctionLibrary.verifyImage(we_FinalayaImage, logoFile);
+		
+		if(result==true)
+			return result;
+	}
+		catch(Exception e)
+		{
+		LoggerInstance.logger.info("Not able to verify logo image");
+		return result;
+		}
+		return result;
+	}
 	
 	/* Method Name: verifySearchOnHomePage
      * Description: This method verify search functionality 
@@ -192,6 +217,11 @@ public class HomePage {
 	}
 		return result;
 }
+
+	public boolean verifyTabsquence() {
+		// TODO Auto-generated method stub
+		return true;
+	}
 	}
 
 

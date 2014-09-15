@@ -19,7 +19,7 @@ import PageObjects.IPOPage;
 import Reports.CustomMethodReport;
 
 
-public class HomePageTest_Updated {
+public class Home_Page{
 
 	static WebDriver driver;
 	private HomePage homePage;
@@ -91,7 +91,7 @@ public class HomePageTest_Updated {
 			
             // Verify HomePage tab Squence 
 			LoggerInstance.logger.info("Verify finalaya tab squence.");
-			boolean isVerifyTabsquence =homePage.verifyTabsquence();
+			boolean isVerifyTabsquence = homePage.verifyTabsquence();
 			
 			if(isVerifyTabsquence) {
 				cmr.generateExecutionReport(printWrite, "Verify if Finalaya Tab sequences are correct.", "Finalaya Tab sequences are correct.", "Finalaya Tab sequences are correct.", true, null);
