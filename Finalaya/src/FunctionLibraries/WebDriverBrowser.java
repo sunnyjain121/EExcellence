@@ -34,6 +34,11 @@ public final class WebDriverBrowser {
 		Properties prop = new Properties();
 		InputStream inputConfig = new FileInputStream(AutomationConstants.PROPERTY_FILE_NAME);
 		prop.load(inputConfig);
+        if(System.getenv("Browser")!=null){
+            broswerName= System.getenv("Browser");
+           }
+        System.out.println("Brower Type >>>"+broswerName);
+        
 		if ("Firefox".equals(broswerName)) {
 			// Create a new instance of firefox driver
 			profile = new FirefoxProfile();
