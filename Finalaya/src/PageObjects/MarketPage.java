@@ -213,7 +213,7 @@ public class MarketPage {
 			}
 			catch (Exception e) 
 			{
-				LoggerInstance.logger.info("User is not navigated to Market Page");
+				LoggerInstance.logger.info("User is not navigated to Market Page"+e.getMessage());
 				return result;
 			}
 		}

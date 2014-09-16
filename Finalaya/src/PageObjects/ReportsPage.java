@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -33,6 +34,7 @@ public class ReportsPage {
 	private final String csspath_MostViewed = "a#ctl00_BodyCPH_lnkMostViewedRpt";
 	private final String csspath_FirstReportLink = "table.bordered>tbody>tr:nth-child(1)>td>div>h2>span>a";
 	private final String csspath_NewWindowTitle = "span#ctl00_Heading";
+	private final String id_NewWindowTitle = "ctl00_Heading";
 	
 	private final String css_MainReportTab = "#menu-wrapper > ul > li:nth-child(8) > a";
 	private final String css_DailyWrapMenuTab = "#menu-wrapper > ul > li:nth-child(8) > div > div.nav-column > ul > li:nth-child(1) > a";
@@ -49,6 +51,17 @@ public class ReportsPage {
 	private final String xpath_DailyScrapdatelink = "//table[@class='BlueBGtable']/tbody/tr[2]";
 	private final String css_closeimg="#divRecentReports > table > tbody > tr:nth-child(1) > td:nth-child(2) > div > a > img";
 	
+	private final String linkTest_ReportsTab = "Reports";
+    private final String linkTest_WeeklyWrap = "Weekly Wrap";
+    private final String xpath_broadbasedindices = "//div[@class='weekDiv_1']//p[.='Broad-based Indices']"; 
+    private final String xpath_fosummary = "//div[@class='weekDiv_1']//p[.='F&O Summary']";
+    private final String xpath_sectoralIndices = "//div[@class='weekDiv_1']//p[.='Sectoral Indices (Top 5)']";
+    private final String xpath_bigWealthCreators = "//th[.='Biggest Wealth Creators']";
+    private final String xpath_bigWealthDestroyers = "//th[.='Biggest Wealth Destroyers']";
+    private final String xpath_sensexDriver = "//th[.='Sensex Drivers']";
+    private final String xpath_firstIndex = "//form/div[5]/div/div[10]/div[1]/div[2]/div[1]/div[1]/div[3]/div[1]/div[1]/table/tbody/tr[1]/td[1]/a";
+    private final String csspath_header = "h1";
+    private final String xpath_weeklywraptitle = "//span[@class='wekHeadlineTlt']";
 	
 	@FindBy(css = csspath_ReportsTab)
 	public WebElement we_csspath_ReportsTab;
@@ -68,6 +81,11 @@ public class ReportsPage {
 	public WebElement we_csspath_FirstReportLink;
 	@FindBy(css = csspath_NewWindowTitle)
 	public WebElement we_csspath_NewWindowTitle;
+	
+	@FindBy(id = id_NewWindowTitle)
+	public WebElement we_id_NewWindowTitle;
+	
+
 	
 	@FindBy(css = css_MainReportTab)
 	public WebElement we_MainReportTab;
@@ -98,6 +116,38 @@ public class ReportsPage {
 	@FindBy(xpath = xpath_DailyScrapdatelink)
 	public List<WebElement> we_DailyScrapdatelink;
 	
+	@FindBy(how = How.LINK_TEXT, using = linkTest_ReportsTab)
+    private WebElement we_ReportsTab;
+    
+    @FindBy(how = How.LINK_TEXT, using = linkTest_WeeklyWrap)
+    private WebElement weeklyWrap;
+    
+    @FindBy(how = How.XPATH, using = xpath_broadbasedindices)
+    private WebElement broadbasedindices;
+    
+    @FindBy(how = How.XPATH, using = xpath_fosummary)
+    private WebElement fosummary;
+    
+    @FindBy(how = How.XPATH, using = xpath_sectoralIndices)
+    private WebElement sectoralIndices;
+    
+    @FindBy(how = How.XPATH, using = xpath_bigWealthCreators)
+    private WebElement bigWealthCreators;
+    
+    @FindBy(how = How.XPATH, using = xpath_sensexDriver)
+    private WebElement sensexDriver;
+    
+    @FindBy(how = How.XPATH, using = xpath_bigWealthDestroyers)
+    private WebElement bigWealthDestroyers;
+    
+    @FindBy(how = How.XPATH, using = xpath_firstIndex)
+    private WebElement firstIndex;
+    
+    @FindBy(how = How.XPATH, using = xpath_weeklywraptitle)
+    private WebElement weekly_wrap;
+    
+    @FindBy(how = How.CSS, using = csspath_header)
+    private WebElement header;
 
 	public ReportsPage(WebDriver driver){
 		this.driver=driver;
@@ -128,9 +178,10 @@ public class ReportsPage {
        * Created By: Sunny Jain
        * Created Date: 25-08-2014
        * */
-	public boolean verifyAllReportsTabIsDisplayed() {
+	public boolean verifyAllReportsTabIsDisplayed(WebDriver driver) {
 		boolean result = false;
 		try {
+			FunctionLibrary.waitTillElementPresent(driver, 10, By.cssSelector(csspath_AllReports));
 			result = we_csspath_AllReports.isDisplayed();
 			if (result == true)
 				LoggerInstance.logger.info("All Reports tab is displayed");
@@ -150,9 +201,10 @@ public class ReportsPage {
        * Created Date: 25-08-2014
        * */
 
-	public boolean verifyPremiumTabIsDisplayed() {
+	public boolean verifyPremiumTabIsDisplayed(WebDriver driver) {
 		boolean result = false;
 		try {
+			FunctionLibrary.waitTillElementPresent(driver, 10, By.cssSelector(csspath_Premium));
 			result = we_csspath_Premium.isDisplayed();
 			if (result == true)
 				LoggerInstance.logger.info("Premium tab is displayed");
@@ -170,9 +222,10 @@ public class ReportsPage {
        * Created By: Sunny Jain
        * Created Date: 25-08-2014
        * */
-	public boolean verifyLatestTabIsDisplayed() {
+	public boolean verifyLatestTabIsDisplayed(WebDriver driver) {
 		boolean result = false;
 		try {
+			FunctionLibrary.waitTillElementPresent(driver, 10, By.cssSelector(csspath_Latest));
 			result = we_csspath_Latest.isDisplayed();
 			if (result == true)
 				LoggerInstance.logger.info("Latest tab is displayed");
@@ -190,9 +243,10 @@ public class ReportsPage {
        * Created By: Sunny Jain
        * Created Date: 25-08-2014
        * */
-	public boolean verifyMostViewedTabIsDisplayed() {
+	public boolean verifyMostViewedTabIsDisplayed(WebDriver driver) {
 		boolean result = false;
 		try {
+			FunctionLibrary.waitTillElementPresent(driver, 10, By.cssSelector(csspath_MostViewed));
 			result = we_csspath_MostViewed.isDisplayed();
 			if (result == true)
 				LoggerInstance.logger.info("Most viewed tab is displayed");
@@ -210,9 +264,10 @@ public class ReportsPage {
        * Created By: Sunny Jain
        * Created Date: 25-08-2014
        * */
-	public boolean verifyTitle() {
+	public boolean verifyTitle(WebDriver driver) {
 		boolean result = false;
 		try {
+			FunctionLibrary.waitTillElementPresent(driver, 10, By.cssSelector(csspath_Title));
 			LoggerInstance.logger.info("verify the tilte");
 			result = FunctionLibrary.verifyTextWebelement("Home » Research Reports",
 					we_csspath_Title);
@@ -237,9 +292,10 @@ public class ReportsPage {
        * Created By: Sunny Jain
        * Created Date: 25-08-2014
        * */
-	public void clickOnReportLink() {
+	public void clickOnReportLink(WebDriver driver) {
 		
 		try{
+			FunctionLibrary.waitTillElementPresent(driver, 10, By.cssSelector(csspath_FirstReportLink));
 			LoggerInstance.logger.info("click on the first report link");
 			FunctionLibrary.clickWebLink(we_csspath_FirstReportLink);
 		}
@@ -283,12 +339,13 @@ public class ReportsPage {
        * Created By: Sunny Jain
        * Created Date: 25-08-2014
        * */
-	public boolean verifyNewWindowTitle() {
+	public boolean verifyNewWindowTitle(WebDriver driver) {
 		  boolean result = false;
 
 		try {
+			FunctionLibrary.waitTillElementPresent(driver, 10, By.id(id_NewWindowTitle));
 			LoggerInstance.logger.info("verify the tilte of newly opened window");
-			result = FunctionLibrary.verifyTextWebelement("Research Reports",we_csspath_NewWindowTitle);
+			result = FunctionLibrary.verifyTextWebelement("Research Reports",we_id_NewWindowTitle);
 		if (result == true){
 			LoggerInstance.logger.info("title is verified");
 			return result;
@@ -315,7 +372,7 @@ public class ReportsPage {
 
 		boolean result = false;
 		try {
-
+			
 			FunctionLibrary.clickMenuItem(driver, we_MainReportTab,
 					we_DailyWrapMenuTab);
 			driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
@@ -616,5 +673,138 @@ public class ReportsPage {
 		}
 		return result;
 	}
+	
+	/* Method Name: verifyweeklyWraplink()
+     * Description: This method will verify weekly wrap link
+     * Created By: Aman Saraf Jain
+     * Created Date: 23-08-2014
+     * */
+    
+    public boolean verifyweeklyWraplink() {
+  	  boolean result=false;
+   	 try
+            {
+                    LoggerInstance.logger.info("click on weekly Wrap link on report tab");
+                    FunctionLibrary.clickMenuItem(driver,we_ReportsTab,weeklyWrap); 
+                    result=FunctionLibrary.verifyTextWebelement("Weekly Wrap", weekly_wrap);
+                    if (result==true){
+   				     result=true;
+   					 LoggerInstance.logger.info("Verification passed");
+   			 return result;
+   		}
+            }
+            catch(Exception e)
+            {
+            LoggerInstance.logger.info("Not able to click on weekly Wrap link Reports Tab");
+            return result;
+            }
+   	 return result;}
+    
+    /* Method Name: clickOnweeklyWraplink()
+     * Description: This method will click weekly wrap link
+     * Created By: Aman Saraf Jain
+     * Created Date: 23-08-2014
+     * */
+    public void clickOnweeklyWraplink() {
+   	 try
+        {
+                LoggerInstance.logger.info("click on weekly Wrap link on report tab");
+                FunctionLibrary.clickMenuItem(driver,we_ReportsTab,weeklyWrap); 
+        }
+        catch(Exception e)
+        {
+        LoggerInstance.logger.info("Not able to click on weekly Wrap link Reports Tab");
+        }
+}
+
+    
+    /* Method Name: verify_table_headers()
+     * Description: This method will verify headers of tables present
+     * Created By: Aman Saraf Jain
+     * Created Date: 23-08-2014
+     * */
+    public boolean verify_table_headers(){
+  	  boolean result=false;
+  	  boolean result1=false;
+  	  boolean result2=false;
+  	  boolean result3=false; 
+   	 try
+         {
+                 LoggerInstance.logger.info("verifying Broad base indices text as a Table header");
+                 result1 =  FunctionLibrary.verifyTextWebelement("Broad-based Indices", broadbasedindices);
+                 LoggerInstance.logger.info("verifying F&O summary text as a Table header");
+                 result2 =  FunctionLibrary.verifyTextWebelement("F&O Summary", fosummary);
+                 LoggerInstance.logger.info("verifying Sectoral Indices (Top 5) text as a Table header");
+                 result3 = FunctionLibrary.verifyTextWebelement("Sectoral Indices (Top 5)",sectoralIndices);
+           	  if (result1==true&&result2==true&&result3==true){
+				     result=true;
+					 LoggerInstance.logger.info("Verification passed");
+					 return result;
+		}
+         }
+         catch(Exception e)
+         {
+       	  	LoggerInstance.logger.info("verification Failed");
+return result;
+         }
+return result;    }
+    
+    /* Method Name: verify_right_hand_tables()
+     * Description: This method will verify headers of tables present
+     * Created By: Aman Saraf Jain
+     * Created Date: 23-08-2014
+     * */
+    
+    public boolean verify_right_hand_tables(){
+     	  boolean result=false;
+      	  boolean result1=false;
+      	  boolean result2=false;
+      	  boolean result3=false; 
+   	 try
+        {
+                LoggerInstance.logger.info("verifying Big Wealth Creators Table");
+                result1 = FunctionLibrary.verifyTextWebelement("Biggest Wealth Creators", bigWealthCreators);
+                LoggerInstance.logger.info("verifying Biggest Wealth Destroyers Table");
+                result2 = FunctionLibrary.verifyTextWebelement("Biggest Wealth Destroyers", bigWealthDestroyers);
+                LoggerInstance.logger.info("verifying Sensex Drivers Table");
+                result3 = FunctionLibrary.verifyTextWebelement("Sensex Drivers",sensexDriver);
+                if (result1==true&&result2==true&&result3==true){
+				     result=true;
+					 LoggerInstance.logger.info("Verification passed");
+					 return result;
+		}
+         }
+        catch(Exception e)
+        {
+      	  	LoggerInstance.logger.info("verification Failed");
+      	  	return result;
+        }
+   return result;}
+    
+    /* Method Name: verify_index_link_navigates_marketToday_page()
+     * Description: This method will verify verify_index_link_navigates_marketToday_page
+     * Created By: Aman Saraf Jain
+     * Created Date: 23-08-2014
+     * */
+    public boolean verify_index_link_navigates_marketToday_page(){
+     	 boolean result=false; 
+   	 try
+           {
+                   LoggerInstance.logger.info("clicking one of the index link");
+                   FunctionLibrary.clickWebLink(firstIndex);
+                   LoggerInstance.logger.info("Verifying navigated to Market Today page");
+                   result = FunctionLibrary.verifyTextWebelement("Market Today",header);  
+                   if(result==true){
+                   	LoggerInstance.logger.info("Verification passed");
+                   	return result;
+                   }
+          
+           }
+           catch(Exception e)
+           {
+         	  	LoggerInstance.logger.info("verification Failed");
+             	return result;
+           }
+      	return result;   }
 	
 }

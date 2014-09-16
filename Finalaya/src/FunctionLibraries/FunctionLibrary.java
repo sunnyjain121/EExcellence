@@ -67,7 +67,50 @@ public class FunctionLibrary {
 					
 		  }
 	}
+	
+	
+	/* Method Name: switchFrame
+     * Description:This method will switch the iframe
+     * Parameters: 
+     *            1. Webdriver instance 
+                  2. Frame id or name
+                               
+     * Created By: Aman Saraf Jain
+     * Created Date: 11-09-2014
+     * */  
 
+    public static void switchFrame(WebDriver driver,String frameid) {
+          try {
+              driver.switchTo().frame(frameid);
+              LoggerInstance.logger.info("Frame switched");
+              }
+          catch (Exception e) {
+              LoggerInstance.logger.info("Unable to switch frame");
+          }
+
+  }
+    
+    /* Method Name: switchDefaultFrame
+     * Description:This method will switch the iframe
+     * Parameters: 
+     *            1. Webdriver instance 
+                               
+     * Created By: Aman Saraf Jain
+     * Created Date: 11-09-2014
+     * */  
+
+    
+    public static void switchDefaultFrame(WebDriver driver) {
+          try {
+              driver.switchTo().defaultContent();
+              }
+          catch (Exception e) {
+              LoggerInstance.logger.info("Unable to switch frame");
+          }
+  } 
+
+	
+	
 	
 	   /* Class Name    : WebDriverBrowser
 		* Method Name   : getWebDriver 
