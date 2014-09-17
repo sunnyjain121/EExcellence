@@ -9,29 +9,29 @@ import Logger.LoggerInstance;
 public class ResourcesPage {
 
 	private final String XPath_ResourceTab = "//*[@id='menu-wrapper']/ul/li[7]/a";
-	private final String XPath_GeneralEconomicIndicators = "//*[@id='aspnetForm']/div[5]/div/div[10]/div/div[2]/div[1]/h2[1]";
-	private final String Xpath_CCilIndicatorsIndices = "//*[@id='aspnetForm']/div[5]/div/div[10]/div/div[2]/div[2]/h2";
-	private final String Xpath_NSEFIMMDAIndicators = "//*[@id='aspnetForm']/div[5]/div/div[10]/div/div[2]/div[1]/h2[2]";
-	private final String Xpath_IndicatorName = "//*[@id='aspnetForm']/div[5]/div/div[10]/div/div[2]/div[1]/table[1]/thead/tr/th[1]";
-	private final String Xpath_RBIPolicyIndicators = "//*[@id='aspnetForm']/div[5]/div/div[10]/div/div[2]/div[1]/table[2]/thead/tr/th[1]";
-	private final String Xpath_RBIReferExchRates = "//*[@id='aspnetForm']/div[5]/div/div[10]/div/div[2]/div[1]/table[3]/thead/tr/th[1]";
+	private final String csspath_GeneralEconomicIndicators = "#aspnetForm>div>div>div>div>div>div>h2";
+	private final String csspath_CCilIndicatorsIndices = "#aspnetForm>div>div>div>div>div>div>h2";
+	private final String csspath_NSEFIMMDAIndicators = "#aspnetForm>div>div>div>div>div>div>h2";
+	private final String csspath_IndicatorName = ".bordered>thead>tr>th";
+	private final String csspath_RBIPolicyIndicators = ".bordered>thead>tr>th";
+	private final String csspath_RBIReferExchRates = ".bordered>thead>tr>th";
 
-	private final String Xpathpath_Key_Economic_Indicators = "//*[@id='aspnetForm']/div[5]/div/div[10]/div/div[1]/span/div/h1";
+	private final String csspath_Key_Economic_Indicators = ".DashboardTitle";
 	@FindBy(xpath = XPath_ResourceTab)
 	public WebElement we_ResourceTab;
-	@FindBy(xpath = Xpathpath_Key_Economic_Indicators)
+	@FindBy(css = csspath_Key_Economic_Indicators)
 	public WebElement we_Key_Economic;
-	@FindBy(xpath = XPath_GeneralEconomicIndicators)
+	@FindBy(css = csspath_GeneralEconomicIndicators)
 	public WebElement we_GeneralEconomicIndicators;
-	@FindBy(xpath = Xpath_CCilIndicatorsIndices)
+	@FindBy(css = csspath_CCilIndicatorsIndices)
 	public WebElement we_CCilIndicatorsIndices;
-	@FindBy(xpath = Xpath_NSEFIMMDAIndicators)
+	@FindBy(css = csspath_NSEFIMMDAIndicators)
 	public WebElement we_NSEFIMMDAIndicators;
-	@FindBy(xpath = Xpath_IndicatorName)
+	@FindBy(css = csspath_IndicatorName)
 	public WebElement we_IndicatorName;
-	@FindBy(xpath = Xpath_RBIPolicyIndicators)
+	@FindBy(css = csspath_RBIPolicyIndicators)
 	public WebElement we_RBIPolicyIndicators;
-	@FindBy(xpath = Xpath_RBIReferExchRates)
+	@FindBy(css = csspath_RBIReferExchRates)
 	public WebElement we_RBIReferExchRates;
 
 	

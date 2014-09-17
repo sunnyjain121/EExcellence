@@ -44,19 +44,19 @@ public class CompaniesPage {
 	 	 private final String csspath_CompareCompnaiesSubLink = "#menu-wrapper > ul > li:nth-child(2) > div > div.nav-column > ul > li:nth-child(4) > a";
 	 	 private final String csspath_IndustriesSubTab = "#menu-wrapper > ul > li:nth-child(2) > div > div.nav-column > ul > li:nth-child(5) > a";
 	 	 private final String csspath_DocumentSubTab = "#menu-wrapper > ul > li:nth-child(2) > div > div.nav-column > ul > li:nth-child(6) > a";
-	 	 private final String csspath_Microsite = "#ctl00_BodyCPH_divCompany > h1 > span";
+	 	 private final String csspath_Microsite = "#ctl00_BodyCPH_divCompany > span";
 	 	 private final String csspath_Resultspage = "#ctl00_BodyCPH_divCompany > h1";
 	 	 private final String csspath_Annoucement = "#mainOuter > div > div > div > div.DashboardTitle > h1";
-	 	 private final String Xpath_CompareCompaniesPage = "//*[@id='aspnetForm']/div[5]/div/div[10]/div/h1/span";
+	 	 private final String csspath_CompareCompaniesPage = "#aspnetForm > div:nth-child(38) > div > div:nth-child(14) > div > h1 > span";
 	 	 private final String csspath_Industriespage = "#divHeader > span > div > h1 > span";
-	 	 private final String xpath_CompanyDocument = "//*[@id='ctl00_BodyCPH_divDocument']/span";
-  
+	 	 private final String csspath_CompanyDocument = "#ctl00_BodyCPH_divDocument > span";
+	 	
 	     @FindBy(css=css_InforMationTabclick)
 		 public WebElement we_InforMationTabclick;
 	     
 	     @FindBy(id=id_InforMationTab)
 		 public WebElement we_InforMationTab;
-	     
+	    
 		 @FindBy(id=id_DocumentTab)
 		 public WebElement we_DocumentTab;
 		 
@@ -144,13 +144,13 @@ public class CompaniesPage {
 		 @FindBy(css = csspath_Annoucement)
 		 private WebElement we_csspath_Annoucement;
 
-		 @FindBy(xpath = Xpath_CompareCompaniesPage)
-		 private WebElement we_xpath_CompareCompaniesPage;
+		 @FindBy(css = csspath_CompareCompaniesPage)
+		 private WebElement we_css_CompareCompaniesPage;
 
 		 @FindBy(css = csspath_Industriespage)
 		 private WebElement we_csspath_Industriespage;
 
-		 @FindBy(xpath = xpath_CompanyDocument)
+		 @FindBy(css = csspath_CompanyDocument)
 		 private WebElement we_CompanyDocumentPage;
 
 		 // This is a constructor, as every page need a base driver to find web elements
@@ -459,16 +459,13 @@ boolean result = false ;
 	    	try
 	    {
 	            String colortextaleftimagesrcval=leftimage.get(i).getAttribute("src");
-            if(result!=colortextaleftimagesrcval.contains("star-4.png")|| result!=colortextaleftimagesrcval.contains("CID") || result!=colortextaleftimagesrcval.contains("NoSparkline_N.jpg"))
+            if(result=colortextaleftimagesrcval.contains("star-4.png")|| colortextaleftimagesrcval.contains("CID") || colortextaleftimagesrcval.contains("NoSparkline_N.jpg"))
             {
             	 LoggerInstance.logger.info("Image is displayed in left of text Value.");
             }
-            else
-            {
-            	 LoggerInstance.logger.info("Image is  not displayed in left of text Value.");
-            }
+         
             }catch (Exception e) {
-            	 LoggerInstance.logger.info("Image is   null");
+            	 LoggerInstance.logger.info("Image is  not displayed in left of text Value.");
 				}
 	    }
 		return result;
@@ -492,16 +489,13 @@ boolean result = false ;
 		    	try
 		    {
 		            String  colortextaleftimagesrcval=Rightimage.get(i).getAttribute("src");
-		            if(result!=colortextaleftimagesrcval.contains("II_Trans_Graph.GIF") )
+		            if(result=colortextaleftimagesrcval.contains("II_Trans_Graph.GIF") )
 		            {
 		            	 LoggerInstance.logger.info("Image is displayed in Right of Text Value.");
 		            }
-		            else
-		            {
-		            	 LoggerInstance.logger.info("Image is  not displayed in Right of Text Value.");
-		            }
+	
 		            }catch (Exception e) {
-		            	 LoggerInstance.logger.info("Image is   null");
+		            	LoggerInstance.logger.info("Image is  not displayed in Right of Text Value.");
 						}
 			    }
 				return result;
@@ -688,7 +682,7 @@ public Boolean verifyCompareCompaniesPageIsdisplayed() {
 		LoggerInstance.logger.info("Going to  Sub Tab");
 		FunctionLibrary.clickMenuItem(driver, we_csspath_MainLink,
 				we_csspath_CompareCompnaiesSubLink);
-		result = we_xpath_CompareCompaniesPage.isDisplayed();
+		result = we_css_CompareCompaniesPage.isDisplayed();
 		if (result == true)
 			LoggerInstance.logger
 					.info("Compare Companies Page is displayed");

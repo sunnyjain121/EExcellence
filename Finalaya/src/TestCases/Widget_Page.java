@@ -86,7 +86,6 @@ public class Widget_Page {
 			
 			// Verify links present on Widget Tab
 			LoggerInstance.logger.info("verifying links present on Widget tab");
-			Thread.sleep(5000);
 			boolean isVerifyLinksPresent = widgetPage.verifyLinksPresent();
 			
 			if(isVerifyLinksPresent){
@@ -98,7 +97,6 @@ public class Widget_Page {
 			
 			// Verify market breadth link and sub icons like refresh feedback on Widget Tab
 			LoggerInstance.logger.info("Verify market breadth link and sub icons like refresh feedback on Widget Tab");
-			Thread.sleep(5000);
 			boolean isVerifyMarketBreadthLink = widgetPage.verifyMarketBreadthLink(driver);
 			if(isVerifyMarketBreadthLink){
 				cmr.generateExecutionReport(printWrite, "Verify if market breadth link and sub icons like refresh feedback are present on widget tab.", "market breadth link and sub icons like refresh feedback are present on widget tab.", "market breadth link and sub icons like refresh feedback are present on widget tab.", true, null);
@@ -108,13 +106,10 @@ public class Widget_Page {
 			}
 			// Navigating back to widget page
 			LoggerInstance.logger.info("Navigating back to widget page");
-			Thread.sleep(5000);
 			widgetPage.clickOnWidgetTab();
-			Thread.sleep(5000);
 
 			// Verify section by on Widget Tab
 			LoggerInstance.logger.info("Verify section by on Widget Tab");
-			Thread.sleep(5000);
 			boolean isVerifysectionby = widgetPage.verifysectionby();
 			if(isVerifysectionby){
 				cmr.generateExecutionReport(printWrite, "Verify Section by on widget tab.", "Section by is present on widget tab.", "Section by is present on widget tab.", true, null);
@@ -122,11 +117,13 @@ public class Widget_Page {
 				isVerificationPassed=false;
 				cmr.generateExecutionReport(printWrite, "Verify Section by on widget tab.", "Section by is present on widget tab.", "Section by is not present on widget tab.", false, fLib.captureScreenshot());
 			}
-			Thread.sleep(5000);
-			
+			// Navigating back to widget page
+			LoggerInstance.logger.info("Navigating back to widget page");
+			widgetPage.clickOnWidgetTab();
+						
+					
 			// Verify Latest Impression section
 			LoggerInstance.logger.info("Verify Latest Impression section");
-			Thread.sleep(5000);
 			boolean isVerifyLatestImpression = widgetPage.verifyLatestImpression();
 			if(isVerifyLatestImpression) {
 				cmr.generateExecutionReport(printWrite, "Verify if Latest Impression section is present.", "Latest Impression section is present.", "Latest Impression section is present.", true, null);
@@ -134,7 +131,6 @@ public class Widget_Page {
 				isVerificationPassed=false;
 				cmr.generateExecutionReport(printWrite, "Verify if Latest Impression section is present.", "Latest Impression section is present.", "Latest Impression section is not present.", false, fLib.captureScreenshot());
 			}
-			Thread.sleep(5000);
 			LoggerInstance.logger.info("***********************WidgetPage tab() Ended*********************************");				
 		
 			if(!isVerificationPassed){

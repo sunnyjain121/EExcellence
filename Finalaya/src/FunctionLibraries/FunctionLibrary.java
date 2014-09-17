@@ -1082,4 +1082,51 @@ public static boolean isTextPresent(WebDriver driver, String txtValue) {
 		return imagePath;
 		
 	}
+	
+	
+	/* Method Name: 
+     * Description: verifyTextColor
+      *            This method will return the color of the text.
+      * Parameters: 
+      *            1. WebElement object identifier  - Get the locator value.
+      *            2. Color code.
+     * Created By: Darwin
+     * Created Date: 14-08-2014
+     * */
+
+     public static boolean verifyTextColor(WebElement webelement, String colorcode) {
+     
+try {
+     if (webelement.isDisplayed()){
+     String text = webelement.getCssValue("color").toString();
+     // Split css value of rgb
+     String[] numbers = text.replace("rgba(", "").replace(")", "").split(",");
+     int number1 = Integer.parseInt(numbers[0]);
+     numbers[1] = numbers[1].trim();
+     int number2 = Integer.parseInt(numbers[1]);
+     numbers[2] = numbers[2].trim();
+     int number3 = Integer.parseInt(numbers[2]);
+     String hex = String.format("#%02X%02X%02X", number1, number2, number3);
+     if (hex.equals(colorcode)){
+            LoggerInstance.logger.info("color verified and found same");
+            return true;
+     }
+     else{
+            LoggerInstance.logger.info("color verified and found not same");
+            return false;
+            }
+     }
+     else {
+            LoggerInstance.logger.info("Element is not displayed");
+            return false;
+     }
+} catch (Exception e) {
+     System.out.println(e.getMessage());
+     
+     LoggerInstance.logger.info("Unable to get the back ground colcor");
+     LoggerInstance.logger.info(e.getMessage());
+     return false;
+     }
+}
+
 }

@@ -33,10 +33,10 @@ private final String xpath_getwdgetcode="//img[@alt='Get Widget Code']";
 private final String xpath_feedback="//img[@title='Feedback']";
 private final String xpath_investorspowered="//img[@src='http://impetus-d270/Finalaya/images/finalaya_small.gif']";
 private final String xpath_bsemarketindices="//a[contains(.,'BSE Market Indices')]";
-private final String classname_DashboardTitle="DashboardTitle";
-private final String xpath_market="/html/body/form/div[5]/div/div[10]/div/div[2]/div[2]/div[1]/ul[1]/li[5]/a";
-private final String xpath_markettext="/html/body/form/div[5]/div/div[10]/div[2]/div[1]/div[1]/p[1]/span[2]";
-private final String xpath_bsemarketimg="//img[@src='http://impetus-d270/Finalaya/images/widget/wid_sml_3.jpg']";
+private final String id_DashboardTitle="ctl00_BodyCPH_lblWidgetName";
+private final String xpath_market="//*[@class='widRHT'][1]/li[5]/a[1]";
+private final String css_markettext="#aspnetForm > div:nth-child(36) > div > div:nth-child(14) > div:nth-child(3) > div:nth-child(1) > div:nth-child(1) > p:nth-child(1) > span:nth-child(2)";
+private final String xpath_bsemarketimg="//*[@id='divRecentViewed']/ul/li[3]/div[2]/h2/a";
 
 
 
@@ -94,14 +94,14 @@ private WebElement investorsIcon;
 @FindBy(how = How.XPATH, using = xpath_bsemarketindices)
 private WebElement bseindiceswidgetlink;
 
-@FindBy(how = How.CLASS_NAME, using = classname_DashboardTitle)
+@FindBy(how = How.ID, using = id_DashboardTitle)
 private WebElement dashboardTitle;
 
 @FindBy(how = How.XPATH, using = xpath_market)
 private WebElement MarketlinkunderBySection;
 
 
-@FindBy(how = How.XPATH, using = xpath_markettext)
+@FindBy(how = How.CSS, using = css_markettext)
 private WebElement MarketText;
 
 @FindBy(how = How.XPATH, using = xpath_refresh)
@@ -299,7 +299,7 @@ public void clickOnBseTopLoserGainer() {
 		  LoggerInstance.logger.info("Verifying Section By  link on widget Tab");
 		  Thread.sleep(3000);
 		  FunctionLibrary.clickWebLink(MarketlinkunderBySection);
-		  result = FunctionLibrary.verifyTextWebelement("Market", MarketText);
+		  result = FunctionLibrary.verifyTextWebelement("\"Market\"", MarketText);
 		  if (result==true)
 		  {
 			  LoggerInstance.logger.info("Verification passed");
@@ -320,8 +320,9 @@ public  boolean verifyLatestImpression(){
 	  boolean result=false;
 	  try{
 		  LoggerInstance.logger.info("Verifying Latest Impression section");
+		  String expected = bse_market_indice.getText();
 		  FunctionLibrary.clickWebLink(bse_market_indice);
-		  result = FunctionLibrary.verifyTextWebelement("Finalaya Widgets - BSE Market Indices", dashboardTitle);
+		  result = FunctionLibrary.verifyTextWebelement(expected, dashboardTitle);
 		  if (result==true)
 		  {
 			  LoggerInstance.logger.info("Verification passed - Navigation to sublink widget successfull");

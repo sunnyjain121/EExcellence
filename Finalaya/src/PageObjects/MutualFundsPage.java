@@ -14,26 +14,26 @@ public class MutualFundsPage {
 	final WebDriver driver;
 	private final String css_MutualFundTab = "#menu-wrapper > ul > li:nth-child(3) > a";
 	private final String css_FundHouses = "#menu-wrapper > ul > li:nth-child(3) > div > div.nav-column > ul > li:nth-child(1) > a";
-	private final String css_FHHeader = "#aspnetForm > div:nth-child(35) > div > div:nth-child(14) > div.mf_Header > div > h1 > span";
+	private final String css_FHHeader = "#aspnetForm > div:nth-child(36) > div > div:nth-child(14) > div.mf_Header > div > h1 > span";
 	private final String css_Funds = "#menu-wrapper > ul > li:nth-child(3) > div > div.nav-column > ul > li:nth-child(2) > a";
-	private final String css_FHeader = "#aspnetForm > div:nth-child(35) > div > div:nth-child(14) > div.mf_Header > div > h1 > span";
+	private final String css_FHeader = "#aspnetForm > div:nth-child(36) > div > div:nth-child(14) > div.mf_Header > div > h1 > span";
 	private final String css_FundScreener = "#menu-wrapper > ul > li:nth-child(3) > div > div.nav-column > ul > li:nth-child(3) > a";
-	private final String css_FSHeader = "#aspnetForm > div:nth-child(36) > div > div:nth-child(14) > div.mf_Header > div > h1 > span";
+	private final String css_FSHeader = "#aspnetForm > div:nth-child(37) > div > div:nth-child(14) > div.mf_Header > div > h1 > span";
 	private final String css_PortChur = "#menu-wrapper > ul > li:nth-child(3) > div > div.nav-column > ul > li:nth-child(4) > a";
-	private final String css_PCHeader = "#aspnetForm > div:nth-child(36) > div > div:nth-child(14) > div.mf_Header > div > h1 > span";
+	private final String css_PCHeader = "#aspnetForm > div:nth-child(37) > div > div:nth-child(14) > div.mf_Header > div > h1 > span";
 	private final String css_CompareFunds = "#menu-wrapper > ul > li:nth-child(3) > div > div.nav-column > ul > li:nth-child(5) > a";
 	private final String css_CFHeader = "#NoLftRht > h1 > span";
 	private final String css_MonthlySCard = "#menu-wrapper > ul > li:nth-child(3) > div > div.nav-column > ul > li:nth-child(6) > a";
-	private final String css_MSCHeader = "#aspnetForm > div:nth-child(35) > div > div:nth-child(14) > table > tbody > tr:nth-child(1) > td > div > h1 > span";
+	private final String css_MSCHeader = "#aspnetForm > div:nth-child(36) > div > div:nth-child(14) > table > tbody > tr:nth-child(1) > td > div > h1 > span";
 	private final String css_NewFOffers = "#menu-wrapper > ul > li:nth-child(3) > div > div.nav-column > ul > li:nth-child(7) > a";
-	private final String css_NFOHeader = "#aspnetForm > div:nth-child(35) > div > div:nth-child(14) > div.mf_Header > div > span > h1";
-	private final String css_Corpus = "#aspnetForm > div:nth-child(35) > div > div:nth-child(14) > table > tbody > tr:nth-child(4) > td > span";
-	private final String css_CorpusGainers = "#aspnetForm > div:nth-child(35) > div > div:nth-child(14) > table > tbody > tr:nth-child(7) > td:nth-child(1) > span";
-	private final String css_CorpusLosers = "#aspnetForm > div:nth-child(35) > div > div:nth-child(14) > table > tbody > tr:nth-child(7) > td:nth-child(3) > span";
-	private final String css_NAVGainers = "#aspnetForm > div:nth-child(35) > div > div:nth-child(14) > table > tbody > tr:nth-child(10) > td:nth-child(1) > span";
-	private final String css_NAVLosers = "#aspnetForm > div:nth-child(35) > div > div:nth-child(14) > table > tbody > tr:nth-child(10) > td:nth-child(3) > span";
-	private final String css_valueCorpusGainerFirstRow = "#aspnetForm > div:nth-child(35) > div > div:nth-child(14) > table > tbody > tr:nth-child(7) > td:nth-child(1) > table > tbody > tr:nth-child(1) > td:nth-child(2) > span";
-	private final String css_valueCorpusLosersFirstRow = "#aspnetForm > div:nth-child(35) > div > div:nth-child(14) > table > tbody > tr:nth-child(7) > td:nth-child(3) > table > tbody > tr:nth-child(1) > td:nth-child(2) > span";
+	private final String css_NFOHeader = "#aspnetForm > div:nth-child(36) > div > div:nth-child(14) > div.mf_Header > div > span > h1";
+	private final String xpath_Corpus = "html/body/form/div[6]/div/div[10]/table/tbody/tr[4]/td/span";
+	private final String css_CorpusGainers = "#aspnetForm > div:nth-child(36) > div > div:nth-child(14) > table > tbody > tr:nth-child(7) > td:nth-child(1) > span";
+	private final String css_CorpusLosers = "#aspnetForm > div:nth-child(36) > div > div:nth-child(14) > table > tbody > tr:nth-child(7) > td:nth-child(3) > span";
+	private final String css_NAVGainers = "#aspnetForm > div:nth-child(36) > div > div:nth-child(14) > table > tbody > tr:nth-child(10) > td:nth-child(1) > span";
+	private final String css_NAVLosers = "#aspnetForm > div:nth-child(36) > div > div:nth-child(14) > table > tbody > tr:nth-child(10) > td:nth-child(3) > span";
+	private final String css_valueCorpusGainerFirstRow = "#aspnetForm > div:nth-child(36) > div > div:nth-child(14) > table > tbody > tr:nth-child(7) > td:nth-child(1) > table > tbody > tr:nth-child(1) > td:nth-child(2) > span";
+	private final String css_valueCorpusLosersFirstRow = "#aspnetForm > div:nth-child(36) > div > div:nth-child(14) > table > tbody > tr:nth-child(7) > td:nth-child(3) > table > tbody > tr:nth-child(1) > td:nth-child(2) > span";
 	private final String css_MutualFundCF = "#menu-wrapper > ul > li:nth-child(3) > div > div.nav-column > ul > li:nth-child(5) > a";
 	private final String id_actualValueOnCompPage = "ctl00_BodyCPH_ucLftPanel_lblAvgAUM";
 	private final String id_CorpusGainers_FirstRow = "ctl00_BodyCPH_rptAUMGainers_ctl01_lnkAMC";
@@ -47,7 +47,7 @@ public class MutualFundsPage {
 	private final String id_DdiOne = "ctl00_BodyCPH_ddlIndices1";
 	private final String id_DdiTwo = "ctl00_BodyCPH_ddlIndices2";
 	private final String id_CompareBtn = "ctl00_BodyCPH_btnGenerateGraph";
-	private final String css_ImageGraph = "html.js.flexbox.canvas.canvastext.webgl.no-touch.geolocation.postmessage.no-websqldatabase.indexeddb.hashchange.history.draganddrop.websockets.rgba.hsla.multiplebgs.backgroundsize.borderimage.borderradius.boxshadow.textshadow.opacity.cssanimations.csscolumns.cssgradients.no-cssreflections.csstransforms.no-csstransforms3d.csstransitions.fontface.video.audio.localstorage.sessionstorage.webworkers.applicationcache.svg.inlinesvg.smil.svgclippaths body form#aspnetForm div div div div#NoLftRht div#ctl00_BodyCPH_dvChart div div#divViewChart div div#ctl00_BodyCPH_ucCompareChart_divChart div#chartDiv_CompEx div div div div svg g path.amChartsPlotArea";
+	private final String css_ImageGraph = "#chartDiv_CompEx";
 	private final String expectedCorpusColor = "#006699";
 	private final String expectedCorpusGainersColor = "#108900";
 	private final String expectedCorpusLosersColor = "#FC2A00";
@@ -90,7 +90,7 @@ public class MutualFundsPage {
 	private WebElement we_NFOHeader;
 	@FindBy(css = css_MonthlySCard)
 	private WebElement we_MonthlySCard;
-	@FindBy(css = css_Corpus)
+	@FindBy(xpath = xpath_Corpus)
 	private WebElement we_Corpus;
 	@FindBy(css = css_CorpusGainers)
 	private WebElement we_CorpusGainers;
@@ -266,6 +266,7 @@ public class MutualFundsPage {
 	 * Created Date: 21-08-2014
 	 */
 	public void clickOnMonthlySCard(){
+		
 		try
 		{	
 			LoggerInstance.logger.info("click on Monthly Score Card");
@@ -305,13 +306,14 @@ public class MutualFundsPage {
 		boolean result= false;
 		try{
 		 result=we_FHHeader.isDisplayed();
-		 if (result==true)
+		 if (result)
 			 LoggerInstance.logger.info("User is navigated to Fund Houses Page");
 		 return result;
 			}
 		catch (Exception e) 
 			{
 			LoggerInstance.logger.info("User is not navigated to Fund Houses Page");
+			System.out.println(e.getMessage());
 			return result;
 			}
 	}
@@ -326,7 +328,7 @@ public class MutualFundsPage {
 		boolean result= false;
 		try{
 		 result=we_FHeader.isDisplayed();
-		 if (result==true)
+		 if (result)
 		 LoggerInstance.logger.info("User is navigated to Funds Page");
 		 return result;
 			}
@@ -347,7 +349,7 @@ public class MutualFundsPage {
 		boolean result= false;
 		try{
 		 result=we_FSHeader.isDisplayed();
-		 if (result==true)
+		 if (result)
 		 LoggerInstance.logger.info("User is navigated to Fund Screener Page");
 		 return result;
 			}
@@ -368,7 +370,7 @@ public class MutualFundsPage {
 		boolean result= false;
 		try{
 		 result=we_PCHeader.isDisplayed();
-		 if (result==true)
+		 if (result)
 		 LoggerInstance.logger.info("User is navigated to Portfolio Churning Page");
 		 return result;
 			}
@@ -389,7 +391,7 @@ public class MutualFundsPage {
 		boolean result= false;
 		try{
 		 result=we_CFHeader.isDisplayed();
-		 if (result==true)
+		 if (result)
 		 LoggerInstance.logger.info("User is navigated to Compare Funds Page");
 		 return result;
 			}
@@ -410,7 +412,7 @@ public class MutualFundsPage {
 		boolean result= false;
 		try{
 		 result=we_MSCHeader.isDisplayed();
-		 if (result==true)
+		 if (result)
 		 LoggerInstance.logger.info("User is navigated to Monthly Score Card Page");
 		 return result;
 			}
@@ -431,7 +433,7 @@ public class MutualFundsPage {
 		boolean result= false;
 		try{
 		 result=we_NFOHeader.isDisplayed();
-		 if (result==true)
+		 if (result)
 		 LoggerInstance.logger.info("User is navigated to New Fund Offers Page");
 		 return result;
 			}
@@ -449,7 +451,7 @@ public class MutualFundsPage {
 	 * Created By: Darwin
 	 * Created Date: 26-08-2014
 	 */
-	public boolean verifyCorpusColour() {
+/*	public boolean verifyCorpusColour() {
 		boolean result = false;
 		try {
 			LoggerInstance.logger.info("Verifying color of Top 5 Fund Houses in terms of Corpus displayed in BLUE");
@@ -461,7 +463,20 @@ public class MutualFundsPage {
 			LoggerInstance.logger.info("Not able to verify color of Top 5 Fund Houses in terms of Corpus displayed in BLUE");
 		}
 		return result;
+	}*/
+	
+	public boolean verifyCorpusColour() {
+		boolean result = false;
+		try {
+			LoggerInstance.logger.info("Verifying color of Top 5 Fund Houses in terms of Corpus displayed in BLUE");
+			
+			result=FunctionLibrary.verifyTextColor(we_Corpus,expectedCorpusColor);
+		} catch (Exception e) {
+			LoggerInstance.logger.info("Not able to verify color of Top 5 Fund Houses in terms of Corpus displayed in BLUE");
+		}
+		return result;
 	}
+	
 	/*
 	 * Method Name: verifyCorpusGainersColour 
 	 * Description: Verify Top 5 Fund Houses Gainers on Corpus basis(displayed in GREEN)
@@ -473,7 +488,7 @@ public class MutualFundsPage {
 		boolean result = false;
 		try {
 			LoggerInstance.logger.info("Verifying color of Top 5 Fund Houses Gainers on Corpus basis displayed in GREEN");
-			result=FunctionLibrary.verifyElementColor(we_CorpusGainers,expectedCorpusGainersColor);
+			result=FunctionLibrary.verifyTextColor(we_CorpusGainers,expectedCorpusGainersColor);
 		} catch (Exception e) {
 			LoggerInstance.logger.info("Not able to verify color of Top 5 Fund Houses Gainers on Corpus basis displayed in GREEN");
 		}
@@ -490,7 +505,7 @@ public class MutualFundsPage {
 		boolean result = false;
 		try {
 			LoggerInstance.logger.info("Verifying color of Top 5 Fund Houses Losers on Corpus basis displayed in RED");
-			result=FunctionLibrary.verifyElementColor(we_CorpusLosers,expectedCorpusLosersColor);
+			result=FunctionLibrary.verifyTextColor(we_CorpusLosers,expectedCorpusLosersColor);
 		} catch (Exception e) {
 			LoggerInstance.logger.info("Not able to verify color of Top 5 Fund Houses Losers on Corpus basis displayed in RED");
 		}
@@ -507,7 +522,7 @@ public class MutualFundsPage {
 		boolean result = false;
 		try {
 			LoggerInstance.logger.info("Verifying color of Top 5 NAV (%) Gainers displayed in GREEN");
-			result=FunctionLibrary.verifyElementColor(we_NAVGainers,expectedNAVGainersColor);
+			result=FunctionLibrary.verifyTextColor(we_NAVGainers,expectedNAVGainersColor);
 		} catch (Exception e) {
 			LoggerInstance.logger.info("Not able to verify color of Top 5 NAV (%) Gainers displayed in GREEN");
 		}
@@ -524,7 +539,7 @@ public class MutualFundsPage {
 		boolean result = false;
 		try {
 			LoggerInstance.logger.info("Verifying color of Top 5 NAV (%) Losers tables displayed in RED");
-			result=FunctionLibrary.verifyElementColor(we_NAVLosers,expectedNAVLosersColor);
+			result=FunctionLibrary.verifyTextColor(we_NAVLosers,expectedNAVLosersColor);
 		} catch (Exception e) {
 			LoggerInstance.logger.info("Not able to verify color of Top 5 NAV (%) Losers tables displayed in RED");
 		}
@@ -625,7 +640,7 @@ public class MutualFundsPage {
 			FunctionLibrary.selectItemFromWeblist(we_DdiTwo, Index2);
 			we_CompareBtn.click();
 			result = we_ImageGraph.isDisplayed();
-			if (result==true){
+			if (result){
 				LoggerInstance.logger.info("Graph is displayed on page");
 			}
 			else {
@@ -635,6 +650,7 @@ public class MutualFundsPage {
 		catch(Exception e)
 		{
 			LoggerInstance.logger.info("Not able to verify if graph is displayed");
+			System.out.println(e.getMessage());
 		}	
 		return result;
 	}
