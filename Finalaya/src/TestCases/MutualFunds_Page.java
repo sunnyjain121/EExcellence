@@ -11,6 +11,7 @@ import java.io.PrintWriter;
 import java.lang.reflect.Method;
 import java.util.Properties;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.annotations.AfterMethod;
@@ -90,6 +91,7 @@ public class MutualFunds_Page {
 		// Hover mouse over Mutual Funds tab
 		LoggerInstance.logger.info("Hover mouse over Mutual Funds tab");
 		obj_mutualfundspage.hoverMouse();
+		Thread.sleep(1000);
 				
 		// Verify that text is displayed correctly
 		LoggerInstance.logger.info("Verify that text is displayed correctly");
@@ -105,6 +107,7 @@ public class MutualFunds_Page {
 		// Hover mouse over Mutual Funds tab
 		LoggerInstance.logger.info("Hover mouse over Mutual Funds tab");
 		obj_mutualfundspage.hoverMouse();
+		Thread.sleep(1000);
 		
 		// Click on Funds House item
 		LoggerInstance.logger.info("Click on Funds House item");
@@ -117,11 +120,12 @@ public class MutualFunds_Page {
 			cmr.generateExecutionReport(printWrite, "Verify if Funds House Page is opened.", "Funds House Page is opened.", "Funds House Page is opened.", true, null);
 		}else{
 			isVerificationPassed=false;
-			cmr.generateExecutionReport(printWrite, "Verify if Funds House Page is opened.", "Funds House Page is opened.", "Funds House Page is not opened.", true, fLib.captureScreenshot());
+			cmr.generateExecutionReport(printWrite, "Verify if Funds House Page is opened.", "Funds House Page is opened.", "Funds House Page is not opened.", false, fLib.captureScreenshot());
 		}
 		// Hover mouse over Mutual Funds tab
 		LoggerInstance.logger.info("Hover mouse over Mutual Funds tab");
 		obj_mutualfundspage.hoverMouse();
+		Thread.sleep(1000);
 		
 		// Click on Funds item
 		LoggerInstance.logger.info("Click on Funds item");
@@ -139,6 +143,7 @@ public class MutualFunds_Page {
 		// Hover mouse over Mutual Funds tab
 		LoggerInstance.logger.info("Hover mouse over Mutual Funds tab");
 		obj_mutualfundspage.hoverMouse();
+		Thread.sleep(1000);
 		
 		// Click on Funds Screener item
 		LoggerInstance.logger.info("Click on Funds Screener item");
@@ -156,6 +161,7 @@ public class MutualFunds_Page {
 		// Hover mouse over Mutual Funds tab
 		LoggerInstance.logger.info("Hover mouse over Mutual Funds tab");
 		obj_mutualfundspage.hoverMouse();
+		Thread.sleep(1000);
 		
 		// Click on Portfolio Churning item
 		LoggerInstance.logger.info("Click on Portfolio Churning item");
@@ -173,6 +179,7 @@ public class MutualFunds_Page {
 		// Hover mouse over Mutual Funds tab
 		LoggerInstance.logger.info("Hover mouse over Mutual Funds tab");
 		obj_mutualfundspage.hoverMouse();
+		Thread.sleep(1000);
 		
 		// Click on Compare Funds item
 		LoggerInstance.logger.info("Click on Compare Funds item");
@@ -191,6 +198,7 @@ public class MutualFunds_Page {
 		// Hover mouse over Mutual Funds tab
 		LoggerInstance.logger.info("Hover mouse over Mutual Funds tab");
 		obj_mutualfundspage.hoverMouse();
+		Thread.sleep(1000);
 		
 		// Click on Monthly Score Card item
 		LoggerInstance.logger.info("Click on Monthly Score Card item");
@@ -208,6 +216,7 @@ public class MutualFunds_Page {
 		// Hover mouse over Mutual Funds tab
 		LoggerInstance.logger.info("Hover mouse over Mutual Funds tab");
 		obj_mutualfundspage.hoverMouse();
+		Thread.sleep(1000);
 		
 		// Click on New Fund Offers item
 		LoggerInstance.logger.info("Click on New Fund Offers item");
@@ -256,10 +265,13 @@ public void MutualFunds_MonthScoreCard_VerifyColorAndValue() {
 	// Hover mouse over Mutual Funds tab
 	LoggerInstance.logger.info("Hover mouse over Mutual Funds tab");
 	obj_mutualfundspage.hoverMouse();
+	Thread.sleep(1000);
 	
 	// Click on Monthly Score card item
 	LoggerInstance.logger.info("Click on Monthly Score card item");
 	obj_mutualfundspage.clickOnMonthlySCard();
+	
+	FunctionLibrary.waitTillElementPresent(driver, 5, By.xpath("html/body/form/div[6]/div/div[10]/table/tbody/tr[1]/td/div/h1/span"));
 	
 	// Verify Top 5 Fund Houses in terms of Corpus (displayed in BLUE)
 	LoggerInstance.logger.info("Verify Top 5 Fund Houses in terms of Corpus (displayed in BLUE)");
@@ -271,7 +283,6 @@ public void MutualFunds_MonthScoreCard_VerifyColorAndValue() {
 		isVerificationPassed=false;
 		cmr.generateExecutionReport(printWrite, "Verify if Top 5 Fund Houses in terms of Corpus are displayed in BLUE.", "Top 5 Fund Houses in terms of Corpus are displayed in BLUE.", "Top 5 Fund Houses in terms of Corpus are not displayed in BLUE.", false, fLib.captureScreenshot());
 	}
-	
 	// Verify Top 5 Fund Houses Gainers on Corpus basis(displayed in GREEN)
 	LoggerInstance.logger.info("Verify Top 5 Fund Houses Gainers on Corpus basis(displayed in GREEN)");
 	boolean isVerifyCorpusGainersColour = obj_mutualfundspage.verifyCorpusGainersColour();
@@ -318,13 +329,17 @@ public void MutualFunds_MonthScoreCard_VerifyColorAndValue() {
 		isVerificationPassed=false;
 		cmr.generateExecutionReport(printWrite, "Verify if same Corpus Amount is displayed on page for first record of Top 5 Fund Houses Gainsers on Corpus basis.", "same Corpus Amount is displayed on page for first record of Top 5 Fund Houses Gainsers on Corpus basis.", "same Corpus Amount is not displayed on page for first record of Top 5 Fund Houses Gainsers on Corpus basis.", false, fLib.captureScreenshot());
 	}
+	
 	// Hover mouse over Mutual Funds tab
 	LoggerInstance.logger.info("Hover mouse over Mutual Funds tab");
 	obj_mutualfundspage.hoverMouse();
 	
+	Thread.sleep(5000);
 	// Click on Monthly Score card page
 	LoggerInstance.logger.info("Click on Monthly Score card page");
 	obj_mutualfundspage.clickOnMonthlySCard();
+	
+	FunctionLibrary.waitTillElementPresent(driver, 5, By.xpath("html/body/form/div[6]/div/div[10]/table/tbody/tr[1]/td/div/h1/span"));
 	
 	// Verify same Corpus Amount is displayed on page for first record of "Top 5 Fund Houses Losers on Corpus basis
 	LoggerInstance.logger.info("Verify same Corpus Amount is displayed on page for first record of Top 5 Fund Houses Losers on Corpus basis");
@@ -343,15 +358,11 @@ public void MutualFunds_MonthScoreCard_VerifyColorAndValue() {
 	}
 	
 	} catch (Exception e) {
+		
 		LoggerInstance.logger.info("Exception occured.");
 		e.printStackTrace();
-	} finally {
-		obj_mutualfundspage = null;
-		if(!isVerificationPassed) {
-			isVerificationPassed=true;
-			org.testng.Assert.fail();
-		}
-	}	
+		
+	} 
 }
 	
 	
@@ -367,11 +378,13 @@ public void MutualFunds_MonthScoreCard_VerifyColorAndValue() {
 		// Hover mouse over Mutual Funds tab
 		LoggerInstance.logger.info("Hover mouse over Mutual Funds tab");
 		obj_mutualfundspage.hoverMouse();
+		Thread.sleep(1000);
 		
 		// Hover mouse over Compare Funds item
 		LoggerInstance.logger.info("Hover mouse over Compare Funds item");
 		obj_mutualfundspage.hoverMouseCF();
-		
+				
+		Thread.sleep(2000);
 		// Verify that expected text is displayed on Page
 		LoggerInstance.logger.info("Verify that expected text is displayed on Page");
 		boolean isVerifyTextCF =obj_mutualfundspage.verifyTextCF();
