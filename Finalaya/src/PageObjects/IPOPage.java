@@ -70,7 +70,7 @@ public class IPOPage {
     private final String csspath_IPOForthcoming_TableHeader = "#ctl00_BodyCPH_ForthcomingIssues_tblMessage>tbody>tr";
     private final String csspath_IPOForthcoming_TableNoData = "#ctl00_BodyCPH_ForthcomingIssues_tblMessage>tbody>tr>td";
     
-    private final String xpath_IPOForthcoming_TableHeader = "//table[@class='bordered']/thead/tr";
+    private final String xpath_IPOForthcoming_TableHeader = "//table[@class='bordered']/tbody/tr";
     private final String xpath_IPOForthcoming_TableNoData = "//table[@class='bordered']/tbody/tr/td";
 
 	private final String csspath_IPOForthcoming_GuidedSearch = ".divGuiSearch>h3";
@@ -701,6 +701,7 @@ public class IPOPage {
             		WebElement span = td.get(i).findElement(By.tagName("span"));
             		if(("There is no Forthcoming IPO available.").equals(span.getText())){
             			LoggerInstance.logger.info("Altenate text 'There is no Current IPO Available' is displayed");
+            			result=true;
             			break;
             		}
             	}else if (td.size()>0) {

@@ -32,31 +32,35 @@ import Logger.LoggerInstance;
 public class ReportPublisher implements IReporter {
 	
 	public static PrintWriter  f_out;
-	public static final String OUT_FOLDER = "Finalaya Execution Report";
 	CustomMethodReport cm = new CustomMethodReport();
 	File path=null;
 	/*
-	 * Description: This method will generate the report with overall execution status 
-	 * This method is provided by TestNG 
+	 * Description: This method will generate the report with overall execution status. 
+	 * Pass results are marked in green color while failed in red.
+	 * This method is provided by TestNG. We are overriding this method and providing our customization to generated the report.
+	 * Created By: Bal Govind
+	 * Created Date: 03-09-2014
 	 * */
+	
 	@Override
 	public void generateReport(List<XmlSuite> arg0, List<ISuite> suites, String outdir)
 	{
-		try
-		{
-		f_out = createWriter(OUT_FOLDER);
-		} catch (IOException e)
-		{
+		//Create the html file using createWriter method
+		try {
+			f_out = createWriter();
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
 		ITestContext tc = null;
 		
+		//Generate the body of html file and attach the logo
+		
 		startHtmlPage(f_out);
 		
 		for (ISuite suite : suites) {
-            //Following code gets the suite name
-            String suiteName = suite.getName();
+        //Following code gets the suite name
+        String suiteName = suite.getName();
             
 	    //Getting the results for the said suite
 	    Map<String, ISuiteResult> suiteResults = suite.getResults();
@@ -64,13 +68,15 @@ public class ReportPublisher implements IReporter {
 		for (ISuiteResult sr : suiteResults.values()) {
 	    	tc = sr.getTestContext();
 	      }
-		
+		//Getting all passed test cases
 		IResultMap passedTests = tc.getPassedTests();
 		
+		//Getting all failed test cases
 		IResultMap failedTests = tc.getFailedTests();
 		
 		int totalTestCases = passedTests.size() + failedTests.size();
-		
+			
+		// Generate the header of report
 		
 		f_out.println("<table border='1' width='1000' id = \"reportTable\">");
 		
@@ -85,7 +91,8 @@ public class ReportPublisher implements IReporter {
 				"<td>Status</td>" +
 			"</tr>");
 		
-	      // Print all test exceptions...
+	      // Print all passed test cases
+		
 	      for( ITestResult r: passedTests.getAllResults()) {
 	    	  
 	    	  f_out.println("<tr bgcolor = lightgreen>" +
@@ -94,7 +101,8 @@ public class ReportPublisher implements IReporter {
 					  "<td>" + "Pass" + "</td>" +
 					  "</tr>");  
 	      }
-		
+	      
+		// Print all failed test cases
 	      for( ITestResult r1: failedTests.getAllResults()) {
 	    	  f_out.println("<tr bgcolor = \"FF6666\">" +
 					  "<td>" + "</td>" +
@@ -106,23 +114,29 @@ public class ReportPublisher implements IReporter {
 		
 		endHtmlPage(f_out);
 
-		// Open the Report after all the execution
+		//Open the Report after execution of all test cases
 		try {
 			Desktop.getDesktop().open(path);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 		f_out.flush();
 		f_out.close();
 		
 	}
 	
 	
-	/** 
-	 * Description: This method will start to generate the html report file 
-	 * and create the header and set the logo of application
+	/* Method Name: startHtmlPage
+	 * Description: 
+	 * 		This method will start generating the html file and set the logo of application 
+	 * Parameters: 
+	 * 		1. out- PrintWriter- handle of html file generated using createWriter method 
+	 * Created By: Bal Govind
+	 * Created Date: 03-09-2014
 	 * */
+	
 	public void startHtmlPage(PrintWriter out)
 	{
 		File logoDir = new File("");
@@ -149,16 +163,30 @@ public class ReportPublisher implements IReporter {
 		
 	}
 	
-	/** Finishes HTML Stream */
+	/*
+	 * Description: This Method will finishes the html stream.
+	 * Parameter: out: PrintWriter- It is the handle of html file.			
+	 * Created By: Bal Govind
+	 * Created Date: 03-09-2014
+	 * 
+	 * */
+	
 	private void endHtmlPage(PrintWriter out)
 	{
-		//out.println("<table border='1' width='1000'> <tr><td>To see Log file: <a href= \"" + logFile.getPath() +"\"><b>Click here</b></a></td></tr></table>");
-		
 		out.println("</table>");
 		out.println("</body></html>");
 	}
 	
-	public PrintWriter createWriter(String outdir) throws IOException
+	
+	/*
+	 * Description: This Method will Create a file of html type and return the handle of file.
+	 * 				A folder will be created that is provided in the property file that has name as "finalExecutionReport"			
+	 * Created By: Bal Govind
+	 * Created Date: 03-09-2014
+	 * 
+	 * */
+	
+	public PrintWriter createWriter() throws IOException
 	{	
 		Properties prop = new Properties();
 		InputStream inputConfig = new FileInputStream(AutomationConstants.PROPERTY_FILE_NAME);
@@ -172,20 +200,27 @@ public class ReportPublisher implements IReporter {
 		String absolutepath	=	directory.getAbsolutePath();
 		String str_reportFilePath = absolutepath+File.separator+folder;
 		File f1 = new File(str_reportFilePath);
+		
+		// Create the folder with the name provided in property file
 		File outFolder = cm.createFolderorFile(false, f1);
 		
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 		Date date = new Date();
 		
 		String reportDirName = dateFormat.format(date);
+		
 		File currentDateReportFolder = new File(outFolder + "\\" + reportDirName);
 		
+		// Create a folder with the Current Date
 		if(!currentDateReportFolder.exists())
 			currentDateReportFolder.mkdir();
+		
 		SimpleDateFormat timeFormat = new SimpleDateFormat("HH-mm-ss");
 		Date time = new Date();
+		
 		String tim1 = timeFormat.format(time);
 		
+		//Append the time in html file.
 		String rPath = "Finalaya Execution Report_" + tim1;
 		path = new File(currentDateReportFolder + "\\" + rPath + ".html") ;
 		return new PrintWriter(new BufferedWriter(new FileWriter(new File(currentDateReportFolder, rPath + ".html"))));

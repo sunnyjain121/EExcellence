@@ -46,8 +46,15 @@ public class CustomMethodReport {
 		return folderOrFile;
 	}
 	
-	/** Starts HTML Stream 
-	 * @throws IOException */
+	/* Method Name: startHtmlPage
+	 * Description: 
+	 * 		This method will generate the Header of internal execution html report
+	 * Parameters: 
+	 * 		1. out- PrintWriter- handle of html file generated using createWriter method 
+	 * Created By: Bal Govind
+	 * Created Date: 03-09-2014
+	 * */
+	
 	public void startHtmlPage(PrintWriter out) throws IOException
 	{
 		out.println("<html>");
@@ -63,7 +70,9 @@ public class CustomMethodReport {
 		out.println("</head>");
 		
 		out.println("<body onload = GenerateColId()><br/>");
-	
+
+		// This will generate the header of the html for the internal html
+		
 		out.println("<table border='1' width='100%' id = \"reportTable\"> " +
 						"<tr bgcolor=\"grey\">" +
 							"<td>S.No.</td>" +
@@ -75,7 +84,6 @@ public class CustomMethodReport {
 							"<td>Screenshot</td>" +
 							"<td>Status</td>" +
 						"</tr>");
-		//out.flush();
 		
 	}
 	
@@ -94,6 +102,7 @@ public class CustomMethodReport {
 	 * */
 	
 	public void generateExecutionReport(PrintWriter out, String action, String expectedResult, String actualResult, boolean isPassed, String screenshot) {
+		
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 		SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
 		
@@ -128,8 +137,14 @@ public class CustomMethodReport {
 		out.println("</table></body></html>");
 	}
 	
+	
 	/*
-	 * This Method will Create a file of html type and return the handle of file
+	 * Description: This Method will Create a file of html type and return the handle of file
+	 * parameter: method: String- This method accepts the a String that contains the method name. 
+	 * 								Html file will be create using this method name 
+	 * Created By: Bal Govind
+	 * Created Date: 03-09-2014
+	 * 
 	 * */
 	public PrintWriter createWriter(String methodName) throws IOException
 	{
@@ -155,7 +170,8 @@ public class CustomMethodReport {
 		
 		String reportPath = outFolder + "\\" + reportName ;
 		
-		//put the file name in HashMap against method Name
+		//put the file name in HashMap against method Name. This hashmap is used for the linking of internal verification and overall execution reoport
+		
 		hm.put(methodName, reportPath);
 		
 		return new PrintWriter(new BufferedWriter(new FileWriter(new File(outFolder, reportName))));

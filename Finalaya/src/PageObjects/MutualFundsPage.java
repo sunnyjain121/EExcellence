@@ -27,8 +27,8 @@ public class MutualFundsPage {
 	private final String css_MSCHeader = "#aspnetForm > div:nth-child(36) > div > div:nth-child(14) > table > tbody > tr:nth-child(1) > td > div > h1 > span";
 	private final String css_NewFOffers = "#menu-wrapper > ul > li:nth-child(3) > div > div.nav-column > ul > li:nth-child(7) > a";
 	private final String css_NFOHeader = "#aspnetForm > div:nth-child(36) > div > div:nth-child(14) > div.mf_Header > div > span > h1";
-	private final String xpath_Corpus = "html/body/form/div[6]/div/div[10]/table/tbody/tr[4]/td/span";
-	private final String css_CorpusGainers = "#aspnetForm > div:nth-child(36) > div > div:nth-child(14) > table > tbody > tr:nth-child(7) > td:nth-child(1) > span";
+	private final String xpath_Corpus = "//*[@id='aspnetForm']/div[6]/div/div[10]/table/tbody/tr[4]/td/span";//html/body/form/div[6]/div/div[10]/table/tbody/tr[4]/td/span";
+	private final String xpath_CorpusGainers = "//*[@id='aspnetForm']/div[6]/div/div[10]/table/tbody/tr[7]/td[1]/span";
 	private final String css_CorpusLosers = "#aspnetForm > div:nth-child(36) > div > div:nth-child(14) > table > tbody > tr:nth-child(7) > td:nth-child(3) > span";
 	private final String css_NAVGainers = "#aspnetForm > div:nth-child(36) > div > div:nth-child(14) > table > tbody > tr:nth-child(10) > td:nth-child(1) > span";
 	private final String css_NAVLosers = "#aspnetForm > div:nth-child(36) > div > div:nth-child(14) > table > tbody > tr:nth-child(10) > td:nth-child(3) > span";
@@ -39,7 +39,7 @@ public class MutualFundsPage {
 	private final String id_CorpusGainers_FirstRow = "ctl00_BodyCPH_rptAUMGainers_ctl01_lnkAMC";
 	private final String id_CorpusLosers_FirstRow = "ctl00_BodyCPH_rptAUMLosers_ctl01_lnkAMC";
 	private final String id_ActualTextMF = "dMF";
-	private final String id_ActualTextCF = "dCmpF";
+	private final String css_ActualTextCF = "#dCmpF";
 	private final String id_GraphChkBox = "ctl00_BodyCPH_cboxGraph";
 	private final String id_EquityChkBox = "ctl00_BodyCPH_rbEquity";
 	private final String id_DropdownOne = "ctl00_BodyCPH_comp1";
@@ -92,7 +92,7 @@ public class MutualFundsPage {
 	private WebElement we_MonthlySCard;
 	@FindBy(xpath = xpath_Corpus)
 	private WebElement we_Corpus;
-	@FindBy(css = css_CorpusGainers)
+	@FindBy(xpath = xpath_CorpusGainers)
 	private WebElement we_CorpusGainers;
 	@FindBy(css = css_CorpusLosers)
 	private WebElement we_CorpusLosers;
@@ -112,7 +112,7 @@ public class MutualFundsPage {
 	private WebElement we_CorpusLosers_FirstRow;
 	@FindBy(css = css_MutualFundCF)
 	private WebElement we_MutualFundCF;
-	@FindBy(id = id_ActualTextCF)
+	@FindBy(css = css_ActualTextCF)
 	private WebElement we_ActualTextCF;
 	@FindBy(id = id_GraphChkBox)
 	private WebElement we_GraphChkBox;
@@ -161,6 +161,7 @@ public class MutualFundsPage {
 	public boolean verifyTextMF() {
 		boolean result = false;
 		try{
+			FunctionLibrary.waitTillElementPresent(driver, 10, By.id(id_ActualTextMF));
 			LoggerInstance.logger.info("Verify that On right of subtabs, text is displayed");
 			result = FunctionLibrary.verifyTextWebelement(expectedTextMF, we_ActualTextMF);
 		}
@@ -247,9 +248,10 @@ public class MutualFundsPage {
 	 * Created By: Darwin
 	 * Created Date: 21-08-2014
 	 */
-	public void clickOnCompareFunds(){
+	public void clickOnCompareFunds(WebDriver driver){
 		try
 		{	
+			FunctionLibrary.waitTillElementPresent(driver, 10, By.cssSelector(css_CompareFunds));
 			LoggerInstance.logger.info("click on Compare Funds");
 			FunctionLibrary.clickWebLink(we_CompareFunds);
 		}
@@ -265,12 +267,14 @@ public class MutualFundsPage {
 	 * Created By: Darwin
 	 * Created Date: 21-08-2014
 	 */
-	public void clickOnMonthlySCard(){
+	public void clickOnMonthlySCard(WebDriver driver){
 		
 		try
 		{	
+			FunctionLibrary.waitTillElementPresent(driver,10, By.cssSelector(css_MonthlySCard));
 			LoggerInstance.logger.info("click on Monthly Score Card");
 			FunctionLibrary.clickWebLink(we_MonthlySCard);
+			Thread.sleep(3000);
 		}
 		catch(Exception e)
 		{
@@ -302,9 +306,10 @@ public class MutualFundsPage {
 	 * Created By: Darwin
 	 * Created Date: 22-08-2014
 	 */
-	public boolean verifyFundHousesNavigation(){
+	public boolean verifyFundHousesNavigation(WebDriver driver){
 		boolean result= false;
 		try{
+		FunctionLibrary.waitTillElementPresent(driver, 10, By.cssSelector(css_FHHeader));
 		 result=we_FHHeader.isDisplayed();
 		 if (result)
 			 LoggerInstance.logger.info("User is navigated to Fund Houses Page");
@@ -465,11 +470,12 @@ public class MutualFundsPage {
 		return result;
 	}*/
 	
-	public boolean verifyCorpusColour() {
+	
+	public boolean verifyCorpusColour(WebDriver driver) {
 		boolean result = false;
 		try {
 			LoggerInstance.logger.info("Verifying color of Top 5 Fund Houses in terms of Corpus displayed in BLUE");
-			
+			FunctionLibrary.waitTillElementPresent(driver, 10, By.xpath(xpath_Corpus));
 			result=FunctionLibrary.verifyTextColor(we_Corpus,expectedCorpusColor);
 		} catch (Exception e) {
 			LoggerInstance.logger.info("Not able to verify color of Top 5 Fund Houses in terms of Corpus displayed in BLUE");
@@ -571,12 +577,14 @@ public class MutualFundsPage {
 	 * Created By: Darwin
 	 * Created Date: 26-08-2014
 	 */
-	public boolean verifyValueCorpusLosers() {
+	public boolean verifyValueCorpusLosers(WebDriver driver) {
 		boolean result = false;
 		try {
 			LoggerInstance.logger.info("Verifying value of Corpus Losers");
 		valueCorpusLosersOnMSCPage = we_valueCorpusLosersFirstRow.getText();
+		FunctionLibrary.waitTillElementPresent(driver, 10, By.id(id_CorpusLosers_FirstRow));
 		FunctionLibrary.clickWebLink(we_CorpusLosers_FirstRow);
+		FunctionLibrary.waitTillElementPresent(driver, 10, By.id(id_actualValueOnCompPage));
 		result=FunctionLibrary.verifyTextWebelement(valueCorpusLosersOnMSCPage, we_actualValueOnCompPage);
 		} catch (Exception e) {
 			LoggerInstance.logger.info("Not able to Verify value of Corpus Losers");
@@ -597,6 +605,7 @@ public class MutualFundsPage {
 			LoggerInstance.logger.info("hover mouse over Compare Funds item");
 		Actions action = new Actions(driver);
 		action.moveToElement(we_MutualFundCF).build().perform();
+		Thread.sleep(3000);
 		} catch (Exception e) {
 			LoggerInstance.logger.info("Not able to hover mouse over Compare Funds item");
 		}
@@ -608,11 +617,17 @@ public class MutualFundsPage {
 	 * Created By: Darwin
 	 * Created Date: 26-08-2014
 	 */
-	public boolean verifyTextCF() {
+	public boolean verifyTextCF(WebDriver driver) {
 			boolean result = false;
 		try {
 			LoggerInstance.logger.info("Verifying text");
+			FunctionLibrary.waitTillElementPresent(driver, 10, By.cssSelector(css_ActualTextCF));
 			result = FunctionLibrary.verifyTextWebelement(expectedTextCF, we_ActualTextCF);
+			if (result==true){
+				LoggerInstance.logger.info("Verification Passed");
+			}
+			else
+				LoggerInstance.logger.info("Verification Failed");
 		} catch (Exception e) {
 			LoggerInstance.logger.info("Not able to Verify text");
 		}
@@ -628,16 +643,18 @@ public class MutualFundsPage {
 	 * Created By: Darwin
 	 * Created Date: 26-08-2014
 	 */
-	public boolean compareFundsGraph(String Index1, String Index2) throws Throwable {
+	public boolean compareFundsGraph(WebDriver driver, String Index1, String Index2) throws Throwable {
 		boolean result = false;
 		try {
 			LoggerInstance.logger.info("Verifying graph is displayed");
+			FunctionLibrary.waitTillElementPresent(driver,10, By.id(id_GraphChkBox));
 			FunctionLibrary.checkingCheckbox(we_GraphChkBox);
 			FunctionLibrary.checkingCheckbox(we_EquityChkBox);
 			FunctionLibrary.selectItemFromWeblist(we_DropdownOne, "Index");
 			FunctionLibrary.selectItemFromWeblist(we_DdiOne, Index1);
 			FunctionLibrary.selectItemFromWeblist(we_DropdownTwo, "Index");
 			FunctionLibrary.selectItemFromWeblist(we_DdiTwo, Index2);
+			FunctionLibrary.waitTillElementPresent(driver, 10, By.id(id_CompareBtn));
 			we_CompareBtn.click();
 			result = we_ImageGraph.isDisplayed();
 			if (result){
