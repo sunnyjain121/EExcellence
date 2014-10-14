@@ -70,7 +70,7 @@ public class IPOPage {
     private final String csspath_IPOForthcoming_TableHeader = "#ctl00_BodyCPH_ForthcomingIssues_tblMessage>tbody>tr";
     private final String csspath_IPOForthcoming_TableNoData = "#ctl00_BodyCPH_ForthcomingIssues_tblMessage>tbody>tr>td";
     
-    private final String xpath_IPOForthcoming_TableHeader = "//table[@class='bordered']/tbody/tr";
+    private final String xpath_IPOForthcoming_TableHeader = "//table[@class='bordered']/.//tr";
     private final String xpath_IPOForthcoming_TableNoData = "//table[@class='bordered']/tbody/tr/td";
 
 	private final String csspath_IPOForthcoming_GuidedSearch = ".divGuiSearch>h3";
