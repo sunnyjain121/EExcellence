@@ -90,6 +90,7 @@ public class MutualFunds_Page {
 		// Hover mouse over Mutual Funds tab
 		LoggerInstance.logger.info("Hover mouse over Mutual Funds tab");
 		obj_mutualfundspage.hoverMouse();
+		Thread.sleep(1000);
 				
 		// Verify that text is displayed correctly
 		LoggerInstance.logger.info("Verify that text is displayed correctly");
@@ -105,6 +106,7 @@ public class MutualFunds_Page {
 		// Hover mouse over Mutual Funds tab
 		LoggerInstance.logger.info("Hover mouse over Mutual Funds tab");
 		obj_mutualfundspage.hoverMouse();
+		Thread.sleep(1000);
 		
 		// Click on Funds House item
 		LoggerInstance.logger.info("Click on Funds House item");
@@ -122,6 +124,7 @@ public class MutualFunds_Page {
 		// Hover mouse over Mutual Funds tab
 		LoggerInstance.logger.info("Hover mouse over Mutual Funds tab");
 		obj_mutualfundspage.hoverMouse();
+		Thread.sleep(1000);
 		
 		// Click on Funds item
 		LoggerInstance.logger.info("Click on Funds item");
@@ -139,6 +142,7 @@ public class MutualFunds_Page {
 		// Hover mouse over Mutual Funds tab
 		LoggerInstance.logger.info("Hover mouse over Mutual Funds tab");
 		obj_mutualfundspage.hoverMouse();
+		Thread.sleep(1000);
 		
 		// Click on Funds Screener item
 		LoggerInstance.logger.info("Click on Funds Screener item");
@@ -156,6 +160,7 @@ public class MutualFunds_Page {
 		// Hover mouse over Mutual Funds tab
 		LoggerInstance.logger.info("Hover mouse over Mutual Funds tab");
 		obj_mutualfundspage.hoverMouse();
+		Thread.sleep(1000);
 		
 		// Click on Portfolio Churning item
 		LoggerInstance.logger.info("Click on Portfolio Churning item");
@@ -173,6 +178,7 @@ public class MutualFunds_Page {
 		// Hover mouse over Mutual Funds tab
 		LoggerInstance.logger.info("Hover mouse over Mutual Funds tab");
 		obj_mutualfundspage.hoverMouse();
+		Thread.sleep(1000);
 		
 		// Click on Compare Funds item
 		LoggerInstance.logger.info("Click on Compare Funds item");
@@ -191,6 +197,7 @@ public class MutualFunds_Page {
 		// Hover mouse over Mutual Funds tab
 		LoggerInstance.logger.info("Hover mouse over Mutual Funds tab");
 		obj_mutualfundspage.hoverMouse();
+		Thread.sleep(1000);
 		
 		// Click on Monthly Score Card item
 		LoggerInstance.logger.info("Click on Monthly Score Card item");
@@ -208,6 +215,7 @@ public class MutualFunds_Page {
 		// Hover mouse over Mutual Funds tab
 		LoggerInstance.logger.info("Hover mouse over Mutual Funds tab");
 		obj_mutualfundspage.hoverMouse();
+		Thread.sleep(1000);
 		
 		// Click on New Fund Offers item
 		LoggerInstance.logger.info("Click on New Fund Offers item");
@@ -256,6 +264,7 @@ public void MutualFunds_MonthScoreCard_VerifyColorAndValue() {
 	// Hover mouse over Mutual Funds tab
 	LoggerInstance.logger.info("Hover mouse over Mutual Funds tab");
 	obj_mutualfundspage.hoverMouse();
+	Thread.sleep(1000);
 	
 	// Click on Monthly Score card item
 	LoggerInstance.logger.info("Click on Monthly Score card item");
@@ -321,6 +330,7 @@ public void MutualFunds_MonthScoreCard_VerifyColorAndValue() {
 	// Hover mouse over Mutual Funds tab
 	LoggerInstance.logger.info("Hover mouse over Mutual Funds tab");
 	obj_mutualfundspage.hoverMouse();
+	Thread.sleep(5000);
 	
 	// Click on Monthly Score card page
 	LoggerInstance.logger.info("Click on Monthly Score card page");
@@ -367,10 +377,12 @@ public void MutualFunds_MonthScoreCard_VerifyColorAndValue() {
 		// Hover mouse over Mutual Funds tab
 		LoggerInstance.logger.info("Hover mouse over Mutual Funds tab");
 		obj_mutualfundspage.hoverMouse();
+		Thread.sleep(1000);
 		
 		// Hover mouse over Compare Funds item
 		LoggerInstance.logger.info("Hover mouse over Compare Funds item");
 		obj_mutualfundspage.hoverMouseCF();
+		Thread.sleep(1000);
 		
 		// Verify that expected text is displayed on Page
 		LoggerInstance.logger.info("Verify that expected text is displayed on Page");
@@ -386,6 +398,7 @@ public void MutualFunds_MonthScoreCard_VerifyColorAndValue() {
 		// Hover mouse over Mutual Funds tab
 		LoggerInstance.logger.info("Hover mouse over Mutual Funds tab");	
 		obj_mutualfundspage.hoverMouse();
+		Thread.sleep(1000);
 		
 		// Click on Compare Funds item
 		LoggerInstance.logger.info("Click on Compare Funds item");

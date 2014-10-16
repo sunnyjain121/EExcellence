@@ -131,7 +131,7 @@ public class MarketPage {
 			
 			LoggerInstance.logger.info("verify the color of negative value is Red");
 			String result2=FunctionLibrary.getrgbaColor(we_NegativeValue);
-			result= FunctionLibrary.verifyStringsAreSame(result2,"#FF0000");
+			result= FunctionLibrary.verifyStringsAreSame(result2,"#BB202F");
 		}
 		catch(Exception e){
 			LoggerInstance.logger.info("unable to verify the color");

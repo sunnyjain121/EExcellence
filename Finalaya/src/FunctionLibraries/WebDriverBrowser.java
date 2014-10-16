@@ -22,7 +22,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
  * Created Date	: 11-08-2014
  */
 public final class WebDriverBrowser {
-
+public static WebDriver driver;
 	private WebDriverBrowser() {
 	}
 
