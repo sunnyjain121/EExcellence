@@ -27,7 +27,7 @@ public class HomePage {
 	private final String xpath_QuickLink = "//span[contains(.,'QUICK LINKS')]";
 	private final String xpath_SquareButton = "//img[@src='images/gifs/1x1Spacer.gif']";
 	private final String xpath_MarketToday = "//img[@src='Images/NewHomePage/mt_Home.jpg']";
-	private final String xpath_Sensex = "//span[contains(.,'SENSEX')]";
+	private final String xpath_Sensex = "//span[@id='ucMarketToday_ucGraph_lblExchangeIndexName']";
 	private final String xpath_LatestNews = "//span[contains(.,'Latest News')]";
 	private final String xpath_SearchText = "//input[@id='ucHeader_ucSearch_myTextBox']";
 	private final String xpath_SearchButton = "//input[@id='ucHeader_ucSearch_btnFinSearch']";
@@ -205,6 +205,7 @@ public class HomePage {
 		we_SearchText.sendKeys("Real Strips Ltd");
 		LoggerInstance.logger.info("Click on search button");
 		FunctionLibrary.clickWebLink(we_SearchButton);
+		Thread.sleep(8000);
 		LoggerInstance.logger.info("Verify searched company name");
 		result = FunctionLibrary.verifyTextWebelement("Real Strips Ltd", we_RSTText);
 		if (result==true){

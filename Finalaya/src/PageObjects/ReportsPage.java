@@ -59,7 +59,7 @@ public class ReportsPage {
     private final String xpath_bigWealthCreators = "//th[.='Biggest Wealth Creators']";
     private final String xpath_bigWealthDestroyers = "//th[.='Biggest Wealth Destroyers']";
     private final String xpath_sensexDriver = "//th[.='Sensex Drivers']";
-    private final String xpath_firstIndex = "//form/div[5]/div/div[10]/div[1]/div[2]/div[1]/div[1]/div[3]/div[1]/div[1]/table/tbody/tr[1]/td[1]/a";
+    private final String xpath_firstIndex = "//a[@title='S&P SENSEX']";
     private final String csspath_header = "h1";
     private final String xpath_weeklywraptitle = "//span[@class='wekHeadlineTlt']";
 	
@@ -786,25 +786,28 @@ return result;    }
      * Created By: Aman Saraf Jain
      * Created Date: 23-08-2014
      * */
+    
     public boolean verify_index_link_navigates_marketToday_page(){
-     	 boolean result=false; 
-   	 try
+        boolean result=false; 
+        try
            {
                    LoggerInstance.logger.info("clicking one of the index link");
                    FunctionLibrary.clickWebLink(firstIndex);
                    LoggerInstance.logger.info("Verifying navigated to Market Today page");
+                   Thread.sleep(2000);
                    result = FunctionLibrary.verifyTextWebelement("Market Today",header);  
                    if(result==true){
-                   	LoggerInstance.logger.info("Verification passed");
-                   	return result;
+                     LoggerInstance.logger.info("Verification passed");
+                     return result;
                    }
           
            }
            catch(Exception e)
            {
-         	  	LoggerInstance.logger.info("verification Failed");
-             	return result;
+                     LoggerInstance.logger.info("verification Failed");
+             return result;
            }
-      	return result;   }
+      return result;   }
+
 	
 }

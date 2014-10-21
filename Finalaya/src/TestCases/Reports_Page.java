@@ -76,7 +76,7 @@ public class Reports_Page {
 	}
 	
 	//Scenario 1:This test case will navigate to Research Reports menu of reports tab & will verify the different tabs,click on the report and verify the title of report opened in new window.
-	@Test
+	@Test(enabled=false)
 	public void Reports_ResearchReports_VerifyReportsPage() throws Exception{
 		
 		try{
@@ -180,7 +180,7 @@ public class Reports_Page {
 }
 	
 	// Scenario 2 :This test case will navigate to Daily Wrap menu of reports tab & will verify the tables , tables columns and click on the any date and will verify the same on the newly opened window.
-	@Test
+	@Test(enabled=false)
 	public void Reports_DailyWrap_VerifyDailyWrapPage()
 	{
 	try
